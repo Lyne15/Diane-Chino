@@ -1,0 +1,122 @@
+:root{
+  --env-w: 320px;
+  --env-h: 220px;
+  --bg: #fbf8f3;
+  --env-color: #e6cfa8;
+  --env-dark: #d6b78a;
+  --accent: #b1c9a7;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,#f6f7fb 0%, var(--bg) 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.stage{
+  text-align:center;
+  perspective: 1200px; /* para sa 3D flap rotation */
+  padding:20px;
+}
+
+.envelope{
+  width:var(--env-w);
+  height:var(--env-h);
+  position:relative;
+  transform-style: preserve-3d;
+  margin: 0 auto 16px;
+  user-select: none;
+  touch-action: none;
+}
+
+/* ilalim na katawan ng sobre (front) */
+.envelope .body{
+  position:absolute;
+  left:0; right:0; bottom:0;
+  height:70%;
+  background: linear-gradient(180deg, var(--env-color), var(--env-dark));
+  border-radius:6px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  z-index:1;
+  overflow:hidden;
+}
+
+/* inner pocket kung saan nakasilip ang sulat */
+.envelope .inner{
+  position:absolute;
+  top:12%;
+  left:8%;
+  right:8%;
+  bottom:18%;
+  background: white;
+  border-radius:4px;
+  z-index:0;
+  transform: translateZ(-1px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px;
+  box-shadow: inset 0 1px 0 rgba(0,0,0,0.03);
+}
+
+/* sulat */
+.letter{
+  text-align:center;
+  max-width:86%;
+}
+.letter h1{margin:0;font-size:18px;color:#333}
+.letter p{margin:6px 0 0;color:#666}
+
+/* flap (top) */
+.flap{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:55%;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  z-index:3;
+  pointer-events:auto;
+  /* transition kapag hindi nag-drag */
+  transition: transform 300ms cubic-bezier(.2,.9,.25,1);
+  will-change: transform;
+}
+
+/* shape ng flap: triangular-ish */
+.flap-shape{
+  width:100%;
+  height:100%;
+  background: linear-gradient(180deg, var(--env-dark), var(--env-color));
+  clip-path: polygon(0 100%, 50% 0, 100% 100%);
+  border-radius:4px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  transform: translateZ(1px);
+}
+
+/* optional: maliit na border sa edge para depth */
+.flap::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:-3px;
+  height:6px;
+  background: linear-gradient(90deg, rgba(0,0,0,0.04), transparent);
+  z-index:-1;
+}
+
+/* hint text */
+.hint{
+  font-size:13px;
+  color:#666;
+  margin:0;
+}
+
+/* responsive scaling for smaller screens */
+@media (max-width:420px){
+  :root{--env-w: 280px; --env-h: 200px}
+}
