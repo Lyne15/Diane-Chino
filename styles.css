@@ -1,60 +1,161 @@
-/* style.css */
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: #fdf7e4; /* Light wedding-themed background */
-  margin: 0;
-  font-family: sans-serif;
+    background: #e0e5ec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    flex-direction: column;
 }
 
-.envelope-container {
-  position: relative;
-  width: 300px;
-  height: 200px;
+.container {
+    perspective: 1000px; /* Adds 3D depth */
 }
 
-.envelope {
-  width: 100%;
-  height: auto;
-  cursor: pointer;
-  position: absolute;
-  bottom: 0;
-  z-index: 2;
+.instruction {
+    margin-top: 40px;
+    color: #666;
+    font-size: 0.9rem;
+    opacity: 0.8;
 }
 
-.invitation {
-  width: 100%;
-  height: auto;
-  position: absolute;
-  bottom: 0;
-  transform: translateY(50%); /* Only half visible */
-  transition: transform 0.8s ease;
-  cursor: pointer;
-  z-index: 1;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+/* --- ENVELOPE WRAPPER --- */
+.envelope-wrapper {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    background: #34495e; /* The "Back" of the envelope */
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
 }
 
-.invitation.full {
-  transform: translateY(-100vh) scale(1.5);
-  z-index: 10;
+.envelope-wrapper:hover {
+    transform: translateY(-5px);
 }
 
-.click-cue {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 14px;
-  color: #333;
-  animation: bounce 1.2s infinite;
-  opacity: 0.8;
-  pointer-events: none;
+/* --- THE CARD --- */
+.card {
+    position: absolute;
+    top: 50%; /* Start centered vertically */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 270px;
+    height: 180px;
+    background: #fff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    
+    /* Layering: Above background, below flaps */
+    z-index: 2; 
+    
+    /* Animation settings */
+    transition: top 0.5s ease-in-out, 
+                width 0.5s ease, 
+                height 0.5s ease, 
+                transform 0.5s ease;
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translate(-50%, 0); }
-  50% { transform: translate(-50%, -10px); }
+.text {
+    margin-top: 30px;
+}
+
+.close-icon {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* --- ENVELOPE FLAPS (Triangles) --- */
+
+/* Side Flaps */
+.side {
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-top: 100px solid transparent;
+    border-bottom: 100px solid transparent;
+    z-index: 3; /* Above card */
+}
+
+.side.left {
+    left: 0;
+    border-left: 150px solid #2c3e50; /* Side color */
+}
+
+.side.right {
+    right: 0;
+    border-right: 150px solid #2c3e50; /* Side color */
+}
+
+/* Bottom Pocket */
+.bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-bottom: 115px solid #34495e; /* Bottom color */
+    z-index: 4; /* Above sides */
+}
+
+/* The Lid */
+.lid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-top: 115px solid #455a64; /* Lighter lid color */
+    transform-origin: top;
+    transition: transform 0.4s ease-in-out;
+    z-index: 5; /* Topmost layer */
+}
+
+/* --- ANIMATIONS (Controlled by JS) --- */
+
+/* 1. Open Lid */
+.envelope-wrapper.open .lid {
+    transform: rotateX(180deg);
+    z-index: 1; /* Moves behind the envelope body */
+}
+
+/* 2. Slide Card Up (Halfway) */
+.envelope-wrapper.open .card {
+    /* Move up. Note: We use top because transform is used for centering */
+    top: -40px; 
+    z-index: 2; /* Stays behind the bottom pocket */
+    transition-delay: 0.3s; /* Wait for lid */
+}
+
+/* 3. Full Screen Card */
+.card.full-screen {
+    position: fixed;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 90vw;
+    height: 80vh;
+    z-index: 9999; /* Highest priority */
+    box-shadow: 0 0 0 100vh rgba(0,0,0,0.5); /* Dim background */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card.full-screen .close-icon {
+    display: block;
+
+    
 }

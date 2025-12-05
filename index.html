@@ -1,18 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wedding Invitation</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Invitation</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="envelope-container">
-    <img src="close-envelope.png" alt="Envelope" class="envelope">
-    <img src="your-photo.jpg" alt="Invitation" class="invitation">
-    <div class="click-cue">⬆ Click to open</div>
-  </div>
 
-<script src="script.js"></script>
+   <div class="container">
+    <div class="envelope-wrapper" id="envelope">
+        <div class="envelope">
+            <div class="card" id="card">
+                <div class="text">
+                    <h2>You're Invited</h2>
+                    <p><strong>Dec 25th, 2025</strong></p>
+                    <p>Click to Expand</p>
+                </div>
+                <div class="close-icon" id="closeBtn">&times;</div>
+            </div>
+            
+            <div class="side left"></div>
+            <div class="side right"></div>
+            
+            <div class="bottom"></div>
+            
+            <div class="lid"></div>
+        </div>
+    </div>
+    <p class="instruction">Tap envelope to open</p>
+</div>
+
+    <script src="script.js"></script>
 </body>
 </html>

@@ -1,18 +1,19 @@
-// script.js
-const envelope = document.querySelector('.envelope');
-const invitation = document.querySelector('.invitation');
-const clickCue = document.querySelector('.click-cue');
-
-let envelopeOpened = false;
+const envelope = document.getElementById('envelope');
+const card = document.getElementById('card');
+const closeBtn = document.getElementById('closeBtn');
 
 envelope.addEventListener('click', () => {
-  invitation.style.transform = 'translateY(0)'; // Half comes out
-  envelopeOpened = true;
-  clickCue.textContent = "⬆ Click the invitation";
+    envelope.classList.add('open');
 });
 
-invitation.addEventListener('click', () => {
-  if (!envelopeOpened) return;
-  invitation.classList.add('full');
-  clickCue.style.display = 'none';
+card.addEventListener('click', (e) => {
+    if (envelope.classList.contains('open')) {
+        e.stopPropagation();
+        card.classList.add('full-screen');
+    }
+});
+
+closeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    card.classList.remove('full-screen');
 });
