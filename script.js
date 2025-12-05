@@ -1,26 +1,18 @@
-const topFlap = document.querySelector(".envelope-top");
-const paper = document.querySelector(".paper");
-const openSound = document.getElementById("openSound");
+// script.js
+const envelope = document.querySelector('.envelope');
+const invitation = document.querySelector('.invitation');
+const clickCue = document.querySelector('.click-cue');
 
-let opened = false;
+let envelopeOpened = false;
 
-topFlap.addEventListener("click", () => {
-  if (opened) return; // once opened, do nothing
-
-  // Animate flap open
-  topFlap.style.transform = "rotateX(180deg)";
-
-  // Reveal paper
-  paper.style.opacity = "1";
-  paper.style.transform = "translateX(-50%) translateY(0)";
-
-  // Play sound
-  openSound.play();
-
-  opened = true;
+envelope.addEventListener('click', () => {
+  invitation.style.transform = 'translateY(0)'; // Half comes out
+  envelopeOpened = true;
+  clickCue.textContent = "⬆ Click the invitation";
 });
 
-// Button click → go to landing page
-document.getElementById("openLanding").addEventListener("click", () => {
-  window.location.href = "landing.html";
+invitation.addEventListener('click', () => {
+  if (!envelopeOpened) return;
+  invitation.classList.add('full');
+  clickCue.style.display = 'none';
 });

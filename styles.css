@@ -1,112 +1,60 @@
-/* FONT + RESET */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@400;600&display=swap');
-
+/* style.css */
 body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #fdf7e4; /* Light wedding-themed background */
   margin: 0;
-  overflow: hidden;
-  font-family: "Playfair Display", serif;
+  font-family: sans-serif;
 }
 
-/* CASTLE THEMED BACKGROUND */
-.background {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: url("castle-bg.jpg.png") center/cover no-repeat;
-  filter: brightness(0.7);
-  z-index: -1;
-}
-
-/* ENVELOPE AREA */
 .envelope-container {
-  position: absolute;
-  width: 320px;
-  height: 240px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-/* ENVELOPE BODY */
-.envelope-bottom {
-  width: 100%;
-  height: 100%;
-  background: #fff8e6;
-  border: 2px solid #d9c38a;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
   position: relative;
-  z-index: 1;
-
-  background-image: url("gold-pattern.png");
-  background-size: 200px auto;
-  background-repeat: no-repeat;
-  background-position: center;
+  width: 300px;
+  height: 200px;
 }
 
-/* ENVELOPE FLAP */
-.envelope-top {
-  position: absolute;
+.envelope {
   width: 100%;
-  height: 65%;
-  background: #fff2d1;
-  border: 2px solid #d9c38a;
-  border-bottom: none;
-  border-radius: 12px 12px 0 0;
-  transform-origin: bottom;
-  transform: rotateX(0deg);
-  z-index: 2;
-
-  background-image: linear-gradient(
-      rgba(255, 240, 200, 0.3),
-      rgba(255, 240, 200, 0.7)
-    ),
-    url("gold-pattern.png");
-  background-size: 220px;
-}
-
-/* PAPER CARD */
-.paper {
-  position: absolute;
-  width: 95%;
-  height: 300px;
-  background: white;
-  border-radius: 14px;
-  top: 40%;
-  left: 50%;
-  transform: translateX(-50%) translateY(100%);
-  text-align: center;
-  padding: 20px;
-  opacity: 0;
-  transition: 0.6s ease;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-}
-
-.paper h2 {
-  font-family: "Cinzel", serif;
-  font-size: 22px;
-  margin-top: 0;
-  letter-spacing: 1px;
-}
-
-.paper img {
-  width: 100%;
-  border-radius: 10px;
-  margin-top: 10px;
-  margin-bottom: 15px;
-}
-
-.paper button {
-  padding: 12px 22px;
-  background: #c6a85b;
-  color: white;
-  font-size: 17px;
-  border: none;
-  border-radius: 6px;
+  height: auto;
   cursor: pointer;
-  font-family: "Cinzel", serif;
-  transition: 0.3s;
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
 }
-.paper button:hover {
-  background: #b2924f;
+
+.invitation {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  bottom: 0;
+  transform: translateY(50%); /* Only half visible */
+  transition: transform 0.8s ease;
+  cursor: pointer;
+  z-index: 1;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.invitation.full {
+  transform: translateY(-100vh) scale(1.5);
+  z-index: 10;
+}
+
+.click-cue {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  color: #333;
+  animation: bounce 1.2s infinite;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, -10px); }
 }
