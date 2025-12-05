@@ -7,8 +7,10 @@ envelope.addEventListener('click', () => {
 });
 
 card.addEventListener('click', (e) => {
+    // ...
     if (envelope.classList.contains('open')) {
-        e.stopPropagation();
+        // Add full-screen class to both card AND wrapper
+        envelope.classList.add('card-expanded'); 
         card.classList.add('full-screen');
     }
 });

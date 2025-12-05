@@ -152,6 +152,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    
 }
 
 .card.full-screen .close-icon {
@@ -159,3 +160,12 @@ body {
 
     
 }
+
+
+.card.full-screen ~ .side,
+.card.full-screen ~ .bottom,
+.card.full-screen ~ .lid {
+    opacity: 0; /* Makes them transparent */
+    transition: opacity 0.3s ease;
+}
+
