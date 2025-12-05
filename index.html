@@ -1,37 +1,30 @@
-<!doctype html>
-<html lang="tl">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Wedding Envelope — Teal with Pattern Liner</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Invitation Envelope</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="stage">
-    <div class="envelope" id="envelope">
-      <!-- liner (nakikita kapag nag-open ang flap) -->
-      <div class="liner"></div>
 
-      <!-- inner card / invitation peeking -->
-      <div class="invite">
-        <h1>Lyne &amp; [Partner]</h1>
-        <p>We invite you to celebrate our wedding</p>
-      </div>
+  <audio id="openSound" src="open.mp3" preload="auto"></audio>
 
-      <!-- flap (ito ang ida-drag) -->
-      <div class="flap" id="flap">
-        <div class="flap-top"></div>
-      </div>
+  <div class="background"></div>
 
-      <!-- body front panel to create the envelope pocket -->
-      <div class="body-front"></div>
-
-      <!-- decorative outer border -->
-      <div class="frame"></div>
+  <div class="envelope-container">
+    <div class="envelope">
+      <div class="envelope-top"></div>
+      <div class="envelope-bottom"></div>
     </div>
 
-    <p class="hint">Swipe / drag pataas sa flap para buksan</p>
-  </main>
+    <!-- Paper -->
+    <div class="paper">
+      <h2>You're Invited</h2>
+      <img src="your-photo.jpg" alt="Couple Photo">
+      <button id="openLanding">Open Invitation</button>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

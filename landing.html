@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Wedding</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #f6f1e7;
+      font-family: "Playfair Display", serif;
+    }
+
+    .castle-bg {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: url("castle-gate.jpg") center/cover no-repeat;
+      filter: brightness(0.85);
+    }
+
+    .gate {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      top: 0;
+      background: rgba(0,0,0,0.7);
+      transition: 1.8s ease;
+    }
+
+    #leftGate { left: 0; transform: translateX(0); }
+    #rightGate { right: 0; transform: translateX(0); }
+
+    .fade-text {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      text-align: center;
+      font-size: 40px;
+      color: white;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: 1.5s ease;
+    }
+  </style>
+</head>
+<body>
+
+<div class="castle-bg"></div>
+
+<div id="leftGate" class="gate"></div>
+<div id="rightGate" class="gate"></div>
+
+<div class="fade-text" id="welcomeText">Welcome to Our Wedding</div>
+
+<script>
+  setTimeout(() => {
+    document.getElementById("leftGate").style.transform = "translateX(-100%)";
+    document.getElementById("rightGate").style.transform = "translateX(100%)";
+  }, 300);
+
+  setTimeout(() => {
+    document.getElementById("welcomeText").style.opacity = "1";
+    document.getElementById("welcomeText").style.transform = "translateY(0)";
+  }, 2000);
+</script>
+
+</body>
+</html>
