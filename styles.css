@@ -35,7 +35,7 @@ body {
     transform: translateY(-5px);
 }
 
-/* --- THE CARD --- */
+/* --- THE CARD (Image Container) --- */
 .card {
     position: absolute;
     top: 50%; /* Start centered vertically */
@@ -44,8 +44,6 @@ body {
     width: 253px;
     height: 160px;
     background: #fff;
-    padding: 20px;
-    text-align: center;
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     
@@ -54,13 +52,33 @@ body {
     
     /* Animation settings */
     transition: top 0.5s ease-in-out, 
-                width 0.5s ease, 
-                height 0.5s ease, 
-                transform 0.5s ease;
+                 width 0.5s ease, 
+                 height 0.5s ease, 
+                 transform 0.5s ease;
+    
+    /* Ensures content fills the card */
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Itago ang anumang lumalabas sa card boundaries */
 }
 
-.text {
-    margin-top: 30px;
+/* New: Container for the image inside the card */
+.card-content {
+    width: 100%;
+    height: 100%;
+}
+
+/* New: Style for the actual invitation image */
+.invitation-image {
+    width: 100%;
+    height: 100%;
+    
+    /* Susi para hindi maputol: Pinapanatili ang aspect ratio at iniiwasan ang pagputol */
+    object-fit: contain; 
+    
+    border-radius: 4px;
+    display: block;
 }
 
 .close-icon {
@@ -70,6 +88,14 @@ body {
     right: 15px;
     font-size: 1.5rem;
     cursor: pointer;
+    color: #333; 
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    z-index: 10000; /* Dapat mas mataas pa sa full-screen card */
 }
 
 /* --- ENVELOPE FLAPS (Triangles) --- */
@@ -152,13 +178,18 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
+    padding: 20px; /* Dagdag padding para sa full-screen view */
+    box-sizing: border-box; /* Tiyakin na kasama ang padding sa 90vw/80vh */
+}
+
+.card.full-screen .card-content {
+    /* Ang card content ang kukuha ng space sa loob ng may padding na card */
+    width: 100%;
+    height: 100%;
 }
 
 .card.full-screen .close-icon {
     display: block;
-
-    
 }
 
 
@@ -168,4 +199,3 @@ body {
     opacity: 0; /* Makes them transparent */
     transition: opacity 0.3s ease;
 }
-
