@@ -1,5 +1,5 @@
 body {
-    background-image: url("./backgroundForEnvelope.png");
+    background-image: url("./bridgerton.png");
     background-size: cover;     /* makes the image cover the whole screen */
     background-position: center;
     background-repeat: no-repeat;
@@ -30,7 +30,7 @@ body {
     height: 200px;
     background: #939A88; /* The "Back" of the envelope */
     cursor: pointer;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 20px 50px rgba(0,0,0,1.2);
     transition: transform 0.3s ease;
 }
 
