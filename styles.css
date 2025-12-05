@@ -1,122 +1,161 @@
 :root{
-  --env-w: 320px;
-  --env-h: 220px;
-  --bg: #fbf8f3;
-  --env-color: #e6cfa8;
-  --env-dark: #d6b78a;
-  --accent: #b1c9a7;
+  --w: 360px;
+  --h: 260px;
+  --teal-1: #7dbfb0;   /* main envelope */
+  --teal-2: #60a893;   /* darker edge */
+  --liner-bg: #f7fbf9; /* light liner base */
+  --gold: #c9a569;
+  --shadow: rgba(15,20,25,0.14);
 }
 
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background: linear-gradient(180deg,#f6f7fb 0%, var(--bg) 100%);
+  font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,#fbfbfd,#f0f6f4 60%);
   display:flex;
   align-items:center;
   justify-content:center;
+  padding:28px;
 }
 
-.stage{
-  text-align:center;
-  perspective: 1200px; /* para sa 3D flap rotation */
-  padding:20px;
-}
+/* stage */
+.stage{ text-align:center; perspective:1200px; }
 
+/* envelope container */
 .envelope{
-  width:var(--env-w);
-  height:var(--env-h);
+  width:var(--w);
+  height:var(--h);
   position:relative;
-  transform-style: preserve-3d;
-  margin: 0 auto 16px;
-  user-select: none;
-  touch-action: none;
+  transform-style:preserve-3d;
+  margin: 6px auto;
+  user-select:none;
+  touch-action:none;
 }
 
-/* ilalim na katawan ng sobre (front) */
-.envelope .body{
+/* framed gold border like the reference */
+.frame{
+  position:absolute;
+  inset:0;
+  border-radius:14px;
+  border:4px solid var(--gold);
+  z-index:6;
+  pointer-events:none;
+}
+
+/* the pocket / front panel of envelope */
+.body-front{
   position:absolute;
   left:0; right:0; bottom:0;
-  height:70%;
-  background: linear-gradient(180deg, var(--env-color), var(--env-dark));
-  border-radius:6px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-  z-index:1;
+  height:64%;
+  background: linear-gradient(180deg, var(--teal-1), var(--teal-2));
+  border-radius:0 0 12px 12px;
+  box-shadow: 0 12px 26px var(--shadow);
+  z-index:2;
   overflow:hidden;
 }
 
-/* inner pocket kung saan nakasilip ang sulat */
-.envelope .inner{
+/* inner invite/card */
+.invite{
   position:absolute;
-  top:12%;
-  left:8%;
-  right:8%;
-  bottom:18%;
-  background: white;
-  border-radius:4px;
-  z-index:0;
-  transform: translateZ(-1px);
+  top:14%;
+  left:50%;
+  transform:translateX(-50%);
+  width:78%;
+  height:48%;
+  background: #fff;
+  border-radius:8px;
+  z-index:1;
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
   padding:14px;
-  box-shadow: inset 0 1px 0 rgba(0,0,0,0.03);
+  box-shadow: inset 0 1px 0 rgba(0,0,0,0.02);
+  font-family: "Playfair Display", serif;
 }
+.invite h1{margin:0;font-size:18px;color:#3e3a36}
+.invite p{margin:6px 0 0;color:#7b746f;font-size:13px}
 
-/* sulat */
-.letter{
-  text-align:center;
-  max-width:86%;
-}
-.letter h1{margin:0;font-size:18px;color:#333}
-.letter p{margin:6px 0 0;color:#666}
-
-/* flap (top) */
-.flap{
+/* LINER - decorative interior pattern (pure CSS) */
+.liner{
   position:absolute;
   top:0;
   left:0;
-  width:100%;
-  height:55%;
+  right:0;
+  height:58%;
+  z-index:0; /* sits behind flap and invite */
+  transform:translateZ(-1px);
+  /* liner shape matches flap triangle by using clip-path */
+  clip-path: polygon(50% 6%, 97% 95%, 3% 95%);
+  border-radius:12px;
+  background:
+    /* layered swirl-ish motifs with radial & conic gradients to simulate floral pattern */
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.95) 0 4%, transparent 12%),
+    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.95) 0 3%, transparent 10%),
+    radial-gradient(circle at 35% 70%, rgba(255,255,255,0.9) 0 4%, transparent 11%),
+    conic-gradient(from 30deg at 50% 40%, rgba(255,255,255,0.06) 0 40deg, transparent 70deg),
+    repeating-linear-gradient(120deg, rgba(255,255,255,0.02) 0 6px, transparent 6px 20px),
+    linear-gradient(180deg, var(--liner-bg), #f0f5f2);
+  background-size: auto;
+  background-blend-mode: overlay;
+  filter: saturate(0.9) contrast(1.02);
+  outline: 1px solid rgba(0,0,0,0.02);
+  box-shadow: inset 0 -2px 8px rgba(0,0,0,0.04);
+}
+
+/* top FLAP - triangular with rounded apex */
+.flap{
+  position:absolute;
+  top:0;
+  left:6%;
+  width:88%;
+  height:60%;
   transform-origin: top center;
   transform-style: preserve-3d;
-  z-index:3;
-  pointer-events:auto;
-  /* transition kapag hindi nag-drag */
+  z-index:4;
   transition: transform 300ms cubic-bezier(.2,.9,.25,1);
-  will-change: transform;
+  pointer-events:auto;
 }
 
-/* shape ng flap: triangular-ish */
-.flap-shape{
+/* the visible triangular flap with subtle inner border to mimic liner edge */
+.flap-top{
+  position:absolute;
   width:100%;
   height:100%;
-  background: linear-gradient(180deg, var(--env-dark), var(--env-color));
-  clip-path: polygon(0 100%, 50% 0, 100% 100%);
-  border-radius:4px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-  transform: translateZ(1px);
+  background: linear-gradient(180deg, #e8f5ef 0%, rgba(255,255,255,0.85) 20%, var(--teal-1) 70%);
+  /* triangular shape (rounded apex) */
+  clip-path: path('M 50 2 Q 58 20 87 96 L 13 96 Q 42 20 50 2 Z');
+  /* fallback for browsers that don't support clip-path path: use polygon */
+  /* polygon(50% 2%, 97% 96%, 3% 96%) */
+  border-radius:10px;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.12);
+  border-bottom:3px solid rgba(0,0,0,0.04);
+  position:relative;
+  overflow:hidden;
 }
 
-/* optional: maliit na border sa edge para depth */
-.flap::after{
+/* small darker rim inside flap to match image */
+.flap-top::before{
   content:"";
   position:absolute;
-  left:0;right:0;bottom:-3px;
-  height:6px;
-  background: linear-gradient(90deg, rgba(0,0,0,0.04), transparent);
-  z-index:-1;
+  inset:6% 6% 18% 6%;
+  background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(255,255,255,0.02));
+  border-radius:8px;
+  pointer-events:none;
+  mix-blend-mode: multiply;
 }
 
 /* hint text */
 .hint{
+  margin-top:14px;
+  color:#6b6b6b;
   font-size:13px;
-  color:#666;
-  margin:0;
 }
 
-/* responsive scaling for smaller screens */
+/* responsiveness */
 @media (max-width:420px){
-  :root{--env-w: 280px; --env-h: 200px}
+  :root { --w:300px; --h:220px; }
+  .frame{ border-width:3px }
 }

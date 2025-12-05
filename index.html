@@ -3,26 +3,31 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Interactive Envelope - Swipe to Open</title>
+  <title>Wedding Envelope — Teal with Pattern Liner</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main class="stage">
     <div class="envelope" id="envelope">
-      <div class="inner">
-        <div class="letter">
-          <h1>Lyne &amp; [Partner]</h1>
-          <p>Salamat sa pagdalo! ❤️</p>
-        </div>
+      <!-- liner (nakikita kapag nag-open ang flap) -->
+      <div class="liner"></div>
+
+      <!-- inner card / invitation peeking -->
+      <div class="invite">
+        <h1>Lyne &amp; [Partner]</h1>
+        <p>We invite you to celebrate our wedding</p>
       </div>
 
-      <!-- Flap na bubukas -->
+      <!-- flap (ito ang ida-drag) -->
       <div class="flap" id="flap">
-        <div class="flap-shape"></div>
+        <div class="flap-top"></div>
       </div>
 
-      <!-- front body ng envelope -->
-      <div class="body"></div>
+      <!-- body front panel to create the envelope pocket -->
+      <div class="body-front"></div>
+
+      <!-- decorative outer border -->
+      <div class="frame"></div>
     </div>
 
     <p class="hint">Swipe / drag pataas sa flap para buksan</p>

@@ -1,112 +1,91 @@
-// script.js
+// script.js - drag / swipe flap to open (mouse + touch)
 (() => {
   const flap = document.getElementById('flap');
   const envelope = document.getElementById('envelope');
 
-  let dragging = false;
+  let isDragging = false;
   let startY = 0;
-  let lastY = 0;
-  let currentDeg = 0; // current rotation (deg)
-  const MAX_OPEN_DEG = -160; // fully open (negative = rotating back)
-  const MIN_DEG = 0; // closed
-  const THRESHOLD_PERCENT = 0.35; // threshold to snap open on release
+  let currentDeg = 0;
+  const MIN_DEG = 0;        // closed
+  const MAX_OPEN_DEG = -155; // fully open (negative rotates back toward viewer)
+  const SENS = 0.65;        // sensitivity px -> deg
+  const SNAP_THRESHOLD = 0.38; // portion to snap open
 
-  // helper to set transform (and clamp)
-  function setFlapDeg(deg) {
-    const clamped = Math.max(MAX_OPEN_DEG, Math.min(MIN_DEG, deg));
+  function setDeg(d) {
+    // clamp
+    const clamped = Math.max(MAX_OPEN_DEG, Math.min(MIN_DEG, d));
     currentDeg = clamped;
-    flap.style.transform = `rotateX(${clamped}deg)`;
+    flap.style.transform = `rotateX(${clamped}deg) translateZ(1px)`;
   }
 
-  // when user starts dragging (mouse or touch)
-  function startDrag(clientY) {
-    dragging = true;
-    // disable transition during direct dragging
-    flap.style.transition = 'none';
+  function start(clientY) {
+    isDragging = true;
     startY = clientY;
-    lastY = clientY;
+    flap.style.transition = 'none';
   }
 
-  function moveDrag(clientY) {
-    if (!dragging) return;
-    // compute how much upward drag relative to start
-    // if user drags up, clientY decreases → positive delta
-    const delta = startY - clientY;
-    // map delta (pixels) to degrees:
-    // pick mapping: 1 px -> 0.6 deg (tunable)
-    const pxToDeg = 0.6;
-    const targetDeg = Math.min(MIN_DEG, 0 - delta * pxToDeg);
-    setFlapDeg(targetDeg);
-    lastY = clientY;
+  function move(clientY) {
+    if (!isDragging) return;
+    const delta = startY - clientY; // upward drag => positive
+    let deg = Math.min(MIN_DEG, -delta * SENS);
+    if (deg < MAX_OPEN_DEG) deg = MAX_OPEN_DEG;
+    if (deg > MIN_DEG) deg = MIN_DEG;
+    setDeg(deg);
   }
 
-  function endDrag() {
-    if (!dragging) return;
-    dragging = false;
-    // restore smooth transition
-    flap.style.transition = 'transform 300ms cubic-bezier(.2,.9,.25,1)';
-    // decide to snap fully open or closed depending on how far opened
-    const openRatio = Math.abs(currentDeg / Math.abs(MAX_OPEN_DEG)); // 0..1
-    if (openRatio > THRESHOLD_PERCENT) {
-      // snap open
-      animateTo(MAX_OPEN_DEG);
+  function end() {
+    if (!isDragging) return;
+    isDragging = false;
+    flap.style.transition = 'transform 360ms cubic-bezier(.2,.9,.25,1)';
+    const ratio = Math.abs(currentDeg / Math.abs(MAX_OPEN_DEG));
+    if (ratio > SNAP_THRESHOLD) {
+      // snap fully open
+      setDeg(MAX_OPEN_DEG);
     } else {
       // snap closed
-      animateTo(MIN_DEG);
+      setDeg(MIN_DEG);
     }
   }
 
-  function animateTo(targetDeg) {
-    setFlapDeg(targetDeg);
-  }
-
-  /* Mouse events */
+  // mouse
   flap.addEventListener('mousedown', (e) => {
     e.preventDefault();
-    startDrag(e.clientY);
+    start(e.clientY);
     window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('mouseup', onMouseUp);
   });
 
-  function onMouseMove(e) {
-    moveDrag(e.clientY);
-  }
+  function onMouseMove(e) { move(e.clientY); }
   function onMouseUp(e) {
-    endDrag();
+    end();
     window.removeEventListener('mousemove', onMouseMove);
     window.removeEventListener('mouseup', onMouseUp);
   }
 
-  /* Touch events */
+  // touch
   flap.addEventListener('touchstart', (e) => {
     if (e.touches.length > 1) return;
-    const t = e.touches[0];
-    startDrag(t.clientY);
+    start(e.touches[0].clientY);
   }, {passive:false});
 
   flap.addEventListener('touchmove', (e) => {
-    if (!dragging) return;
-    const t = e.touches[0];
-    moveDrag(t.clientY);
-    e.preventDefault(); // prevent scrolling while dragging flap
+    if (!isDragging) return;
+    move(e.touches[0].clientY);
+    e.preventDefault();
   }, {passive:false});
 
   flap.addEventListener('touchend', (e) => {
-    endDrag();
+    end();
   });
 
-  /* Optional: click toggle to open/close */
+  // click to toggle (only when not dragging)
   flap.addEventListener('click', (e) => {
-    // if not dragging, toggle
-    if (dragging) return;
-    flap.style.transition = 'transform 350ms cubic-bezier(.2,.9,.25,1)';
-    if (currentDeg === MIN_DEG) {
-      animateTo(MAX_OPEN_DEG);
-    } else {
-      animateTo(MIN_DEG);
-    }
+    if (isDragging) return;
+    flap.style.transition = 'transform 360ms cubic-bezier(.2,.9,.25,1)';
+    if (currentDeg === MIN_DEG) setDeg(MAX_OPEN_DEG);
+    else setDeg(MIN_DEG);
   });
 
-  // initialize closed
-  setFlapDeg(0);
+  // init closed
+  setDeg(0);
 })();
