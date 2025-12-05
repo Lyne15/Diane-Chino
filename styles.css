@@ -1,5 +1,8 @@
 body {
-    background: #e0e5ec;
+    background-image: url("./backgroundForEnvelope.png");
+    background-size: cover;     /* makes the image cover the whole screen */
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
