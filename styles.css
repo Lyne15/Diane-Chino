@@ -113,12 +113,12 @@ body {
 
 .side.left {
     left: 0;
-    border-left: 150px solid #2c3e50; /* Side color */
+    border-left: 150px solid #757C6A; /* Side color */
 }
 
 .side.right {
     right: 0;
-    border-right: 150px solid #2c3e50; /* Side color */
+    border-right: 150px solid #757C6A; /* Side color */
 }
 
 /* Bottom Pocket */
@@ -130,7 +130,7 @@ body {
     height: 0;
     border-left: 150px solid transparent;
     border-right: 150px solid transparent;
-    border-bottom: 115px solid #34495e; /* Bottom color */
+    border-bottom: 115px solid #848B79; /* Bottom color */
     z-index: 4; /* Above sides */
 }
 
@@ -143,7 +143,7 @@ body {
     height: 0;
     border-left: 150px solid transparent;
     border-right: 150px solid transparent;
-    border-top: 115px solid #455a64; /* Lighter lid color */
+    border-top: 115px solid #939A88; /* Lighter lid color */
     transform-origin: top;
     transition: transform 0.4s ease-in-out;
     z-index: 5; /* Topmost layer */
