@@ -6,22 +6,34 @@
     <title>Interactive Invitation</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-   <div class="envelope-wrapper" id="envelope">
-    <div class="envelope">
-        <div class="card" id="card">
-            <div class="card-content">
-                
-                <img src="./card.png" alt="Wedding/Event Invitation" class="invitation-image"> 
-            </div>
-            <span class="close-icon" id="closeBtn">&times;</span>
-        </div> 
-        <div class="side left"></div>
-        <div class="side right"></div>
-        <div class="bottom"></div>  <div class="lid"></div>
+    <!-- 🔥 VIDEO BACKGROUND -->
+    <div class="video-background">
+        <video autoplay loop muted playsinline>
+            <source src="./videoCastleGate.mp4" type="video/mp4">
+        </video>
     </div>
-</div>
+<!-- <audio  src="./palagiViolin.mp3" loop></audio> -->
+<audio id="bgMusic" loop>
+    <source src="./palagiViolin.mp3" type="audio/mpeg">
+</audio>
+    <!-- 🔥 YOUR ENVELOPE CONTENT -->
+    <div class="envelope-wrapper" id="envelope">
+        <div class="envelope">
+            <div class="card" id="card">
+                <div class="card-content">
+                    <img src="./card.png" alt="Wedding/Event Invitation" class="invitation-image"> 
+                </div>
+                <span class="close-icon" id="closeBtn">&times;</span>
+            </div> 
+            <div class="side left"></div>
+            <div class="side right"></div>
+            <div class="bottom"></div>  
+            <div class="lid"></div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

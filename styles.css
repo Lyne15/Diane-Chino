@@ -1,6 +1,6 @@
 body {
     background-image: url("./bridgerton.png");
-    background-size: cover;     /* makes the image cover the whole screen */
+    background-size: cover;  
     background-position: center;
     background-repeat: no-repeat;
     display: flex;
@@ -11,16 +11,26 @@ body {
     overflow: hidden;
     flex-direction: column;
 }
-
-.container {
-    perspective: 1000px; /* Adds 3D depth */
+    
+/* Fullscreen Video Background */
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
 }
 
-.instruction {
-    margin-top: 40px;
-    color: #666;
-    font-size: 0.9rem;
-    opacity: 0.8;
+.video-background video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.container {
+    perspective: 1000px;
 }
 
 /* --- ENVELOPE WRAPPER --- */
@@ -28,20 +38,22 @@ body {
     position: relative;
     width: 300px;
     height: 200px;
-    background: #939A88; /* The "Back" of the envelope */
+    background: #939A88;
     cursor: pointer;
     box-shadow: 0 20px 50px rgba(0,0,0,1.2);
-    transition: transform 0.3s ease;
-}
-
-.envelope-wrapper:hover {
-    transform: translateY(-5px);
+    
+    /* 🔥 UPDATED: Hidden initially */
+    opacity: 0;
+    visibility: hidden;
+    
+    /* Transition for fade-in */
+    transition: opacity 2s ease, transform 0.3s ease;
 }
 
 /* --- THE CARD (Image Container) --- */
 .card {
     position: absolute;
-    top: 50%; /* Start centered vertically */
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 253px;
@@ -49,37 +61,23 @@ body {
     background: #fff;
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    
-    /* Layering: Above background, below flaps */
     z-index: 2; 
-    
-    /* Animation settings */
-    transition: top 0.5s ease-in-out, 
-                 width 0.5s ease, 
-                 height 0.5s ease, 
-                 transform 0.5s ease;
-    
-    /* Ensures content fills the card */
+    transition: top 0.5s ease-in-out, width 0.5s ease, height 0.5s ease, transform 0.5s ease;
     display: flex; 
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Itago ang anumang lumalabas sa card boundaries */
+    overflow: hidden;
 }
 
-/* New: Container for the image inside the card */
 .card-content {
     width: 100%;
     height: 100%;
 }
 
-/* New: Style for the actual invitation image */
 .invitation-image {
     width: 100%;
     height: 100%;
-    
-    /* Susi para hindi maputol: Pinapanatili ang aspect ratio at iniiwasan ang pagputol */
     object-fit: contain; 
-    
     border-radius: 4px;
     display: block;
 }
@@ -98,12 +96,10 @@ body {
     height: 30px;
     line-height: 30px;
     text-align: center;
-    z-index: 10000; /* Dapat mas mataas pa sa full-screen card */
+    z-index: 10000;
 }
 
-/* --- ENVELOPE FLAPS (Triangles) --- */
-
-/* Side Flaps */
+/* --- ENVELOPE FLAPS --- */
 .side {
     position: absolute;
     top: 0;
@@ -111,20 +107,19 @@ body {
     height: 0;
     border-top: 100px solid transparent;
     border-bottom: 100px solid transparent;
-    z-index: 3; /* Above card */
+    z-index: 3;
 }
 
 .side.left {
     left: 0;
-    border-left: 150px solid #757C6A; /* Side color */
+    border-left: 150px solid #757C6A;
 }
 
 .side.right {
     right: 0;
-    border-right: 150px solid #757C6A; /* Side color */
+    border-right: 150px solid #757C6A;
 }
 
-/* Bottom Pocket */
 .bottom {
     position: absolute;
     bottom: 0;
@@ -133,11 +128,10 @@ body {
     height: 0;
     border-left: 150px solid transparent;
     border-right: 150px solid transparent;
-    border-bottom: 115px solid #848B79; /* Bottom color */
-    z-index: 4; /* Above sides */
+    border-bottom: 115px solid #848B79;
+    z-index: 4;
 }
 
-/* The Lid */
 .lid {
     position: absolute;
     top: 0;
@@ -146,26 +140,25 @@ body {
     height: 0;
     border-left: 150px solid transparent;
     border-right: 150px solid transparent;
-    border-top: 115px solid #939A88; /* Lighter lid color */
+    border-top: 115px solid #939A88;
     transform-origin: top;
     transition: transform 0.4s ease-in-out;
-    z-index: 5; /* Topmost layer */
+    z-index: 5;
 }
 
-/* --- ANIMATIONS (Controlled by JS) --- */
+/* --- ANIMATIONS --- */
 
 /* 1. Open Lid */
 .envelope-wrapper.open .lid {
     transform: rotateX(180deg);
-    z-index: 1; /* Moves behind the envelope body */
+    z-index: 1;
 }
 
-/* 2. Slide Card Up (Halfway) */
+/* 2. Slide Card Up */
 .envelope-wrapper.open .card {
-    /* Move up. Note: We use top because transform is used for centering */
     top: -40px; 
-    z-index: 2; /* Stays behind the bottom pocket */
-    transition-delay: 0.3s; /* Wait for lid */
+    z-index: 2;
+    transition-delay: 0.3s;
 }
 
 /* 3. Full Screen Card */
@@ -176,17 +169,16 @@ body {
     transform: translate(-50%, -50%) !important;
     width: 90vw;
     height: 80vh;
-    z-index: 9999; /* Highest priority */
-    box-shadow: 0 0 0 100vh rgba(0,0,0,0.5); /* Dim background */
+    z-index: 9999;
+    box-shadow: 0 0 0 100vh rgba(0,0,0,0.5);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 20px; /* Dagdag padding para sa full-screen view */
-    box-sizing: border-box; /* Tiyakin na kasama ang padding sa 90vw/80vh */
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .card.full-screen .card-content {
-    /* Ang card content ang kukuha ng space sa loob ng may padding na card */
     width: 100%;
     height: 100%;
 }
@@ -195,10 +187,45 @@ body {
     display: block;
 }
 
-
 .card.full-screen ~ .side,
 .card.full-screen ~ .bottom,
 .card.full-screen ~ .lid {
-    opacity: 0; /* Makes them transparent */
+    opacity: 0;
     transition: opacity 0.3s ease;
+}
+
+/* 🔥 NEW: Floating Animation Logic */
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+/* This class triggers the visibility and the float */
+.envelope-wrapper.appear {
+    opacity: 1;
+    visibility: visible;
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Pause floating when user hovers to make it easier to click */
+.envelope-wrapper.appear:hover {
+    animation-play-state: paused;
+}
+
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1; /* Behind all content */
+}
+
+.video-background video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
