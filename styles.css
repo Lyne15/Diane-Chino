@@ -1,6 +1,6 @@
 body {
     background-image: url("./bridgerton.png");
-    background-size: cover;  
+    background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
     display: flex;
@@ -8,10 +8,10 @@ body {
     justify-content: center;
     height: 100vh;
     font-family: 'Arial', sans-serif;
-    overflow: hidden;
+    overflow: hidden; /* Pinapanatiling nakatago ang scrollbar ng buong page */
     flex-direction: column;
 }
-    
+
 /* Fullscreen Video Background */
 .video-background {
     position: fixed;
@@ -29,10 +29,6 @@ body {
     object-fit: cover;
 }
 
-.container {
-    perspective: 1000px;
-}
-
 /* --- ENVELOPE WRAPPER --- */
 .envelope-wrapper {
     position: relative;
@@ -42,11 +38,9 @@ body {
     cursor: pointer;
     box-shadow: 0 20px 50px rgba(0,0,0,1.2);
     
-    /* 🔥 UPDATED: Hidden initially */
     opacity: 0;
     visibility: hidden;
     
-    /* Transition for fade-in */
     transition: opacity 2s ease, transform 0.3s ease;
 }
 
@@ -62,11 +56,11 @@ body {
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     z-index: 2; 
-    transition: top 0.5s ease-in-out, width 0.5s ease, height 0.5s ease, transform 0.5s ease;
+    transition: top 0.5s ease-in-out, width 0.5s ease, height 0.5s ease, transform 0.5s ease, background 0.5s ease;
     display: flex; 
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow: hidden; /* Itago ang details kapag nasa loob pa ng envelope */
 }
 
 .card-content {
@@ -74,13 +68,53 @@ body {
     height: 100%;
 }
 
-.invitation-image {
+.invitation-image.initial {
     width: 100%;
     height: 100%;
     object-fit: contain; 
     border-radius: 4px;
     display: block;
+    transition: opacity 0.3s ease;
 }
+
+/* Container para sa scrollable details */
+#fullDetailsContainer {
+    display: none; /* Hidden by default */
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Styling para sa content ng details file */
+.invitation-scrollable-content {
+    padding-top: 50px; 
+    padding-bottom: 20px;
+    color: #333;
+    line-height: 1.6;
+    font-size: 1rem;
+    font-family: 'Times New Roman', serif;
+}
+.invitation-scrollable-content h2, .invitation-scrollable-content h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #757C6A; 
+}
+.invitation-scrollable-content .detail-section {
+    margin-bottom: 25px;
+    border-top: 1px solid #ccc;
+    padding-top: 15px;
+}
+.invitation-scrollable-content p {
+    text-align: center;
+    margin: 5px 0;
+}
+.invitation-scrollable-content .rsvp-note {
+    font-weight: bold;
+    margin-top: 30px;
+    font-style: italic;
+}
+
 
 .close-icon {
     display: none;
@@ -167,20 +201,33 @@ body {
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
-    width: 90vw;
-    height: 80vh;
+    width: 95vw;
+    height: 95vh;
     z-index: 9999;
-    box-shadow: 0 0 0 100vh rgba(0,0,0,0.5);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 20px;
-    box-sizing: border-box;
+    box-shadow: 0 0 0 100vh rgba(0,0,0,0.7);
+    
+    /* 🔥 KEY CHANGE: Allow Vertical Scrolling */
+    overflow-y: auto; 
+    overflow-x: hidden;
+    
+    background: #fff; 
+    border-radius: 8px; 
+    
+    /* Reset alignment for scrollable content */
+    justify-content: flex-start;
+    align-items: flex-start; 
 }
 
-.card.full-screen .card-content {
+/* Hide initial image when full screen */
+.card.full-screen .invitation-image.initial {
+    display: none;
+}
+
+/* Show the content container when full screen */
+.card.full-screen #fullDetailsContainer {
+    display: block; 
     width: 100%;
-    height: 100%;
+    height: auto; 
 }
 
 .card.full-screen .close-icon {
@@ -194,38 +241,19 @@ body {
     transition: opacity 0.3s ease;
 }
 
-/* 🔥 NEW: Floating Animation Logic */
-
+/* Floating Animation Logic */
 @keyframes float {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-20px); }
     100% { transform: translateY(0px); }
 }
 
-/* This class triggers the visibility and the float */
 .envelope-wrapper.appear {
     opacity: 1;
     visibility: visible;
     animation: float 3s ease-in-out infinite;
 }
 
-/* Pause floating when user hovers to make it easier to click */
 .envelope-wrapper.appear:hover {
     animation-play-state: paused;
-}
-
-.video-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: -1; /* Behind all content */
-}
-
-.video-background video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 }
