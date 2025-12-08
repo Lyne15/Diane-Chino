@@ -100,18 +100,29 @@ body {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); 
-    z-index: 999; 
-    background: rgba(255, 255, 255, 0.95);
-    padding: 30px;
-    border-radius: 10px;
-    
-    /* Bridgerton Style Box */
-    border: 5px double #D4AF37; /* Gold Double Border */
-    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 175, 55, 0.5); 
+    transform: translate(-50%, -50%);
+    z-index: 999;
+
+    /* Elegant Frosted Glass */
+    background: rgba(255, 255, 255, 0.40);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    padding: 45px 40px;
+    border-radius: 20px;
+
+    /* Thin Gold Border for Wedding Look */
+    border: 1.5px solid rgba(212, 175, 55, 0.7);
+
+    /* Soft Glow */
+    box-shadow: 
+        0 0 45px rgba(0, 0, 0, 0.4),
+        0 0 25px rgba(212, 175, 55, 0.4);
+
     font-family: 'Cormorant Garamond', serif;
-    max-width: 350px;
-    
+    max-width: 380px;
+    text-align: center;
+
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -124,33 +135,62 @@ body {
     pointer-events: auto;
 }
 
-.name-input-container h2 { 
-    color: #757C6A; /* Sage Green Header */ 
-    margin-bottom: 20px; 
-    font-size: 2rem;
+/* Optional Header (kung gusto mo lagyan ng Greeting) */
+.name-input-container h2 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #D4AF37;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
 }
-#guestNameInput { 
-    padding: 10px; 
-    margin-bottom: 15px; 
-    width: 90%; 
-    border: 1px solid #757C6A; 
-    border-radius: 5px; 
-    font-size: 1rem; 
+
+/* ELEGANT INPUT */
+#guestNameInput {
+    width: 100%;
+    padding: 12px 5px;
+    font-size: 1.1rem;
     font-family: 'Playfair Display', serif;
+
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid #D4AF37;
+
+    text-align: center;
+    outline: none;
+    color: #333;
+
+    margin-bottom: 25px;
 }
-#submitNameButton { 
-    padding: 10px 20px; 
-    background-color: #757C6A; /* Sage Green Button */
-    color: #F8F7EE; 
-    border: 2px solid #D4AF37;
-    border-radius: 5px; 
-    cursor: pointer; 
-    font-size: 1rem; 
-    font-weight: bold;
-    transition: background-color 0.3s ease; 
+
+/* BUTTON – Premium Wedding Styling */
+#submitNameButton {
+    padding: 12px 30px;
+    background: #D4AF37;
+    color: white;
+    border: none;
+    border-radius: 30px;
+
+    font-size: 1rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: 0.3s ease;
 }
-#submitNameButton:hover { background-color: #5d6254; }
-.error-message { color: darkred; margin-top: 10px; font-weight: bold; min-height: 20px; }
+
+#submitNameButton:hover {
+    background: #bfa135;
+    transform: scale(1.03);
+}
+
+/* ERROR */
+.error-message {
+    margin-top: 15px;
+    min-height: 22px;
+    font-size: 0.9rem;
+    color: #8b0000;
+    font-weight: 600;
+}
 
 
 /* --- 3. ENVELOPE (Formal Wrapper - Water Bubble/Flip) --- */
