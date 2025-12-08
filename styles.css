@@ -4,10 +4,17 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    font-family: 'Arial', sans-serif;
+    /* Font: Formal, classic feel */
+    font-family: 'Playfair Display', serif; 
     overflow: hidden; 
     flex-direction: column;
 }
+
+/* --- COLOR PALETTE ---
+    Sage Green: #757C6A (Darker), #939A88 (Lighter)
+    Gold/Yellow: #D4AF37 (Gold Accent), #F8F7EE (Cream/Light Yellow)
+    Text/Accent: #4B5320 (Dark Olive/Sage)
+*/
 
 /* Fullscreen Video Background */
 .video-background {
@@ -19,21 +26,39 @@ body {
     overflow: hidden;
     z-index: -2;
     opacity: 0;
-    transition: opacity 1s ease;
+    transition: opacity 2s ease; /* Mas matagal na transition para mas cinematic */
 }
-
 .video-background.active { opacity: 1; }
 .video-background video { width: 100%; height: 100%; object-fit: cover; }
 
-/* --- 1. LANDING SCREEN --- */
-#landingScreen {
+/* --- GLOBAL FAIRY/GLITTER OVERLAY (Motion Effect) --- */
+/* Naglalagay ng subtle moving dots/glitter effect sa buong screen */
+.main-content.active::before {
+    content: '';
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: #000;
-    color: white;
+    /* Gold/White subtle dots */
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.8;
+    z-index: -1;
+    animation: glitterMotion 20s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes glitterMotion {
+    0% { background-position: 0 0; }
+    100% { background-position: 500px 500px; }
+}
+
+
+/* --- 1. LANDING SCREEN --- */
+#landingScreen {
+    background: #000; 
+    color: #F8F7EE; /* Light Yellow/Cream */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -41,22 +66,36 @@ body {
     z-index: 1000;
     transition: opacity 0.5s ease, visibility 0.5s ease;
 }
-
 #landingScreen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+#landingScreen h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    letter-spacing: 5px;
+    border-bottom: 2px solid #D4AF37; /* Gold accent */
+    padding-bottom: 10px;
+}
+
 #startButton {
     padding: 15px 30px;
-    background-color: #757C6A;
-    color: white;
-    border: none;
+    background-color: #939A88; /* Lighter Sage Green */
+    color: #F8F7EE; /* Light Yellow/Cream Text */
+    border: 2px solid #D4AF37; /* Gold Border */
     border-radius: 5px;
     font-size: 1.2rem;
     cursor: pointer;
     margin-top: 20px;
-    transition: background-color 0.3s ease;
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
 }
-#startButton:hover { background-color: #5d6254; }
+#startButton:hover { 
+    background-color: #757C6A; /* Darker Sage */
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.7); /* Gold Shadow */
+}
 
-/* --- 2. NAME INPUT STYLES --- */
+/* --- 2. NAME INPUT STYLES (Formal Box) --- */
 .name-input-container {
     position: fixed;
     top: 50%;
@@ -66,9 +105,12 @@ body {
     background: rgba(255, 255, 255, 0.95);
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    max-width: 300px;
+    
+    /* Bridgerton Style Box */
+    border: 5px double #D4AF37; /* Gold Double Border */
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 175, 55, 0.5); 
+    font-family: 'Cormorant Garamond', serif;
+    max-width: 350px;
     
     opacity: 0;
     visibility: hidden;
@@ -82,14 +124,36 @@ body {
     pointer-events: auto;
 }
 
-.name-input-container h2 { color: #757C6A; margin-bottom: 20px; font-size: 1.5rem; }
-#guestNameInput { padding: 10px; margin-bottom: 15px; width: 90%; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; }
-#submitNameButton { padding: 10px 20px; background-color: #757C6A; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; transition: background-color 0.3s ease; }
+.name-input-container h2 { 
+    color: #757C6A; /* Sage Green Header */ 
+    margin-bottom: 20px; 
+    font-size: 2rem;
+}
+#guestNameInput { 
+    padding: 10px; 
+    margin-bottom: 15px; 
+    width: 90%; 
+    border: 1px solid #757C6A; 
+    border-radius: 5px; 
+    font-size: 1rem; 
+    font-family: 'Playfair Display', serif;
+}
+#submitNameButton { 
+    padding: 10px 20px; 
+    background-color: #757C6A; /* Sage Green Button */
+    color: #F8F7EE; 
+    border: 2px solid #D4AF37;
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: 1rem; 
+    font-weight: bold;
+    transition: background-color 0.3s ease; 
+}
 #submitNameButton:hover { background-color: #5d6254; }
 .error-message { color: darkred; margin-top: 10px; font-weight: bold; min-height: 20px; }
 
 
-/* --- 3. ENVELOPE --- */
+/* --- 3. ENVELOPE (Formal Wrapper - Water Bubble/Flip) --- */
 #mainContent {
     opacity: 0;
     visibility: hidden;
@@ -107,9 +171,10 @@ body {
     position: relative;
     width: 300px;
     height: 200px;
-    background: #939A88;
+    background: #F8F7EE; /* Light Yellow/Cream Envelope Body */
     cursor: pointer;
-    box-shadow: 0 20px 50px rgba(0,0,0,1.2);
+    box-shadow: 0 20px 50px rgba(0,0,0,1.5);
+    border: 1px solid #757C6A;
     
     opacity: 0;
     visibility: hidden;
@@ -122,12 +187,10 @@ body {
     animation: float 3s ease-in-out infinite; 
 }
 
-/* Stop float when input is active */
 .envelope-wrapper.input-active {
     animation: none;
     cursor: default;
-    /* Remove glow if it was active */
-    box-shadow: 0 20px 50px rgba(0,0,0,1.2);
+    box-shadow: 0 20px 50px rgba(0,0,0,1.5);
 }
 
 /* GLOWING (GOLD/YELLOW) */
@@ -136,12 +199,12 @@ body {
 }
 
 @keyframes envelopeGlow {
-    0% { box-shadow: 0 20px 50px rgba(0,0,0,1.2); }
-    /* Gold/Yellow Glow */
-    100% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.9), 0 20px 50px rgba(0,0,0,1.2); } 
+    0% { box-shadow: 0 20px 50px rgba(0,0,0,1.5); }
+    /* Gold Glow */
+    100% { box-shadow: 0 0 60px rgba(255, 215, 0, 1), 0 20px 50px rgba(0,0,0,1.5); } 
 }
 
-/* --- CURSOR HINT ANIMATION (Arrow) --- */
+/* --- CURSOR HINT ANIMATION (Gold Arrow) --- */
 .cursor-hint {
     position: absolute;
     top: 50%;
@@ -152,8 +215,8 @@ body {
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.5s;
-    /* Arrow SVG */
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="gold" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2V8h2v8zM12 7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>') no-repeat center center;
+    /* Arrow SVG - Gold fill */
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23D4AF37" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2V8h2v8zM12 7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>') no-repeat center center;
     background-size: contain;
     z-index: 10;
     animation: bounce 1.2s infinite; 
@@ -169,17 +232,17 @@ body {
 }
 
 
-/* --- CARD AND FLAPS --- */
+/* --- CARD AND FLAPS (The Envelope Structure) --- */
 
 /* Flap definitions to ensure envelope structure is visible */
 .envelope .side { position: absolute; top: 0; width: 0; height: 0; border-top: 100px solid transparent; border-bottom: 100px solid transparent; z-index: 3; }
-.envelope .side.left { left: 0; border-left: 150px solid #757C6A; }
-.envelope .side.right { right: 0; border-right: 150px solid #757C6A; }
-.envelope .bottom { position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-bottom: 115px solid #848B79; z-index: 4; }
+.envelope .side.left { left: 0; border-left: 150px solid #939A88; } /* Lighter Sage */
+.envelope .side.right { right: 0; border-right: 150px solid #939A88; } /* Lighter Sage */
+.envelope .bottom { position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-bottom: 115px solid #757C6A; z-index: 4; } /* Darker Sage */
 .envelope .lid {
-    position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-top: 100px solid #757C6A; 
+    position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-top: 100px solid #939A88; 
     transform-origin: top;
-    transition: transform 0.4s ease-in-out;
+    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Dramatic Flip */
     z-index: 5;
 }
 
@@ -192,10 +255,13 @@ body {
     transform: translate(-50%, -50%);
     width: 253px;
     height: 160px;
-    background: #fff;
+    background: #FEFCF7; /* Creamy White Card */
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     z-index: 2; 
+    
+    /* Bridgerton Card Border */
+    border: 5px outset #D4AF37; /* Gold Outset border for texture */
     
     /* Initially hidden */
     opacity: 0;
@@ -228,15 +294,39 @@ body {
     top: 50% !important; left: 50% !important;
     transform: translate(-50%, -50%) !important;
     width: 95vw; height: 95vh; z-index: 9999;
-    box-shadow: 0 0 0 100vh rgba(0,0,0,0.7);
+    
+    /* Full Screen Bridgerton Box */
+    box-shadow: 0 0 0 100vh rgba(0,0,0,0.8), 0 0 30px rgba(212, 175, 55, 0.8); 
+    background: #FEFCF7; 
+    border: 10px double #D4AF37; /* Double Gold border on the main page */
+    
     overflow-y: auto; overflow-x: hidden;
-    background: #fff; border-radius: 8px; 
+    border-radius: 8px; 
     justify-content: flex-start; align-items: flex-start; 
 }
 .card.full-screen .invitation-image.initial { display: none; }
 #fullDetailsContainer { display: none; }
 .card.full-screen #fullDetailsContainer { display: block; width: 100%; height: auto; }
+
+/* Close Button (Gold) */
+.close-icon {
+    display: none; /* Initially hidden */
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 2.5rem;
+    color: #D4AF37; 
+    text-shadow: 0 0 5px #757C6A;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    z-index: 10000;
+}
 .card.full-screen .close-icon { display: block; }
+.close-icon:hover {
+    transform: scale(1.1) rotate(10deg);
+}
+
 .card.full-screen ~ .side, .card.full-screen ~ .bottom, .card.full-screen ~ .lid { opacity: 0; transition: opacity 0.3s ease; }
 
 /* Floating Animation */
@@ -247,44 +337,66 @@ body {
 }
 
 
+/* --- INVITATION CONTENT STYLES (for invitationDetails.html) --- */
 
-/* --- RSVP BUTTON STYLES --- */
-.rsvp-button {
-    display: inline-block;
-    padding: 15px 30px;
-    margin: 10px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.1rem;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    cursor: pointer;
+.invitation-scrollable-content {
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: 'Cormorant Garamond', serif;
+    color: #4B5320; /* Darker Sage/Olive Text */
+}
+
+.invitation-scrollable-content h2 {
+    font-size: 3.5rem;
+    color: #D4AF37; /* Gold */
     text-align: center;
-    color: white !important; /* Force white text */
-    border: none;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px #939A88;
+    border-bottom: 2px solid #757C6A;
+    padding-bottom: 15px;
 }
 
-.rsvp-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+.invitation-scrollable-content h3 {
+    font-size: 2rem;
+    color: #757C6A; /* Sage Green */
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-style: italic;
 }
 
-/* Color for YES/Confirm Button */
-.confirm-btn {
-    background-color: #4CAF50; /* Green */
-    box-shadow: 0 4px 0 #388E3C; 
-}
-.confirm-btn:active {
-    box-shadow: 0 0 0 #388E3C;
-    transform: translateY(2px);
+.invitation-scrollable-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
 }
 
-/* Color for NO/Decline Button */
-.decline-btn {
-    background-color: #f44336; /* Red */
-    box-shadow: 0 4px 0 #D32F2F; 
+/* Personalized Message Box */
+#personalizedGreeting {
+    background-color: #E5E7E4 !important; /* Lighter Sage/Cream Background */
+    border-top: 5px double #D4AF37 !important; /* Gold double line */
+    border-bottom: 5px double #D4AF37 !important;
+    color: #4B5320 !important;
+    font-size: 1.3rem !important;
+    padding: 30px !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
-.decline-btn:active {
-    box-shadow: 0 0 0 #D32F2F;
-    transform: translateY(2px);
+
+/* --- BRIDGERTON GLITTER EFFECT (Fairy Motion) --- */
+/* Ito ang CSS para sa mga lumilipad na "glitters" kapag nag-open ang card */
+.bridgerton-glitter {
+    position: fixed;
+    border-radius: 50%; 
+    z-index: 10000;
+    pointer-events: none;
+    background-color: #D4AF37; /* Default Gold */
 }
+
+/* --- RSVP Button Styles (Bridgerton Specific) --- */
+
+/* Note: Ang styles na ito ay nasa loob ng <style> tag sa invitationDetails.html para sa full control */
+/* Pero inilista ko dito ang CSS class names para sa reference: */
+
+/* .rsvp-container, .rsvp-btn */ 
+/* .bridgerton-confirm (Sage Green/Gold) */
+/* .bridgerton-decline (Cream/Sage) */

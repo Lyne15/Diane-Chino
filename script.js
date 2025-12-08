@@ -72,12 +72,9 @@ async function loadDataAndDetails() {
         detailsLoaded = true;
         
         // Target the content inside the invitationDetails.html 
-        // Assuming invitationDetails.html contains a scrollable container or is directly fillable
-        // We'll append the personalized message at the end of the detailsContainer content.
-        
         const messageDiv = document.createElement('div');
         messageDiv.id = 'personalizedGreeting';
-        // Apply necessary inline styles for visibility
+        // Apply necessary inline styles (overridden by CSS, but good practice)
         messageDiv.style.marginTop = '40px';
         messageDiv.style.marginBottom = '20px';
         messageDiv.style.padding = '20px';
@@ -101,7 +98,6 @@ function showPersonalizedMessage() {
     
     const messageElement = document.getElementById('personalizedGreeting');
     if (messageElement) {
-        // Use the verified name if available, otherwise use the raw input (if not empty), else default.
         const rawName = nameInput.value.trim();
         const actualName = personalizedGreeting.name || rawName || DEFAULT_MESSAGE.name;
         const messageToShow = personalizedGreeting.message || DEFAULT_MESSAGE.message;
@@ -110,6 +106,49 @@ function showPersonalizedMessage() {
         personalizedMessageShown = true;
     }
 }
+
+// --- Motion Effect Helper (Glitter/Confetti) ---
+function triggerBridgertonConfetti(element) {
+    const rect = element.getBoundingClientRect();
+    const count = 30; // Number of "glitters"
+    
+    for (let i = 0; i < count; i++) {
+        const glitter = document.createElement('div');
+        glitter.classList.add('bridgerton-glitter');
+        
+        // Random position near the center of the element
+        const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * rect.width * 0.3;
+        const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * rect.height * 0.3;
+        
+        glitter.style.left = `${x}px`;
+        glitter.style.top = `${y}px`;
+        glitter.style.backgroundColor = Math.random() > 0.5 ? '#D4AF37' : '#939A88'; // Gold or Sage Green
+        
+        // Random size and rotation
+        const size = Math.random() * 5 + 3;
+        glitter.style.width = `${size}px`;
+        glitter.style.height = `${size}px`;
+        
+        document.body.appendChild(glitter);
+
+        // Random trajectory
+        const finalX = x + (Math.random() - 0.5) * 400;
+        const finalY = y - 50 + (Math.random() - 0.5) * 200; // Mostly upward/outward
+        
+        glitter.animate([
+            { transform: `scale(${Math.random() * 0.8 + 0.2}) rotate(${Math.random() * 360}deg)`, opacity: 1, offset: 0 },
+            { transform: `translate(${finalX - x}px, ${finalY - y}px) rotate(${Math.random() * 720}deg)`, opacity: 0, offset: 1 }
+        ], {
+            duration: 1500 + Math.random() * 1000,
+            easing: 'ease-out',
+            fill: 'forwards'
+        });
+
+        // Clean up
+        setTimeout(() => glitter.remove(), 2500);
+    }
+}
+
 
 // --- Step 1: Landing Screen Click Handler ---
 
@@ -186,14 +225,18 @@ submitButton.addEventListener('click', () => {
         // 1. Open Envelope Animation (Lid rotates, card slides up)
         envelope.classList.add('open');
         
-        // 2. Expand Card to Full Screen (Wait for the envelope to open first)
+        // 2. Trigger the magical effect!
+        // (Ginagawa ito sa envelope wrapper para sa mas malawak na spread)
+        triggerBridgertonConfetti(envelope); 
+        
+        // 3. Expand Card to Full Screen (Wait for the envelope to open first)
         setTimeout(() => {
             card.classList.add('full-screen');
             document.body.style.overflow = 'hidden'; 
             
-            // 3. Show Personalized Message
+            // 4. Show Personalized Message
             showPersonalizedMessage();
-        }, 1000); // <-- Tiniyak ang 1000ms delay para sa smooth full-screen transition
+        }, 1000); 
 
     } else {
         nameError.textContent = "Name not found. Please check your spelling or contact the host.";
