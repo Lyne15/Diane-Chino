@@ -1,93 +1,256 @@
-<div class="invitation-scrollable-content">
-    <h2>The Grand Announcement of Union</h2>
-    
-    <p style="text-align: center; font-style: italic; color: #4B5320; font-size: 1.4rem;">
-        It is with the greatest pleasure that we request the honour of your presence<br>
-        at the wedding of
-    </p>
-    
-    <h1 style="font-family: 'Playfair Display', serif; font-size: 4rem; text-align: center; color: #D4AF37; text-shadow: 1px 1px 2px #939A88; margin: 20px 0;">
-        DIANE & CHINO
-    </h1>
-    
-    <div style="text-align: center; border-top: 1px solid #939A88; padding-top: 10px;">
-        <h3 style="margin-top: 15px;">The Ceremony & The Grand Ball</h3>
-        <p style="font-weight: 600;">The Grand Ballroom at the Willow Creek Estate</p>
-        <p style="font-style: italic;">Saturday, the Twelfth of October, Two Thousand and Twenty-Six</p>
-        <p>Ceremony begins promptly at Four in the Afternoon (4:00 PM)</p>
-    </div>
-    <br>
-    
-    <div style="text-align: center; border-top: 1px solid #939A88; padding-top: 10px;">
-        <h3>Dress Code: Formal Attire</h3>
-        <p>Formal Black Tie Optional (Gowns, Dark Suits, and Immaculate Presentation are Encouraged)</p>
-        <p style="font-size: 1rem; color: #757C6A;">Let the colours of Sage Green, Cream, and Gold inspire your ensemble.</p>
-    </div>
-    
-    <br>
-
-    <p style="font-size: 1.1rem; text-align: justify; margin-top: 20px;">
-        <span style="color: #D4AF37; font-size: 2rem; float: left; line-height: 1; padding-right: 5px; font-weight: bold;">T</span>o ensure the grandeur of the occasion, we kindly request all guests to RSVP at their earliest convenience. This union, long-awaited, shall be a night of joyous revelry, featuring a full orchestra, an elaborate feast, and dancing until the early hours. We are beyond delighted to share this momentous chapter with our most beloved family and cherished friends, ensuring a truly unforgettable entrance into married life.
-    </p>
-    
-
-<div class="rsvp-container">
-    <a href="https://m.me/XDaegusvenus?ref=I will be attending Diane & Chino's wedding 💕" target="_blank" class="rsvp-btn bridgerton-confirm">
-        I Will Attend
-    </a>
-
-    <a href="https://m.me/XDaegusvenus?ref=I cannot attend Diane & Chino's wedding 😢" target="_blank" class="rsvp-btn bridgerton-decline">
-        I Cannot Attend
-    </a>
-</div>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Invitation Scroll</title>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
 <style>
-    /* Binago ang style ng RSVP buttons para maging consistent sa theme */
-    .rsvp-container {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        margin-top: 40px;
-        margin-bottom: 20px;
+    body {
+        margin:0;
+        font-family:'Georgia', serif;
+        background-color:#f4f4f9;
+        overflow-x:hidden;
+    }
+    header, footer {
+        height: 15vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+    }
+    header { background:#f0e6f6; }
+    footer { background:#333; color:white; }
+    h1, h2 { margin:0; }
+
+    /* Scroll Sections */
+    section {
+        position: relative;
+        width:100%;
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+        overflow:hidden;
+        padding:20px;
+        box-sizing:border-box;
     }
 
-    .rsvp-btn {
-        display: inline-block;
-        padding: 16px 30px;
-        border-radius: 5px;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 1.2rem;
-        font-family: 'Playfair Display', serif;
-        transition: 0.3s ease;
-        text-transform: uppercase;
-        letter-spacing: 1px;
+    /* Video Section */
+    #video-section {
+        color:white;
+    }
+    #video-section video {
+        width:80%;
+        max-width:600px;
+        border-radius:15px;
+        box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    }
+    .parallax-bg {
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:150%;
+        background:url('./wedding-bg.jpg') center/cover no-repeat;
+        z-index:-1;
     }
 
-    .bridgerton-confirm {
-        background-color: #757C6A; /* Sage Green */
-        color: #FEFCF7; /* Cream/Light Text */
-        border: 2px solid #D4AF37; /* Gold Border */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    /* Ceremony Section */
+    #ceremony-section {
+        background:#e0f7fa;
+    }
+    #ceremony-section .ceremony-content {
+        max-width:600px;
+        background:rgba(255,255,255,0.9);
+        padding:20px;
+        border-radius:15px;
+        box-shadow:0 8px 20px rgba(0,0,0,0.2);
+        opacity:0;
+        transform:translateY(50px);
+    }
+    #ceremony-section iframe {
+        margin-top:15px;
+        width:100%;
+        height:250px;
+        border:none;
+        border-radius:10px;
     }
 
-    .bridgerton-confirm:hover {
-        background-color: #5d6254;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(212, 175, 55, 0.5); /* Gold hover shadow */
+    /* Bistro Image Section */
+    #bistro-section {
+        background:#fff0f5;
+    }
+    #bistro-section img {
+        width:70%;
+        max-width:500px;
+        border-radius:15px;
+        box-shadow:0 10px 25px rgba(0,0,0,0.3);
     }
 
-    .bridgerton-decline {
-        background-color: #FEFCF7; /* Cream/Light Yellow Background */
-        color: #757C6A; /* Sage Green Text */
-        border: 2px solid #757C6A; /* Sage Green Border */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Dress Code Section */
+    #dresscode-section {
+        background:#f7f7f7;
+        flex-direction:column;
+        gap:15px;
     }
-
-    .bridgerton-decline:hover {
-        background-color: #E5E7E4;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    #dresscode-section .text-content {
+        max-width:700px;
+        background:rgba(255,255,255,0.95);
+        padding:20px;
+        border-radius:15px;
+        box-shadow:0 8px 20px rgba(0,0,0,0.2);
+        opacity:0;
+        transform:translateY(50px);
     }
+    .image-lineup {
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        width:95%;
+        max-width:700px;
+        margin:20px auto 0 auto;
+        flex-wrap:wrap;
+        gap:10px;
+    }
+    .image-item {
+        width:15vw;
+        max-width:100px;
+        border-radius:5px;
+        box-shadow:0 3px 8px rgba(0,0,0,0.1);
+        border:3px solid #FFC0CB;
+        opacity:0;
+        flex-shrink:0;
+    }
+    #img2, #img5 { border-color:#ADD8E6; }
+    #img3, #img6 { border-color:#f7e9a8; }
 </style>
-</div>
+</head>
+<body>
+
+<header>
+    <h1>Chino & Diane Wedding</h1>
+</header>
+
+<!-- Video Section with Parallax -->
+<section id="video-section">
+    <div class="parallax-bg"></div>
+    <video src="./details.mp4" autoplay muted loop></video>
+</section>
+
+<!-- Ceremony Section with Map -->
+<section id="ceremony-section">
+    <div class="ceremony-content">
+        <h2>💍 Ceremony & Reception</h2>
+        <p><strong>Bistro Alejandro</strong></p>
+        <p>We look forward to celebrating with you!</p>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.2294092386355!2d121.056449!3d14.654237!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b9b2c8d5bc25%3A0x123456789abcdef!2sBistro%20Alejandro!5e0!3m2!1sen!2sph!4v1699999999999!5m2!1sen!2sph" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+</section>
+
+<!-- Bistro Image Section -->
+<section id="bistro-section">
+    <img src="./eventPlace.png" alt="Bistro Alejandro">
+</section>
+
+<!-- Dress Code Section -->
+<section id="dresscode-section">
+    <div class="text-content">
+        <h2>👗 Dearest Reader</h2>
+        <p>In the spirit of Bridgerton, please arrive in your finest Regency-inspired attire.</p>
+        <p><strong>Dress Code</strong></p>
+        <p>Ladies: Flowing gowns, empire waist, gloves, pearls, and dainty accessories.</p>
+        <p>Gentlemen: Coats, vest, crisp collar, and a touch of charm.</p>
+    </div>
+    <div class="image-lineup">
+        <img id="img1" class="image-item" src="./color1.png" alt="Color 1">
+        <img id="img2" class="image-item" src="./color2.png" alt="Color 2">
+        <img id="img3" class="image-item" src="./color3.png" alt="Color 3">
+        <img id="img4" class="image-item" src="./color4.png" alt="Color 4">
+        <img id="img5" class="image-item" src="./color5.png" alt="Color 5">
+        <img id="img6" class="image-item" src="./color6.png" alt="Color 6">
+    </div>
+</section>
+
+<footer>
+    <p>See you at the wedding!</p>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Parallax Background
+gsap.to(".parallax-bg", {
+    y:"-30%",
+    ease:"none",
+    scrollTrigger:{
+        trigger:"#video-section",
+        start:"top bottom",
+        end:"bottom top",
+        scrub:true
+    }
+});
+
+// Video Fade
+gsap.fromTo("#video-section video",
+    {opacity:0, scale:0.95},
+    {opacity:1, scale:1, scrollTrigger:{
+        trigger:"#video-section",
+        start:"top 80%",
+        end:"top 30%",
+        scrub:true
+    }}
+);
+
+// Ceremony fade & translate
+gsap.fromTo("#ceremony-section .ceremony-content",
+    {opacity:0, y:50},
+    {opacity:1, y:0, scrollTrigger:{
+        trigger:"#ceremony-section",
+        start:"top 80%",
+        end:"top 30%",
+        scrub:true
+    }}
+);
+
+// Bistro Image Zoom
+gsap.fromTo("#bistro-section img",
+    {opacity:0, scale:0.95},
+    {opacity:1, scale:1.1, scrollTrigger:{
+        trigger:"#bistro-section img",
+        start:"top 80%",
+        end:"top 30%",
+        scrub:true
+    }}
+);
+
+// Dress Code text
+gsap.fromTo("#dresscode-section .text-content",
+    {opacity:0, y:50},
+    {opacity:1, y:0, scrollTrigger:{
+        trigger:"#dresscode-section",
+        start:"top 80%",
+        end:"top 30%",
+        scrub:true
+    }}
+);
+
+// Palette images staggered stacked cards effect
+gsap.utils.toArray("#dresscode-section .image-item").forEach((img, i) => {
+    let xOffset = i < 3 ? -150 : 150;
+    gsap.fromTo(img,
+        {opacity:0, x:xOffset, y:i*10, zIndex:100-i},
+        {opacity:1, x:0, y:0, scrollTrigger:{
+            trigger:img,
+            start:"top 80%",
+            end:"top 50%",
+            scrub:true
+        }}
+    );
+});
+</script>
+
+</body>
+</html>
