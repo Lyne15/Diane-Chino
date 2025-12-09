@@ -161,7 +161,7 @@ startButton.addEventListener('click', () => {
     bgVideo.muted = true;
     bgVideo.play();
     bgMusic.play();
-    
+    startButton.style.display = "none";
     // Envelope appears after 6 seconds
     setTimeout(showEnvelope, 6000); 
 });
@@ -250,3 +250,4 @@ closeBtn.addEventListener('click', (e) => {
     card.classList.remove('full-screen');
     document.body.style.overflow = 'hidden'; 
 });
+

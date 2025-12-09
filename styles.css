@@ -4,16 +4,16 @@ body {
     justify-content: center;
     flex-direction: column;
     font-family: 'Playfair Display', serif;
-    overflow: hidden;
+    overflow-x: hidden; /* important */
+    overflow-y: auto;   /* IMPORTANT: allow page to grow */
 
     /* Background settings */
-    background: url('./diangandchinoimage.png') no-repeat center center;
-    background-size: cover; /* Makes the image cover the entire viewport */
-    height: 100vh; /* Full viewport height */
+    background: url('./diangandchinoimage.png') no-repeat center center / cover;
+    min-height: 100vh; /* instead of fixed 100vh */
 
-    /* Optional: fallback color */
     background-color: #000;
 }
+
 
 
 /* --- COLOR PALETTE ---
@@ -64,97 +64,191 @@ body {
 /* --- 1. LANDING SCREEN --- */
 
 
+#landingScreen {
+    position: absolute;
+    top: 71%;;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
 
 
 /* ---------- Start Button (royal seal) ---------- */
+/* ---------- Start Button (Elegant Bridgerton Style) ---------- */
 #startButton {
-    padding: 14px 30px;
-    background: linear-gradient(145deg, #C4B998, #A9986D);
-    color: #fff8e7;
-    border: 3px solid #D4AF37;
-    border-radius: 50px;
-    font-size: 1rem;
+    padding: 14px 40px;
+    background: linear-gradient(
+        135deg,
+        #d8c8a0 0%,
+        #cbb78a 40%,
+        #b49e6b 100%
+    );
+    color: #031d0b;
+    border: 2.5px solid #D4AF37;
+    border-radius: 40px;
+
+    font-size: 1.1rem;
     font-family: 'Playfair Display', serif;
-    font-weight: 700;
-    letter-spacing: 1.5px;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+
     cursor: pointer;
     margin-top: 25px;
-    box-shadow: 0 4px 12px rgba(212,175,55,0.5);
+
+    /* Elegant glow */
+    box-shadow:
+        0 4px 12px rgba(212,175,55,0.45),
+        inset 0 0 12px rgba(255,255,255,0.25);
+
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+
+    text-transform: uppercase;
 }
 
-/* Gold shimmer on hover */
+/* Soft shimmering light sweeping across */
 #startButton::before {
-    content: '';
+    content: "";
     position: absolute;
-    top: -50%;
-    left: -50%;
+    top: 0;
+    left: -100%;
     width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
-    transform: rotate(45deg) translateX(-100%);
-    transition: transform 0.5s ease;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255,255,255,0.45) 50%,
+        transparent 100%
+    );
+    transform: skewX(-20deg);
+    transition: all 0.6s ease;
 }
+
 #startButton:hover::before {
-    transform: rotate(45deg) translateX(100%);
+    left: 100%;
 }
 
 #startButton:hover {
-    background: linear-gradient(145deg, #A9986D, #C4B998);
-    box-shadow: 0 0 20px rgba(212,175,55,0.8);
+    background: linear-gradient(
+        135deg,
+        #cbb78a 0%,
+        #d8c8a0 50%,
+        #e9ddc2 100%
+    );
+    box-shadow: 
+        0 0 20px rgba(212,175,55,0.8),
+        inset 0 0 15px rgba(255,255,255,0.35);
     transform: translateY(-2px);
 }
 
-/* ---------- Corner Flourishes (SVG placeholders) ---------- */
-#landingScreen::before,
-#landingScreen::after {
-    content: '';
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-size: contain;
-    pointer-events: none;
-}
-#landingScreen::before {
-    top: 10px;
-    left: 10px;
-    background: url('flourish-top-left.svg') no-repeat center center;
-}
-#landingScreen::after {
-    bottom: 10px;
-    right: 10px;
-    background: url('flourish-bottom-right.svg') no-repeat center center;
-}
-
-/* ---------- Vignette / scroll effect ---------- */
-#landingScreen::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle, rgba(0,0,0,0.05) 70%, transparent 100%);
-    pointer-events: none;
-    border-radius: 15px;
-}
-
-/* ---------- Responsive text ---------- */
-@media (max-width: 480px) {
-    #landingScreen h1 {
-        font-size: 1.8rem;
-        letter-spacing: 2px;
-    }
-    #landingScreen h2 {
-        font-size: 0.9rem;
-    }
+/* Tighter look for mobile */
+@media(max-width:480px) {
     #startButton {
-        padding: 12px 25px;
-        font-size: 0.95rem;
+        padding: 12px 32px;
+        font-size: 1rem;
+        letter-spacing: 1.3px;
     }
 }
+
 
 /* --- 2. NAME INPUT STYLES (Formal Box) --- */
+/* --- 1. START BUTTON STYLING --- */
+#startButton {
+    padding: 14px 40px;
+    background: linear-gradient(
+        135deg,
+        #d8c8a0 0%,
+        #cbb78a 40%,
+        #b49e6b 100%
+    );
+    color: #031d0b;
+    border: 2.5px solid #D4AF37;
+    border-radius: 40px;
+
+    font-size: 1.1rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+
+    cursor: pointer;
+    margin-top: 25px;
+
+    /* Elegant glow */
+    box-shadow:
+        0 4px 12px rgba(212,175,55,0.45),
+        inset 0 0 12px rgba(255,255,255,0.25);
+
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    text-transform: uppercase;
+}
+
+/* Soft shimmering light sweeping across */
+#startButton::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255,255,255,0.45) 50%,
+        transparent 100%
+    );
+    transform: skewX(-20deg);
+    transition: all 0.6s ease;
+}
+
+#startButton:hover::before {
+    left: 100%;
+}
+
+#startButton:hover {
+    background: linear-gradient(
+        135deg,
+        #cbb78a 0%,
+        #d8c8a0 50%,
+        #e9ddc2 100%
+    );
+    box-shadow: 
+        0 0 20px rgba(212,175,55,0.8),
+        inset 0 0 15px rgba(255,255,255,0.35);
+    transform: translateY(-2px);
+}
+
+/* Tighter look for mobile */
+@media(max-width:480px) {
+    #startButton {
+        padding: 12px 32px;
+        font-size: 1rem;
+        letter-spacing: 1.3px;
+    }
+}
+
+
+/* --- 2. NAME INPUT STYLES (Formal Box) --- */
+/* --- Root Variables para sa Kulay (Para sa Consistency) --- */
+:root {
+    --color-text: #4a4a4a; /* Madilim na Gray */
+    --color-gold-light: #f3e5c9; /* Light Gold */
+    --color-gold-dark: #e0cca4; /* Darker Gold for gradient */
+    --color-background-blur: rgba(255, 255, 255, 0.35); /* Puti na may opacity para sa glass effect */
+    --color-input-bg: rgba(255, 255, 255, 0.6); /* Mas puti para sa input background */
+    --color-button-shadow: rgba(199, 172, 108, 0.6); 
+}
+
+
+/* --- Container: Glassmorphism Effect with Visibility Toggle --- */
 .name-input-container {
     position: fixed;
     top: 50%;
@@ -162,94 +256,126 @@ body {
     transform: translate(-50%, -50%);
     z-index: 999;
 
-    /* Elegant Frosted Glass */
-    background: rgba(255, 255, 255, 0.40);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
 
-    padding: 45px 40px;
-    border-radius: 20px;
+    width: 90%;
+    max-width: 320px;
+    padding: 28px 25px;
+    border-radius: 40px;
 
-    /* Thin Gold Border for Wedding Look */
-    border: 1.5px solid rgba(212, 175, 55, 0.7);
+    /* Glass Effect */
+    background: var(--color-background-blur);
+    backdrop-filter: blur(20px); 
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
 
-    /* Soft Glow */
-    box-shadow: 
-        0 0 45px rgba(0, 0, 0, 0.4),
-        0 0 25px rgba(212, 175, 55, 0.4);
-
-    font-family: 'Cormorant Garamond', serif;
-    max-width: 380px;
     text-align: center;
+    font-family: 'Poppins', sans-serif;
 
+    /* --- VISIBILITY TOGGLE --- */
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
+/* --- Active State --- */
 .name-input-container.active {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
 }
 
-/* Optional Header (kung gusto mo lagyan ng Greeting) */
-.name-input-container h2 {
-    font-size: 2.2rem;
-    font-weight: 600;
-    color: #D4AF37;
-    margin-bottom: 20px;
-    letter-spacing: 1px;
+/* --- Typography Styling --- */
+.greeting-title {
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 2.8rem; 
+    font-style: italic;
+    font-weight: 500;
+    color: var(--color-text);
+    margin: -10px 0 5px 0; 
+    line-height: 1.2;
 }
 
-/* ELEGANT INPUT */
-#guestNameInput {
+.greeting-text {
+    font-size: 0.95rem;
+    color: var(--color-text);
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+/* --- Input Row (Text Field at Button) --- */
+.input-row {
+    display: flex;
     width: 100%;
-    padding: 12px 5px;
-    font-size: 1.1rem;
-    font-family: 'Playfair Display', serif;
-
-    background: transparent;
-    border: none;
-    border-bottom: 1.5px solid #D4AF37;
-
-    text-align: center;
-    outline: none;
-    color: #333;
-
-    margin-bottom: 25px;
+    height: 44px; 
+    gap: 0;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05); 
 }
 
-/* BUTTON – Premium Wedding Styling */
-#submitNameButton {
-    padding: 12px 30px;
-    background: #D4AF37;
-    color: white;
-    border: none;
-    border-radius: 30px;
-
+#guestNameInput {
+    flex: 1;
+    padding: 0 16px;
     font-size: 1rem;
-    letter-spacing: 1px;
-    font-weight: 600;
-    cursor: pointer;
+    border-radius: 22px 0 0 22px;
+    border: none;
+    background: var(--color-input-bg);
+    color: var(--color-text);
+    outline: none;
+    height: 100%;
+    text-align: left;
+    transition: all 0.3s ease;
+}
 
-    transition: 0.3s ease;
+#guestNameInput:focus {
+    background: rgba(255,255,255,0.8);
+}
+
+/* --- Button Styling (Gold/Metallic Effect) --- */
+#submitNameButton {
+    padding: 0 18px; 
+    height: 100%;
+    border-radius: 0 22px 22px 0;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: capitalize;
+
+    /* Gold Gradient */
+    background: linear-gradient(to bottom, var(--color-gold-light) 0%, var(--color-gold-dark) 100%);
+    color: var(--color-text); 
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.2s ease;
+    flex-shrink: 0;
+
+    /* Gold Border/Shine Effect */
+    box-shadow: 
+        0 2px 4px var(--color-button-shadow),
+        inset 0 1px 1px rgba(255,255,255,0.7);
 }
 
 #submitNameButton:hover {
-    background: #bfa135;
-    transform: scale(1.03);
+    background: linear-gradient(to top, var(--color-gold-light) 0%, var(--color-gold-dark) 100%);
+    box-shadow: 
+        0 1px 2px var(--color-button-shadow),
+        inset 0 1px 1px rgba(255,255,255,0.8);
 }
 
-/* ERROR */
 .error-message {
-    margin-top: 15px;
-    min-height: 22px;
-    font-size: 0.9rem;
+    margin-top: 2px;
+    min-height: 16px;
+    font-size: 0.75rem;
     color: #8b0000;
     font-weight: 600;
 }
+
 
 
 /* --- 3. ENVELOPE (Formal Wrapper - Water Bubble/Flip) --- */

@@ -6,6 +6,7 @@
     <title>A Grand Bridgerton Invitation</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -21,14 +22,21 @@
 
     <div id="landingScreen">
         <!-- <h1>An Invitation Awaits</h1> -->
-        <button id="startButton">Go to the Palace</button>
+        <button id="startButton">Chino & Diane</button>
     </div>
     
 <div class="name-input-container" id="nameInputContainer">
-    <input type="text" id="guestNameInput" placeholder="first name..." required>
-    <button id="submitNameButton">ENTER</button>
+    <p class="greeting-title">A Message From Chino & Diane</p> 
+    <p class="greeting-text">A tender note of love, whispered only for you, will be revealed at the very end of this invitation.</p>
+    <div class="input-row">
+        <input type="text" id="guestNameInput" placeholder="enter your first name..." required>
+        <button id="submitNameButton">Enter</button>
+    </div>
     <p id="nameError" class="error-message"></p>
 </div>
+
+
+
 
     <div class="main-content" id="mainContent">
         <div class="envelope-wrapper" id="envelope">
