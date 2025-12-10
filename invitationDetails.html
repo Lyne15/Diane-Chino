@@ -1,4 +1,10 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bridgerton Themed Wedding Invitation</title>
+    
     <style>
         /* BASE STYLES & FONTS */
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@400;700&display=swap');
@@ -39,21 +45,24 @@
             transition: opacity 1s ease-in-out;
         }
         
-        #cover-section {
-            min-height: 100vh; 
-            opacity: 1;
-            background-color: #000;
-            color: white;
-        }
-
+        /* SCROLL REVEAL EFFECT */
         .section.is-visible {
             opacity: 1;
         }
 
-        /* --- 1. COVER / VIDEO SECTION --- */
+        /* --- 1. COVER / VIDEO SECTION (Optimized for Mobile) --- */
         
+        #cover-section {
+            min-height: 100vh; 
+            opacity: 1; /* Initial state */
+            background-color: #000;
+            color: white;
+            position: relative;
+        }
+
+        /* Pinagsama ang video at content para maging isa ang fade-out transition */
         .cover-container {
-            position: absolute;
+            position: fixed; /* Ginawang fixed para mag-cover sa buong viewport */
             top: 0;
             left: 0;
             width: 100%;
@@ -63,10 +72,11 @@
             justify-content: center;
             align-items: center;
             z-index: 10; 
+            transition: opacity 0.5s ease-out; /* Para sa fade-out sa JS */
         }
 
         #cover-video {
-            position: fixed; 
+            position: absolute; 
             top: 0;
             left: 0;
             width: 100%;
@@ -78,29 +88,28 @@
         .cover-content {
             z-index: 2;
             text-align: center;
-            background: rgba(0, 0, 0, 0.4); 
+            background: rgba(0, 0, 0, 0.5); /* Mas mataas na contrast */
             padding: 20px;
             border-radius: 10px;
             position: relative; 
+            max-width: 90%;
         }
         
         .cover-content h1 { 
             font-size: 3rem; 
-            margin-bottom: 0; 
+            margin-bottom: 5px; 
             color: var(--color-gold); 
         }
         .cover-content p { 
-            font-size: 1.5rem; 
+            font-size: 1.2rem; /* Ginawang mas maliit para sa mobile */
             margin-top: 0; 
         }
 
-        /* --- 2. SAVE THE DATE SECTION (REAL CALENDAR GRID) --- */
+        /* --- 2. SAVE THE DATE SECTION --- */
         #date-section {
             background-color: #FFF8E1;
-            /* background-image: url('https://via.placeholder.com/1200x1200/FAF0E6/8B4513?text=Elegant+Floral+Pattern'); */
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
+            /* Siguraduhing mag-umpisa ang second section sa tamang lugar */
+            margin-top: 100vh; 
         }
         
         .calendar-box {
@@ -191,33 +200,36 @@
             background-color: var(--color-primary);
             flex-direction: column; 
             min-height: auto; 
+            padding-top: 50px;
         }
         
         /* Countdown Display Styling */
         #countdown-timer {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 10px; /* Ginawang mas compact */
             margin-top: 15px;
             margin-bottom: 30px;
             text-align: center;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 90%; /* Siguraduhing responsive */
+            max-width: 400px;
         }
         
         .time-unit span {
             display: block;
             font-family: 'Playfair Display', serif;
             font-weight: 700;
-            font-size: 2rem; 
-            line-height: 1;
+            font-size: 1.8rem; /* Ginawang mas maliit */
+            line-height: 1.2;
             color: var(--color-rose);
         }
         
         .time-unit small {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: var(--color-accent);
             text-transform: uppercase;
         }
@@ -239,11 +251,12 @@
             height: auto;
             border: 3px solid var(--color-gold);
             max-width: 400px;
+            margin-bottom: 10px;
         }
         
         /* CSS para sa Map Zoom Effect gamit ang Iframe */
         .stylized-map {
-            height: 300px; 
+            height: 250px; /* Ginawang mas compact */
             border: 1px dashed var(--color-accent);
             margin-top: 15px;
             width: 90%;
@@ -254,14 +267,14 @@
         }
 
         .map-zoom-content {
-            /* Ang element na ito ang iki-scale para mag-zoom */
             width: 100%;
             height: 100%;
             position: absolute;
             top: 0;
             left: 0;
-            transition: none; 
+            transition: transform 0.1s linear; /* Mabilis na transition */
             transform: scale(1); 
+            transform-origin: center center;
         }
         
         #google-map-iframe {
@@ -269,24 +282,28 @@
             height: 100%;
             pointer-events: none; 
         }
+        
+        .location-map a {
+            font-size: 0.9rem;
+        }
 
         /* --- 4. DRESS CODE SECTION (COMPACT) --- */
         #dresscode-section {
             background-color: #F8F8F8;
             min-height: auto;
-            padding: 30px 20px;
+            padding: 50px 20px;
         }
         .palette-container {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 10px; 
-            margin-top: 20px;
+            gap: 15px; /* Mas malaking space */
+            margin-top: 25px;
         }
         
         img.color-swatch { 
-            width: 40px; 
-            height: 40px; 
+            width: 50px; /* Ginawang mas malaki */
+            height: 50px; 
             border: 2px solid var(--color-accent); 
             border-radius: 50%; 
             object-fit: cover; 
@@ -305,21 +322,33 @@
             #venue-section {
                 flex-direction: row;
                 flex-wrap: wrap;
+                justify-content: space-around;
+                align-items: flex-start;
                 min-height: 100vh;
+            }
+            #countdown-timer {
+                width: 100%;
+                max-width: 600px;
+                margin-top: 0;
+                order: -1; /* Ilagay sa itaas sa desktop */
             }
             .venue-detail, .location-map {
                 width: 45%;
                 text-align: left;
+                padding: 15px;
             }
             .cover-content h1 { font-size: 5rem; }
             .cover-content p { font-size: 2rem; }
+            .stylized-map { height: 400px; }
         }
-
     </style>
-
+</head>
+<body>
 
     <section id="cover-section" class="section">
-        <video id="cover-video" src="./details.mp4" autoplay loop muted></video>
+        <div class="cover-container" id="cover-container"> 
+            <video id="cover-video" src="./details.mp4" autoplay loop muted></video>
+        </div>
     </section>
 
     <section id="date-section" class="section">
@@ -359,7 +388,9 @@
                 <div class="calendar-day">16</div>
                 <div class="calendar-day">17</div>
                 <div class="calendar-day">18</div>
-                <div class="calendar-day highlight">19</div> <div class="calendar-day">20</div>
+                <div class="calendar-day highlight">19</div> 
+                
+                <div class="calendar-day">20</div>
                 <div class="calendar-day">21</div>
                 <div class="calendar-day">22</div>
                 <div class="calendar-day">23</div>
@@ -407,7 +438,7 @@
             <div class="stylized-map" id="zoom-map-container">
                 <div class="map-zoom-content" id="map-zoom-content">
                     <iframe id="google-map-iframe"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28909.67583104309!2d121.27223193392135!3d14.092765872379896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd5d9a270e6307%3A0x8ca878842e4ba751!2sBistro%20Alejandro!5e0!3m2!1sen!2sph!4v1765340125826!5m2!1sen!2sph"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.054324831776!2d121.01893111534896!3d14.59604178970404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c9b320293375%3A0x6b4a68212e5a7e1e!2sAyala%20Triangle%20Gardens!5e0!3m2!1sen!2sph!4v1628000000000!5m2!1sen!2sph"
                         width="100%" 
                         height="100%" 
                         style="border:0;" 
@@ -418,7 +449,7 @@
                 </div>
             </div>
             
-            <a href="https://maps.app.goo.gl/cHvkEE7N7hmQpfN87" style="display: block; margin-top: 20px; text-align: center; color: var(--color-gold); text-decoration: none; border: 1px solid var(--color-gold); padding: 10px; width: 90%; margin: 20px auto 0;">View on Google Maps</a>
+            <a href="https://maps.app.goo.gl/YourActualMapLinkHere" target="_blank" style="display: block; margin-top: 20px; text-align: center; color: var(--color-gold); text-decoration: none; border: 1px solid var(--color-gold); padding: 10px; width: 90%; margin: 20px auto 0;">View on Google Maps</a>
         </div>
     </section>
 
@@ -454,7 +485,8 @@
 
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
+                    // Mag-a-apply lang ng 'is-visible' kung hindi 'cover-section'
+                    if (entry.isIntersecting && entry.target.id !== 'cover-section') {
                         entry.target.classList.add('is-visible');
                     }
                 });
@@ -463,28 +495,24 @@
             });
 
             sections.forEach(section => {
-                if (section.id !== 'cover-section') { 
-                    observer.observe(section);
-                }
+                // Simulan ang pag-observe sa lahat ng sections
+                observer.observe(section);
             });
 
             // --- 2. COVER FADE-OUT EFFECT ---
-            const coverSection = document.getElementById('cover-section');
-            const coverVideo = document.getElementById('cover-video');
-            const coverContent = coverSection.querySelector('.cover-content');
+            const coverContainer = document.getElementById('cover-container');
 
             window.addEventListener('scroll', () => {
                 const scrollPos = window.scrollY;
                 const height = window.innerHeight;
 
-                // Fast fade out (within the first 50% of viewport height)
-                let opacity = 1 - (scrollPos / (height * 0.5)); 
+                // Fade out ang buong FIXED container habang nag-i-scroll
+                let opacity = 1 - (scrollPos / (height * 0.75)); // Mas mahaba ang fade para hindi biglaan
                 opacity = Math.max(0, Math.min(1, opacity));
                 
-                if (coverVideo) coverVideo.style.opacity = opacity;
-                if (coverContent) coverContent.style.opacity = opacity;
+                if (coverContainer) coverContainer.style.opacity = opacity;
 
-                // I-call din ang map zoom function sa bawat scroll
+                // I-call ang map zoom function sa bawat scroll
                 mapZoomScroll(); 
             });
 
@@ -518,38 +546,38 @@
                 }
             }, 1000);
 
-            // --- 4. MAP SCROLL-TO-ZOOM EFFECT (SUPER ZOOM OUT sa Simula, SUPER ZOOM IN sa Huli) ---
+            // --- 4. MAP SCROLL-TO-ZOOM EFFECT ---
             const mapZoomContent = document.getElementById('map-zoom-content');
             const venueSection = document.getElementById('venue-section');
+            const stylizedMap = document.getElementById('zoom-map-container');
 
             const mapZoomScroll = () => {
-                // Tiyakin na exist ang element bago mag-execute
-                if (!mapZoomContent || !venueSection) return; 
+                if (!mapZoomContent || !venueSection || !stylizedMap) return; 
 
-                const rect = venueSection.getBoundingClientRect();
+                // Gamitin ang stylizedMap container para sa mas accurate na posisyon
+                const rect = stylizedMap.getBoundingClientRect();
                 const viewportHeight = window.innerHeight;
                 
-                // I-calculate ang scroll progress (0 hanggang 1) sa loob ng section
-                const scrollRange = venueSection.offsetHeight; 
-                let scrollProgress = (viewportHeight - rect.top) / (scrollRange + viewportHeight);
+                // Kalkulahin ang progress mula sa pagpasok sa viewport hanggang sa labasan
+                const mapTop = rect.top;
+                const mapHeight = rect.height;
+
+                // Progress: 0 (map out of view below) hanggang 1 (map out of view above)
+                let scrollProgress = (viewportHeight - mapTop) / (viewportHeight + mapHeight);
                 
                 // I-clamp ang progress sa 0.001 hanggang 1
                 scrollProgress = Math.max(0.001, Math.min(1, scrollProgress));
                 
-                // NEW ZOOM RANGE: Simula sa scale 0.5 (SUPER ZOOM OUT) at magtatapos sa scale 2.0 (SUPER ZOOM IN)
-                const minScale = 0.5; // Simula (Super Zoom Out)
-                const maxScale = 2.0; // Dulo (Super Zoom In)
+                // Zoom Range: 0.5 (SUPER ZOOM OUT) hanggang 2.0 (SUPER ZOOM IN)
+                const minScale = 0.5; 
+                const maxScale = 2.0; 
                 
-                // Normal na formula para sa zoom in upon scroll
                 const currentScale = minScale + (maxScale - minScale) * scrollProgress;
                 
-                // I-apply ang scale sa mapa
                 mapZoomContent.style.transform = `scale(${currentScale})`;
             };
 
-            // Call the function once to set the initial state and attach to scroll
             mapZoomScroll();
-
         });
     </script>
 
