@@ -1,61 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Grand Bridgerton Invitation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Grand Bridgerton Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div class="video-background">
-        <video id="bgVideo" loop muted playsinline>
-            <source src="./videoCastleGate.mp4" type="video/mp4">
-        </video>
-    </div>
+    <div class="video-background">
+        <video id="bgVideo" loop muted playsinline>
+            <source src="./videoCastleGate.mp4" type="video/mp4">
+        </video>
+    </div>
 
-    <audio id="bgMusic" loop>
-        <source src="./palagiViolin.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="bgMusic" loop>
+        <source src="./palagiViolin.mp3" type="audio/mpeg">
+    </audio>
 
-    <div id="landingScreen">
-                <button id="startButton">Chino & Diane</button>
-    </div>
-    
+    <div id="landingScreen">
+        <!-- <h1>An Invitation Awaits</h1> -->
+        <button id="startButton">Chino & Diane</button>
+    </div>
+    
 <div class="name-input-container" id="nameInputContainer">
-    <p class="greeting-title">A Message From Chino & Diane</p> 
-    <p class="greeting-text">A tender note of love, whispered only for you, will be revealed at the very end of this invitation.</p>
-    <div class="input-row">
-        <input type="text" id="guestNameInput" placeholder="enter your first name..." required>
-        <button id="submitNameButton">Enter</button>
-    </div>
-    <p id="nameError" class="error-message"></p>
+    <p class="greeting-title">A Message From Chino & Diane</p> 
+    <p class="greeting-text">A tender note of love, whispered only for you, will be revealed at the very end of this invitation.</p>
+    <div class="input-row">
+        <input type="text" id="guestNameInput" placeholder="enter your first name..." required>
+        <button id="submitNameButton">Enter</button>
+    </div>
+    <p id="nameError" class="error-message"></p>
 </div>
 
 
 
 
-    <div class="main-content" id="mainContent">
-        <div class="envelope-wrapper" id="envelope">
-            <div class="cursor-hint" id="cursorHint"></div>
-            <div class="envelope">
-                <div class="card" id="card">
-                    <div class="card-content">
-                        <img src="./card.png" alt="Wedding/Event Invitation" class="invitation-image initial"> 
-                        <div id="fullDetailsContainer"></div> 
-                    </div>
-                    <span class="close-icon" id="closeBtn">&times;</span>
-                </div> 
-                <div class="side left"></div>
-                <div class="side right"></div>
-                <div class="bottom"></div> 
-                <div class="lid"></div>
-            </div>
-        </div>
-    </div>
+    <div class="main-content" id="mainContent">
+        <div class="envelope-wrapper" id="envelope">
+            <div class="cursor-hint" id="cursorHint"></div>
+            <div class="envelope">
+                <div class="card" id="card">
+                    <div class="card-content">
+                        <img src="./card.png" alt="Wedding/Event Invitation" class="invitation-image initial"> 
+                        <div id="fullDetailsContainer"></div> 
+                    </div>
+                    <span class="close-icon" id="closeBtn">&times;</span>
+                </div> 
+                <div class="side left"></div>
+                <div class="side right"></div>
+                <div class="bottom"></div> 
+                <div class="lid"></div>
+            </div>
+        </div>
+    </div>
 
-    <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
