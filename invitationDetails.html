@@ -51,7 +51,7 @@
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             width: 100%;
         }
 
@@ -137,10 +137,7 @@
         .w-time-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.9rem; color: var(--w-sage); margin-top: 10px; }
 
         /* 5. VENUE TEXT */
-        .w-venue-info {
-            margin-top: 40px;
-            padding: 0 20px;
-        }
+    
         .w-venue-pre {
             font-family: 'Cinzel', serif;
             font-size: 0.65rem;
@@ -161,7 +158,7 @@
 
         /* 6. GALLERY SECTION */
         .w-gallery-section {
-            padding: 20px 0 80px 0;
+            padding: 10px 0 100px 0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -191,28 +188,30 @@
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             border: 4px solid #fff;
-            opacity: 0;
-            transition: transform 0.35s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.3s ease;
+            opacity: 1; /* Keep visible so the fold/unfold is seen */
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
             pointer-events: none;
             user-select: none;
             -webkit-user-drag: none;
+            z-index: 1;
         }
 
-        /* Initial Sequence Animation */
-        .w-stack-img.revealed { opacity: 1; }
-        .img-1.revealed { transform: translate(0, 0) rotate(0deg); z-index: 3; }
-        .img-2.revealed { transform: translate(12px, 12px) rotate(2deg); z-index: 2; }
-        .img-3.revealed { transform: translate(24px, 24px) rotate(4deg); z-index: 1; }
+        /* Initial Stacked Layout (The "Folded" State) */
+        .img-1 { transform: translate(0, 0) rotate(0deg); z-index: 3; }
+        .img-2 { transform: translate(8px, 8px) rotate(2deg); z-index: 2; }
+        .img-3 { transform: translate(16px, 16px) rotate(4deg); z-index: 1; }
 
-        .img-1.scatter { transform: translate(-100px, -15px) rotate(-6deg); }
-        .img-2.scatter { transform: translate(0, 10px) rotate(0deg); }
-        .img-3.scatter { transform: translate(100px, -15px) rotate(6deg); }
+        /* Unstacked / Escape State */
+        .scatter.img-1 { transform: translate(-100px, -15px) rotate(-6deg); }
+        .scatter.img-2 { transform: translate(0, 10px) rotate(0deg); }
+        .scatter.img-3 { transform: translate(100px, -15px) rotate(6deg); }
 
-        /* Carousel States */
+        /* Carousel Active State (after scatter) */
         .carousel-active .w-stack-img {
             opacity: 0;
-            transform: scale(0.8) translate(0, 0);
+            transform: scale(0.8) translate(0, 0) rotate(0deg);
             pointer-events: auto;
+            transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.3s ease;
         }
         .carousel-active .w-stack-img.active {
             opacity: 1;
@@ -271,7 +270,7 @@
             <p class="w-time-text">Ten o'clock in the morning</p>
         </div>
 
-        <div class="w-reveal w-venue-info">
+        <div class="w-reveal ">
             <span class="w-venue-pre">The place to be for our wedding:</span>
             <div class="w-venue-name">BISTRO ALEJANDRO</div>
         </div>
@@ -290,38 +289,53 @@
             const g1 = document.getElementById('gImg1'), g2 = document.getElementById('gImg2'), g3 = document.getElementById('gImg3');
             const gallerySection = document.getElementById('wGalleryTrigger');
             const images = [g1, g2, g3];
-            let sequenceStarted = false, carouselActive = false, currentIndex = 0;
+            let carouselActive = false, currentIndex = 0;
 
-            // 1. REVEAL OBSERVER
+            // 1. CONTENT REVEAL OBSERVER
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("active"); });
             }, { threshold: 0.1 });
             document.querySelectorAll(".w-reveal").forEach(r => observer.observe(r));
 
-            // 2. INITIAL ANIMATION
+            // 2. BIDIRECTIONAL GALLERY OBSERVER (Centered Trigger)
             const galleryObserver = new IntersectionObserver(entries => {
-                if (entries[0].isIntersecting && !sequenceStarted) {
-                    sequenceStarted = true;
-                    setTimeout(() => g1.classList.add('revealed'), 0);
-                    setTimeout(() => g2.classList.add('revealed'), 500);
-                    setTimeout(() => g3.classList.add('revealed'), 1000);
+                const entry = entries[0];
+                if (entry.isIntersecting) {
+                    // PLAY ANIMATION (Unstack)
+                    images.forEach((img, i) => {
+                        setTimeout(() => img.classList.add('scatter'), i * 150);
+                    });
+                    
+                    // Delay activation of interactive carousel until scatter is done
                     setTimeout(() => {
-                        images.forEach(img => img.classList.add('scatter'));
-                        setTimeout(() => {
+                        if (entry.isIntersecting) {
                             carouselActive = true;
                             gallerySection.classList.add('carousel-active');
                             updateCarousel();
-                        }, 800);
-                    }, 1800);
+                        }
+                    }, 800);
+                } else {
+                    // REVERSE ANIMATION (Fold back)
+                    carouselActive = false;
+                    gallerySection.classList.remove('carousel-active');
+                    images.forEach(img => {
+                        img.classList.remove('scatter');
+                        img.style.transform = ''; // Clear carousel overrides
+                        img.style.opacity = '';
+                    });
                 }
-            }, { threshold: 0.6 });
+            }, { 
+                threshold: 0.7, // Trigger when 70% of section is in view (centered)
+                rootMargin: "0px" 
+            });
             galleryObserver.observe(gallerySection);
 
             // 3. TOUCH/SWIPE ENGINE
             let startX = 0, currentX = 0, isDragging = false;
             function updateCarousel(offset = 0) {
+                if (!carouselActive) return;
                 images.forEach((img, i) => {
-                    img.classList.remove('active', 'next', 'prev', 'scatter', 'revealed');
+                    img.classList.remove('active', 'next', 'prev');
                     let pos = (i - currentIndex + images.length) % images.length;
                     img.style.transform = '';
                     img.style.opacity = '';
@@ -362,6 +376,7 @@
                 }
                 updateCarousel(0);
             };
+
             gallerySection.addEventListener('mousedown', start);
             window.addEventListener('mousemove', move);
             window.addEventListener('mouseup', end);
