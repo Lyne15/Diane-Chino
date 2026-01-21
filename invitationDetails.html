@@ -40,19 +40,18 @@
 
         /* 2. CONTENT SECTIONS */
         .w-section {
-            padding: 50px 20px 10px 20px;
+            padding: 50px 20px 0px 20px;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            position: relative;
         }
 
         .w-reveal {
             opacity: 0;
             transform: translateY(20px);
-            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
-            margin-bottom: 25px;
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            margin-bottom: 20px;
             width: 100%;
         }
 
@@ -83,7 +82,7 @@
             padding: 25px 15px;
             border-radius: 80px 80px 20px 20px;
             width: 75%;
-            max-width: 250px;
+            max-width: 230px;
             border: 0.5px solid rgba(197, 160, 89, 0.3);
             box-shadow: 0 10px 20px rgba(113, 125, 108, 0.05);
             margin: 0 auto;
@@ -101,7 +100,7 @@
             width: 100%; height: 100%;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 2s cubic-bezier(.4, 0, 0.2, 1);
+            transition: transform 1.5s cubic-bezier(.4, 0, 0.2, 1);
         }
 
         .w-face {
@@ -129,27 +128,51 @@
             justify-content: center;
             align-items: center;
             gap: 5px;
-            margin-top: 10px;
+            margin-top: 5px;
         }
         .w-t-unit { display: flex; flex-direction: column; align-items: center; min-width: 40px; }
         .w-t-sep { font-size: 1rem; color: var(--w-gold); padding-bottom: 10px; }
         .w-val { font-size: 1.4rem; color: var(--w-dark); font-family: 'Playfair Display', serif; }
         .w-label { font-size: 0.5rem; text-transform: uppercase; color: var(--w-gold); letter-spacing: 1px; }
-        .w-time-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; color: var(--w-sage); margin-top: 15px; }
+        .w-time-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.9rem; color: var(--w-sage); margin-top: 10px; }
 
-        /* 5. GALLERY SECTION - MOBILE OPTIMIZED */
+        /* 5. VENUE TEXT */
+        .w-venue-info {
+            margin-top: 40px;
+            padding: 0 20px;
+        }
+        .w-venue-pre {
+            font-family: 'Cinzel', serif;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            color: var(--w-gold);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .w-venue-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: var(--w-dark);
+            text-transform: uppercase;
+        }
+
+        /* 6. GALLERY SECTION */
         .w-gallery-section {
-            padding: 40px 0 100px 0;
+            padding: 20px 0 80px 0;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             position: relative;
-            overflow: hidden; /* Hide horizontal overflow on root */
-            min-height: 250px;
+            overflow: hidden;
+            min-height: 220px;
             touch-action: pan-y;
-            user-select: none;
+            cursor: grab;
         }
+
+        .w-gallery-section:active { cursor: grabbing; }
 
         .w-image-stack {
             position: relative;
@@ -165,56 +188,48 @@
             width: 280px;
             height: 180px;
             object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             border: 4px solid #fff;
             opacity: 0;
-            transform: scale(0.9);
-            transition: 
-                transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
-                opacity 0.5s ease,
-                left 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-            background: #eee;
+            transition: transform 0.35s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.3s ease;
             pointer-events: none;
+            user-select: none;
+            -webkit-user-drag: none;
         }
 
-        /* Initial Animation Sequence */
+        /* Initial Sequence Animation */
         .w-stack-img.revealed { opacity: 1; }
-        .img-1.revealed { transform: translate(0, 0) rotate(0deg) scale(1); z-index: 3; }
-        .img-2.revealed { transform: translate(12px, 12px) rotate(2deg) scale(1); z-index: 2; }
-        .img-3.revealed { transform: translate(24px, 24px) rotate(4deg) scale(1); z-index: 1; }
+        .img-1.revealed { transform: translate(0, 0) rotate(0deg); z-index: 3; }
+        .img-2.revealed { transform: translate(12px, 12px) rotate(2deg); z-index: 2; }
+        .img-3.revealed { transform: translate(24px, 24px) rotate(4deg); z-index: 1; }
 
-        .img-1.scatter { transform: translate(-100px, -15px) rotate(-6deg) scale(1); }
-        .img-2.scatter { transform: translate(0, 10px) rotate(0deg) scale(1); }
-        .img-3.scatter { transform: translate(100px, -15px) rotate(6deg) scale(1); }
+        .img-1.scatter { transform: translate(-100px, -15px) rotate(-6deg); }
+        .img-2.scatter { transform: translate(0, 10px) rotate(0deg); }
+        .img-3.scatter { transform: translate(100px, -15px) rotate(6deg); }
 
-        /* Carousel Mode Styles */
+        /* Carousel States */
         .carousel-active .w-stack-img {
+            opacity: 0;
+            transform: scale(0.8) translate(0, 0);
             pointer-events: auto;
-            left: 50%;
-            margin-left: -140px; /* Centers the absolute element */
         }
-
-        /* Active Image - Centered and Full */
         .carousel-active .w-stack-img.active {
             opacity: 1;
-            transform: scale(1) translate(0, 0) rotate(0deg) !important;
+            transform: scale(1) translate(0, 0);
             z-index: 10;
         }
-
-        /* Next Image - Peek from Right */
         .carousel-active .w-stack-img.next {
-            opacity: 0.4;
-            transform: scale(0.8) translate(260px, 0) rotate(0deg) !important;
+            opacity: 0.35;
+            transform: scale(0.8) translate(280px, 0);
             z-index: 5;
         }
-
-        /* Previous Image - Peek from Left */
         .carousel-active .w-stack-img.prev {
-            opacity: 0.4;
-            transform: scale(0.8) translate(-260px, 0) rotate(0deg) !important;
+            opacity: 0.35;
+            transform: scale(0.8) translate(-280px, 0);
             z-index: 5;
         }
+        .is-dragging .w-stack-img { transition: none !important; }
     </style>
 
     <section id="w-hero">
@@ -223,7 +238,7 @@
         </video>
     </section>
 
-    <section class="w-section" id="w-main-content">
+    <section class="w-section">
         <div class="w-reveal">
             <h2>Save the Date</h2>
             <div class="w-sub">Chino & Diane</div>
@@ -255,13 +270,18 @@
             </div>
             <p class="w-time-text">Ten o'clock in the morning</p>
         </div>
+
+        <div class="w-reveal w-venue-info">
+            <span class="w-venue-pre">The place to be for our wedding:</span>
+            <div class="w-venue-name">BISTRO ALEJANDRO</div>
+        </div>
     </section>
 
     <section class="w-gallery-section" id="wGalleryTrigger">
         <div class="w-image-stack" id="wSlider">
-            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" class="w-stack-img img-1" id="gImg1" alt="Venue 1">
-            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80" class="w-stack-img img-2" id="gImg2" alt="Venue 2">
-            <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=800&q=80" class="w-stack-img img-3" id="gImg3" alt="Venue 3">
+            <img src="./place.jpeg" class="w-stack-img img-1" id="gImg1">
+            <img src="./place2.png" class="w-stack-img img-2" id="gImg2">
+            <img src="./place3.png" class="w-stack-img img-3" id="gImg3">
         </div>
     </section>
 
@@ -270,102 +290,86 @@
             const g1 = document.getElementById('gImg1'), g2 = document.getElementById('gImg2'), g3 = document.getElementById('gImg3');
             const gallerySection = document.getElementById('wGalleryTrigger');
             const images = [g1, g2, g3];
-            let sequenceStarted = false, carouselActive = false, currentIndex = 0, autoTimer;
+            let sequenceStarted = false, carouselActive = false, currentIndex = 0;
 
             // 1. REVEAL OBSERVER
             const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add("active");
-                });
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("active"); });
             }, { threshold: 0.1 });
             document.querySelectorAll(".w-reveal").forEach(r => observer.observe(r));
 
-            // 2. INITIAL ANIMATION SEQUENCE
+            // 2. INITIAL ANIMATION
             const galleryObserver = new IntersectionObserver(entries => {
                 if (entries[0].isIntersecting && !sequenceStarted) {
                     sequenceStarted = true;
-                    // Sequence: Reveal -> Scatter -> Carousel
                     setTimeout(() => g1.classList.add('revealed'), 0);
-                    setTimeout(() => g2.classList.add('revealed'), 800);
-                    setTimeout(() => g3.classList.add('revealed'), 1600);
+                    setTimeout(() => g2.classList.add('revealed'), 500);
+                    setTimeout(() => g3.classList.add('revealed'), 1000);
                     setTimeout(() => {
                         images.forEach(img => img.classList.add('scatter'));
-                        setTimeout(() => activateCarousel(), 1200);
-                    }, 2800);
+                        setTimeout(() => {
+                            carouselActive = true;
+                            gallerySection.classList.add('carousel-active');
+                            updateCarousel();
+                        }, 800);
+                    }, 1800);
                 }
             }, { threshold: 0.6 });
             galleryObserver.observe(gallerySection);
 
-            // 3. CAROUSEL ENGINE
-            function activateCarousel() {
-                carouselActive = true;
-                gallerySection.classList.add('carousel-active');
-                updateCarousel();
-                startAutoSlide();
-            }
-
-            function updateCarousel() {
+            // 3. TOUCH/SWIPE ENGINE
+            let startX = 0, currentX = 0, isDragging = false;
+            function updateCarousel(offset = 0) {
                 images.forEach((img, i) => {
                     img.classList.remove('active', 'next', 'prev', 'scatter', 'revealed');
-                    if (i === currentIndex) {
+                    let pos = (i - currentIndex + images.length) % images.length;
+                    img.style.transform = '';
+                    img.style.opacity = '';
+                    if (pos === 0) { 
                         img.classList.add('active');
-                    } else if (i === (currentIndex + 1) % images.length) {
+                        img.style.transform = `translateX(${offset}px) scale(${1 - Math.abs(offset/1200)})`;
+                    } else if (pos === 1) { 
                         img.classList.add('next');
-                    } else {
+                        img.style.transform = `translateX(${280 + offset}px) scale(0.8)`;
+                        img.style.opacity = 0.35 + (offset < 0 ? Math.abs(offset/400) : 0);
+                    } else { 
                         img.classList.add('prev');
+                        img.style.transform = `translateX(${-280 + offset}px) scale(0.8)`;
+                        img.style.opacity = 0.35 + (offset > 0 ? offset/400 : 0);
                     }
                 });
             }
-
-            function shift(dir) {
-                currentIndex = (currentIndex + dir + images.length) % images.length;
-                updateCarousel();
-                startAutoSlide();
-            }
-
-            function startAutoSlide() {
-                clearInterval(autoTimer);
-                autoTimer = setInterval(() => shift(1), 5000);
-            }
-
-            // Click-to-slide (Allow clicking on the peeking images)
-            images.forEach((img) => {
-                img.addEventListener('click', () => {
-                    if (!carouselActive) return;
-                    if (img.classList.contains('next')) shift(1);
-                    if (img.classList.contains('prev')) shift(-1);
-                });
-            });
-
-            // SWIPE LOGIC (Touch & Mouse)
-            let startX = 0, currentX = 0, isDragging = false;
-
-            const handleStart = (e) => {
-                startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            const start = (e) => {
+                if (!carouselActive) return;
                 isDragging = true;
-                clearInterval(autoTimer); // Pause auto-slide during interaction
+                startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+                gallerySection.classList.add('is-dragging');
             };
-
-            const handleEnd = (e) => {
+            const move = (e) => {
                 if (!isDragging) return;
+                currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+                let walk = currentX - startX;
+                updateCarousel(walk);
+            };
+            const end = (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                gallerySection.classList.remove('is-dragging');
                 let endX = e.type.includes('touch') ? e.changedTouches[0].clientX : e.clientX;
                 let diff = startX - endX;
-                
-                // Swipe threshold (50px)
                 if (Math.abs(diff) > 50) {
-                    shift(diff > 0 ? 1 : -1);
-                } else {
-                    startAutoSlide(); // Resume if swipe was too short
+                    currentIndex = (currentIndex + (diff > 0 ? 1 : -1) + images.length) % images.length;
                 }
-                isDragging = false;
+                updateCarousel(0);
             };
+            gallerySection.addEventListener('mousedown', start);
+            window.addEventListener('mousemove', move);
+            window.addEventListener('mouseup', end);
+            gallerySection.addEventListener('touchstart', start, {passive: true});
+            gallerySection.addEventListener('touchmove', move, {passive: true});
+            gallerySection.addEventListener('touchend', end, {passive: true});
 
-            gallerySection.addEventListener('touchstart', handleStart, {passive: true});
-            gallerySection.addEventListener('touchend', handleEnd, {passive: true});
-            gallerySection.addEventListener('mousedown', handleStart);
-            window.addEventListener('mouseup', handleEnd);
-
-            // 4. CALENDAR & TIMER
+            // 4. CUBE & TIMER
             let rot = 0;
             function spinCubes() {
                 const c1 = document.getElementById("wC1"), c2 = document.getElementById("wC2");
