@@ -9,7 +9,6 @@
             --w-gold: #c5a059;
             --w-cream: #fcfaf2;
             --w-glass: rgba(255, 255, 255, 0.85);
-            
             font-family: 'Playfair Display', serif;
             background: var(--w-cream);
             color: var(--w-dark);
@@ -21,7 +20,7 @@
             flex-direction: column;
         }
 
-        /* 1. HERO VIDEO (85vh para may silip na susunod na section) */
+        /* 1. HERO VIDEO */
         #w-hero {
             height: 85vh; 
             width: 100%;
@@ -39,14 +38,13 @@
             object-fit: cover;
         }
 
-        /* 2. CONTENT SECTIONS (Compact & Elegant Spacing) */
+        /* 2. CONTENT SECTIONS */
         .w-section {
-            padding: 50px 20px 100px 20px;
+            padding: 50px 20px 10px 20px;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
             position: relative;
         }
 
@@ -54,7 +52,7 @@
             opacity: 0;
             transform: translateY(20px);
             transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             width: 100%;
         }
 
@@ -79,7 +77,7 @@
             text-transform: uppercase;
         }
 
-        /* 3. CALENDAR CUBE (Compact Arched Look) */
+        /* 3. CALENDAR CUBE */
         .w-card-box {
             background: var(--w-glass);
             padding: 25px 15px;
@@ -125,7 +123,7 @@
         .w-year-line { width: 20px; height: 1px; background: var(--w-gold); margin: 4px 0; }
         .w-year-text { font-family: 'Cinzel', serif; font-size: 0.7rem; color: var(--w-sage); }
 
-        /* 4. TIMER (Minimalist) */
+        /* 4. TIMER */
         .w-timer-container {
             display: flex;
             justify-content: center;
@@ -137,8 +135,86 @@
         .w-t-sep { font-size: 1rem; color: var(--w-gold); padding-bottom: 10px; }
         .w-val { font-size: 1.4rem; color: var(--w-dark); font-family: 'Playfair Display', serif; }
         .w-label { font-size: 0.5rem; text-transform: uppercase; color: var(--w-gold); letter-spacing: 1px; }
+        .w-time-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; color: var(--w-sage); margin-top: 15px; }
 
-        .w-time-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; color: var(--w-sage); margin-top: 20px; }
+        /* 5. GALLERY SECTION - MOBILE OPTIMIZED */
+        .w-gallery-section {
+            padding: 40px 0 100px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden; /* Hide horizontal overflow on root */
+            min-height: 250px;
+            touch-action: pan-y;
+            user-select: none;
+        }
+
+        .w-image-stack {
+            position: relative;
+            width: 280px; 
+            height: 180px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .w-stack-img {
+            position: absolute;
+            width: 280px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border: 4px solid #fff;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: 
+                transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+                opacity 0.5s ease,
+                left 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            background: #eee;
+            pointer-events: none;
+        }
+
+        /* Initial Animation Sequence */
+        .w-stack-img.revealed { opacity: 1; }
+        .img-1.revealed { transform: translate(0, 0) rotate(0deg) scale(1); z-index: 3; }
+        .img-2.revealed { transform: translate(12px, 12px) rotate(2deg) scale(1); z-index: 2; }
+        .img-3.revealed { transform: translate(24px, 24px) rotate(4deg) scale(1); z-index: 1; }
+
+        .img-1.scatter { transform: translate(-100px, -15px) rotate(-6deg) scale(1); }
+        .img-2.scatter { transform: translate(0, 10px) rotate(0deg) scale(1); }
+        .img-3.scatter { transform: translate(100px, -15px) rotate(6deg) scale(1); }
+
+        /* Carousel Mode Styles */
+        .carousel-active .w-stack-img {
+            pointer-events: auto;
+            left: 50%;
+            margin-left: -140px; /* Centers the absolute element */
+        }
+
+        /* Active Image - Centered and Full */
+        .carousel-active .w-stack-img.active {
+            opacity: 1;
+            transform: scale(1) translate(0, 0) rotate(0deg) !important;
+            z-index: 10;
+        }
+
+        /* Next Image - Peek from Right */
+        .carousel-active .w-stack-img.next {
+            opacity: 0.4;
+            transform: scale(0.8) translate(260px, 0) rotate(0deg) !important;
+            z-index: 5;
+        }
+
+        /* Previous Image - Peek from Left */
+        .carousel-active .w-stack-img.prev {
+            opacity: 0.4;
+            transform: scale(0.8) translate(-260px, 0) rotate(0deg) !important;
+            z-index: 5;
+        }
     </style>
 
     <section id="w-hero">
@@ -148,7 +224,6 @@
     </section>
 
     <section class="w-section" id="w-main-content">
-        
         <div class="w-reveal">
             <h2>Save the Date</h2>
             <div class="w-sub">Chino & Diane</div>
@@ -157,22 +232,8 @@
         <div class="w-reveal">
             <div class="w-card-box">
                 <div class="w-cubes">
-                    <div class="w-wrap">
-                        <div class="w-cube" id="wC1">
-                            <div class="w-face w-front" id="wN1">1</div>
-                            <div class="w-face w-back">0</div>
-                            <div class="w-face w-top">4</div>
-                            <div class="w-face w-bottom">7</div>
-                        </div>
-                    </div>
-                    <div class="w-wrap">
-                        <div class="w-cube" id="wC2">
-                            <div class="w-face w-front" id="wN2">9</div>
-                            <div class="w-face w-back">2</div>
-                            <div class="w-face w-top">5</div>
-                            <div class="w-face w-bottom">8</div>
-                        </div>
-                    </div>
+                    <div class="w-wrap"><div class="w-cube" id="wC1"><div class="w-face w-front" id="wN1">1</div><div class="w-face w-back">0</div><div class="w-face w-top">4</div><div class="w-face w-bottom">7</div></div></div>
+                    <div class="w-wrap"><div class="w-cube" id="wC2"><div class="w-face w-front" id="wN2">9</div><div class="w-face w-back">2</div><div class="w-face w-top">5</div><div class="w-face w-bottom">8</div></div></div>
                 </div>
                 <div class="w-month-wrap">
                     <span class="w-month-text">APRIL</span>
@@ -194,46 +255,121 @@
             </div>
             <p class="w-time-text">Ten o'clock in the morning</p>
         </div>
+    </section>
 
+    <section class="w-gallery-section" id="wGalleryTrigger">
+        <div class="w-image-stack" id="wSlider">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" class="w-stack-img img-1" id="gImg1" alt="Venue 1">
+            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80" class="w-stack-img img-2" id="gImg2" alt="Venue 2">
+            <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=800&q=80" class="w-stack-img img-3" id="gImg3" alt="Venue 3">
+        </div>
     </section>
 
     <script>
         (function() {
-            const video = document.getElementById('w-video');
-            const scrollTarget = document.getElementById('w-main-content');
-            
-            // Hanapin ang scrollable container (yung .card.full-screen mo sa main style.css)
-            const cardContainer = document.querySelector('.card.full-screen');
+            const g1 = document.getElementById('gImg1'), g2 = document.getElementById('gImg2'), g3 = document.getElementById('gImg3');
+            const gallerySection = document.getElementById('wGalleryTrigger');
+            const images = [g1, g2, g3];
+            let sequenceStarted = false, carouselActive = false, currentIndex = 0, autoTimer;
 
-            // --- AUTO SCROLL FUNCTION ---
-            video.onended = function() {
-                if (cardContainer) {
-                    // Mas accurate na scroll sa loob ng modal container
-                    cardContainer.scrollTo({
-                        top: scrollTarget.offsetTop,
-                        behavior: 'smooth'
-                    });
-                } else {
-                    // Fallback kung wala sa modal
-                    scrollTarget.scrollIntoView({ behavior: 'smooth' });
-                }
-            };
-
-            // REVEAL OBSERVER
+            // 1. REVEAL OBSERVER
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) entry.target.classList.add("active");
                 });
-            }, { root: cardContainer || null, threshold: 0.1 });
-
+            }, { threshold: 0.1 });
             document.querySelectorAll(".w-reveal").forEach(r => observer.observe(r));
 
-            // CUBE LOGIC
-            let rot = 0;
-            const c1 = document.getElementById("wC1"), c2 = document.getElementById("wC2");
-            const n1 = document.getElementById("wN1"), n2 = document.getElementById("wN2");
+            // 2. INITIAL ANIMATION SEQUENCE
+            const galleryObserver = new IntersectionObserver(entries => {
+                if (entries[0].isIntersecting && !sequenceStarted) {
+                    sequenceStarted = true;
+                    // Sequence: Reveal -> Scatter -> Carousel
+                    setTimeout(() => g1.classList.add('revealed'), 0);
+                    setTimeout(() => g2.classList.add('revealed'), 800);
+                    setTimeout(() => g3.classList.add('revealed'), 1600);
+                    setTimeout(() => {
+                        images.forEach(img => img.classList.add('scatter'));
+                        setTimeout(() => activateCarousel(), 1200);
+                    }, 2800);
+                }
+            }, { threshold: 0.6 });
+            galleryObserver.observe(gallerySection);
 
+            // 3. CAROUSEL ENGINE
+            function activateCarousel() {
+                carouselActive = true;
+                gallerySection.classList.add('carousel-active');
+                updateCarousel();
+                startAutoSlide();
+            }
+
+            function updateCarousel() {
+                images.forEach((img, i) => {
+                    img.classList.remove('active', 'next', 'prev', 'scatter', 'revealed');
+                    if (i === currentIndex) {
+                        img.classList.add('active');
+                    } else if (i === (currentIndex + 1) % images.length) {
+                        img.classList.add('next');
+                    } else {
+                        img.classList.add('prev');
+                    }
+                });
+            }
+
+            function shift(dir) {
+                currentIndex = (currentIndex + dir + images.length) % images.length;
+                updateCarousel();
+                startAutoSlide();
+            }
+
+            function startAutoSlide() {
+                clearInterval(autoTimer);
+                autoTimer = setInterval(() => shift(1), 5000);
+            }
+
+            // Click-to-slide (Allow clicking on the peeking images)
+            images.forEach((img) => {
+                img.addEventListener('click', () => {
+                    if (!carouselActive) return;
+                    if (img.classList.contains('next')) shift(1);
+                    if (img.classList.contains('prev')) shift(-1);
+                });
+            });
+
+            // SWIPE LOGIC (Touch & Mouse)
+            let startX = 0, currentX = 0, isDragging = false;
+
+            const handleStart = (e) => {
+                startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+                isDragging = true;
+                clearInterval(autoTimer); // Pause auto-slide during interaction
+            };
+
+            const handleEnd = (e) => {
+                if (!isDragging) return;
+                let endX = e.type.includes('touch') ? e.changedTouches[0].clientX : e.clientX;
+                let diff = startX - endX;
+                
+                // Swipe threshold (50px)
+                if (Math.abs(diff) > 50) {
+                    shift(diff > 0 ? 1 : -1);
+                } else {
+                    startAutoSlide(); // Resume if swipe was too short
+                }
+                isDragging = false;
+            };
+
+            gallerySection.addEventListener('touchstart', handleStart, {passive: true});
+            gallerySection.addEventListener('touchend', handleEnd, {passive: true});
+            gallerySection.addEventListener('mousedown', handleStart);
+            window.addEventListener('mouseup', handleEnd);
+
+            // 4. CALENDAR & TIMER
+            let rot = 0;
             function spinCubes() {
+                const c1 = document.getElementById("wC1"), c2 = document.getElementById("wC2");
+                const n1 = document.getElementById("wN1"), n2 = document.getElementById("wN2");
                 if(!c1) return;
                 rot += 360;
                 c1.style.transform = `rotateX(${rot}deg) rotateY(${rot}deg)`;
@@ -242,27 +378,20 @@
                     n1.textContent = Math.floor(Math.random() * 10);
                     n2.textContent = Math.floor(Math.random() * 10);
                 }, 100);
-                setTimeout(() => {
-                    clearInterval(mix);
-                    n1.textContent = "1"; n2.textContent = "9";
-                }, 1500);
+                setTimeout(() => { clearInterval(mix); n1.textContent = "1"; n2.textContent = "9"; }, 1500);
             }
-            setInterval(spinCubes, 6000);
-            setTimeout(spinCubes, 1000);
+            setInterval(spinCubes, 6000); spinCubes();
 
-            // TIMER
             const target = new Date("April 19, 2026 10:00:00").getTime();
             function updateTimer() {
-                const now = new Date().getTime();
-                const diff = target - now;
+                const now = new Date().getTime(), diff = target - now;
                 if (diff < 0) return;
                 document.getElementById("wD").innerText = String(Math.floor(diff / 864e5)).padStart(2, '0');
                 document.getElementById("wH").innerText = String(Math.floor((diff % 864e5) / 36e5)).padStart(2, '0');
                 document.getElementById("wM").innerText = String(Math.floor((diff % 36e5) / 6e4)).padStart(2, '0');
                 document.getElementById("wS").innerText = String(Math.floor((diff % 6e4) / 1e3)).padStart(2, '0');
             }
-            setInterval(updateTimer, 1000);
-            updateTimer();
+            setInterval(updateTimer, 1000); updateTimer();
         })();
     </script>
 </div>
