@@ -20,9 +20,11 @@
             flex-direction: column;
         }
 
+        /* 1. HERO VIDEO */
         #w-hero { height: 85vh; width: 100%; background: #000; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; }
         #w-video { width: 100%; height: 100%; object-fit: cover; }
 
+        /* 2. CONTENT SECTIONS */
         .w-section { padding: 50px 20px 0px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; }
         .w-reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); margin-bottom: 10px; width: 100%; }
         .w-reveal.active { opacity: 1; transform: translateY(0); }
@@ -30,7 +32,7 @@
         #w-root h2 { font-family: 'Great Vibes', cursive; font-size: clamp(2.8rem, 12vw, 3.5rem); color: var(--w-sage); margin: 0; }
         .w-sub { font-family: 'Cinzel', serif; font-size: .7rem; letter-spacing: 3px; color: var(--w-gold); margin-top: 5px; text-transform: uppercase; }
 
-        /* CALENDAR */
+        /* 3. CALENDAR CUBE */
         .w-card-box { background: var(--w-glass); padding: 25px 15px; border-radius: 80px 80px 20px 20px; width: 75%; max-width: 230px; border: 0.5px solid rgba(197, 160, 89, 0.3); margin: 0 auto; }
         .w-cubes { display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; }
         .w-wrap { width: 50px; height: 50px; perspective: 1000px; }
@@ -41,17 +43,17 @@
         .w-top { transform: rotateX(90deg) translateZ(25px); }
         .w-bottom { transform: rotateX(-90deg) translateZ(25px); }
 
-        /* TIMER */
+        /* 4. TIMER */
         .w-timer-container { display: flex; justify-content: center; align-items: center; gap: 5px; margin-top: 5px; }
         .w-t-unit { display: flex; flex-direction: column; align-items: center; min-width: 40px; }
         .w-val { font-size: 1.4rem; color: var(--w-dark); }
         .w-label { font-size: 0.5rem; text-transform: uppercase; color: var(--w-gold); letter-spacing: 1px; }
 
-        /* VENUE */
+        /* 5. VENUE */
         .w-venue-pre { font-family: 'Cinzel', serif; font-size: 0.65rem; color: var(--w-gold); text-transform: uppercase; margin-bottom: 8px; display: block; }
         .w-venue-name { font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 4px; color: var(--w-dark); }
 
-        /* GALLERY - IMPROVED VISUALS */
+        /* 6. GALLERY - FIXED VISUALS & SWIPING */
         .w-gallery-section {
             padding: 40px 0 120px 0;
             display: flex;
@@ -60,14 +62,14 @@
             position: relative;
             overflow: hidden;
             min-height: 320px;
-            touch-action: pan-y; 
+            touch-action: pan-y; /* Crucial for vertical scrolling */
             cursor: grab;
         }
 
         .w-image-stack {
             position: relative;
             width: 280px; 
-            height: 210px; /* Improved aspect ratio */
+            height: 210px;
         }
 
         .w-stack-img {
@@ -78,22 +80,24 @@
             border-radius: 15px;
             box-shadow: 0 15px 35px rgba(58, 68, 55, 0.15);
             border: 4px solid #fff;
-            transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, box-shadow 0.3s ease;
+            transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
             touch-action: pan-y; 
             pointer-events: auto;
+            user-select: none;
+            -webkit-user-drag: none;
         }
 
-        /* Better initial stacking */
+        /* Initial Stack */
         .img-1 { transform: translate(0, 0) rotate(0deg); z-index: 3; }
         .img-2 { transform: translate(10px, 10px) rotate(3deg); z-index: 2; }
         .img-3 { transform: translate(20px, 20px) rotate(6deg); z-index: 1; }
 
-        /* Wider scatter to make them "visible" */
+        /* Spread Animation */
         .scatter.img-1 { transform: translate(-110px, -20px) rotate(-8deg); }
         .scatter.img-2 { transform: translate(0, 15px) rotate(0deg); }
         .scatter.img-3 { transform: translate(110px, -20px) rotate(8deg); }
 
-        /* Carousel Active State */
+        /* Carousel States */
         .carousel-active .w-stack-img { opacity: 0; transform: scale(0.7) translate(0,0); }
         .carousel-active .w-stack-img.active { 
             opacity: 1; 
@@ -101,8 +105,8 @@
             z-index: 20; 
             box-shadow: 0 20px 40px rgba(113, 125, 108, 0.3);
         }
-        .carousel-active .w-stack-img.next { opacity: 0.4; transform: scale(0.8) translate(260px, 0); z-index: 10; }
-        .carousel-active .w-stack-img.prev { opacity: 0.4; transform: scale(0.8) translate(-260px, 0); z-index: 10; }
+        .carousel-active .w-stack-img.next { opacity: 0.4; transform: scale(0.8) translate(280px, 0); z-index: 10; }
+        .carousel-active .w-stack-img.prev { opacity: 0.4; transform: scale(0.8) translate(-280px, 0); z-index: 10; }
         
         .is-dragging .w-stack-img { transition: transform 0.1s linear, opacity 0.3s ease !important; }
     </style>
@@ -159,11 +163,13 @@
             const images = [document.getElementById('gImg1'), document.getElementById('gImg2'), document.getElementById('gImg3')];
             let carouselActive = false, currentIndex = 0;
 
+            // 1. REVEAL OBSERVER
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("active"); });
             }, { threshold: 0.1 });
             document.querySelectorAll(".w-reveal").forEach(r => observer.observe(r));
 
+            // 2. GALLERY TRIGGER
             const galleryObserver = new IntersectionObserver(entries => {
                 const entry = entries[0];
                 if (entry.isIntersecting) {
@@ -183,7 +189,8 @@
             }, { threshold: 0.4 });
             galleryObserver.observe(gallerySection);
 
-            let startX = 0, startY = 0, isDragging = false, isScrolling = false;
+            // 3. LOGIC-BASED SWIPE (FIXES POSITIONING & SCROLLING)
+            let startX = 0, startY = 0, isDragging = false, directionChosen = false, isScrolling = false;
 
             function updateCarousel(offset = 0) {
                 if (!carouselActive) return;
@@ -192,67 +199,82 @@
                     let pos = (i - currentIndex + images.length) % images.length;
                     if (pos === 0) { 
                         img.classList.add('active'); 
-                        img.style.transform = `translateX(${offset}px) scale(${1.1 - Math.abs(offset/1000)})`;
+                        img.style.transform = `translateX(${offset}px) scale(${1.1 - Math.abs(offset/1200)})`;
                         img.style.opacity = 1;
-                    }
-                    else if (pos === 1) { 
+                    } else if (pos === 1) { 
                         img.classList.add('next'); 
-                        img.style.transform = `translateX(${260 + offset}px) scale(0.8)`; 
+                        img.style.transform = `translateX(${280 + offset}px) scale(0.8)`; 
                         img.style.opacity = 0.4;
-                    }
-                    else { 
+                    } else { 
                         img.classList.add('prev'); 
-                        img.style.transform = `translateX(${-260 + offset}px) scale(0.8)`; 
+                        img.style.transform = `translateX(${-280 + offset}px) scale(0.8)`; 
                         img.style.opacity = 0.4;
                     }
                 });
             }
 
-            const onStart = (e) => {
+            const handleStart = (e) => {
                 if (!carouselActive) return;
                 isDragging = true;
                 isScrolling = false;
+                directionChosen = false;
                 startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
                 startY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
                 gallerySection.classList.add('is-dragging');
             };
 
-            const onMove = (e) => {
+            const handleMove = (e) => {
                 if (!isDragging || isScrolling) return;
-                const x = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-                const y = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
-                const diffX = x - startX;
-                const diffY = y - startY;
 
-                if (Math.abs(diffX) > Math.abs(diffY)) {
-                    if (Math.abs(diffX) > 5) {
-                        if (e.cancelable) e.preventDefault();
-                        updateCarousel(diffX);
+                const currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+                const currentY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+                const diffX = currentX - startX;
+                const diffY = currentY - startY;
+
+                if (!directionChosen) {
+                    // Decide if user wants to swipe image or scroll page
+                    if (Math.abs(diffX) > Math.abs(diffY)) {
+                        directionChosen = true; // Swiping Image
+                    } else if (Math.abs(diffY) > 6) {
+                        isScrolling = true; // Scrolling Page
+                        isDragging = false;
+                        updateCarousel(0);
+                        return;
                     }
-                } else if (Math.abs(diffY) > 5) {
-                    isScrolling = true;
-                    isDragging = false;
-                    updateCarousel(0);
+                }
+
+                if (directionChosen) {
+                    if (e.cancelable) e.preventDefault();
+                    updateCarousel(diffX);
                 }
             };
 
-            const onEnd = (e) => {
+            const handleEnd = (e) => {
                 if (!isDragging) return;
-                isDragging = false;
-                gallerySection.classList.remove('is-dragging');
                 const endX = e.type.includes('touch') ? (e.changedTouches[0] ? e.changedTouches[0].clientX : startX) : e.clientX;
                 const diff = startX - endX;
-                if (Math.abs(diff) > 50) currentIndex = (currentIndex + (diff > 0 ? 1 : -1) + images.length) % images.length;
+
+                gallerySection.classList.remove('is-dragging');
+                if (Math.abs(diff) > 50 && directionChosen) {
+                    currentIndex = (currentIndex + (diff > 0 ? 1 : -1) + images.length) % images.length;
+                }
+                
+                isDragging = false;
+                directionChosen = false;
                 updateCarousel(0);
             };
 
-            gallerySection.addEventListener('mousedown', onStart);
-            window.addEventListener('mousemove', onMove, {passive: false});
-            window.addEventListener('mouseup', onEnd);
-            gallerySection.addEventListener('touchstart', onStart, {passive: true});
-            window.addEventListener('touchmove', onMove, {passive: false});
-            window.addEventListener('touchend', onEnd);
+            // Start on gallery
+            gallerySection.addEventListener('touchstart', handleStart, {passive: true});
+            gallerySection.addEventListener('mousedown', handleStart);
 
+            // Track move/end on document so swipe works in any position
+            document.addEventListener('touchmove', handleMove, {passive: false});
+            document.addEventListener('mousemove', handleMove);
+            document.addEventListener('touchend', handleEnd);
+            document.addEventListener('mouseup', handleEnd);
+
+            // 4. TIMER & CUBES
             let rot = 0;
             function spinCubes() {
                 const c1 = document.getElementById("wC1"), c2 = document.getElementById("wC2");
