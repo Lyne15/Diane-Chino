@@ -1,302 +1,288 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <div id="w-root">
-    <style>
-        /* CSS VARIABLES & RESET */
-        #w-root {
-            --w-sage: #717d6c;
-            --w-dark: #3a4437;
-            --w-gold: #c5a059;
-            --w-cream: #fcfaf2;
-            --w-glass: rgba(255, 255, 255, 0.85);
-            font-family: 'Playfair Display', serif;
-            background: var(--w-cream);
-            color: var(--w-dark);
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-        }
+<style>
+    /* CSS VARIABLES & RESET */
+    #w-root {
+        --w-sage: #717d6c;
+        --w-dark: #3a4437;
+        --w-gold: #c5a059;
+        --w-cream: #fcfaf2;
+        --w-glass: rgba(255, 255, 255, 0.85);
+        font-family: 'Playfair Display', serif;
+        background: var(--w-cream);
+        color: var(--w-dark);
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+    }
 
-        /* HERO VIDEO */
-        #w-hero { height: 85vh; width: 100%; background: #000; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; }
-        #w-video { width: 100%; height: 100%; object-fit: cover; }
+    /* HERO VIDEO */
+    #w-hero { height: 85vh; width: 100%; background: #000; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; }
+    #w-video { width: 100%; height: 100%; object-fit: cover; }
 
-        /* CONTENT SECTIONS */
-        .w-section { padding: 50px 20px 0px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; }
-        .w-reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); margin-bottom: 10px; width: 100%; }
-        .w-reveal.active { opacity: 1; transform: translateY(0); }
+    /* CONTENT SECTIONS */
+    .w-section { padding: 50px 20px 0px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .w-reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); margin-bottom: 10px; width: 100%; }
+    .w-reveal.active { opacity: 1; transform: translateY(0); }
 
-        #w-root h2 { font-family: 'Great Vibes', cursive; font-size: clamp(2.8rem, 12vw, 3.5rem); color: var(--w-sage); margin: 0; }
-        .w-sub { font-family: 'Cinzel', serif; font-size: .7rem; letter-spacing: 3px; color: var(--w-gold); margin-top: 5px; text-transform: uppercase; }
+    #w-root h2 { font-family: 'Great Vibes', cursive; font-size: clamp(2.8rem, 12vw, 3.5rem); color: var(--w-sage); margin: 0; }
+    .w-sub { font-family: 'Cinzel', serif; font-size: .7rem; letter-spacing: 3px; color: var(--w-gold); margin-top: 5px; text-transform: uppercase; }
 
-        /* CALENDAR CUBE */
-        .w-card-box { background: var(--w-glass); padding: 25px 15px; border-radius: 80px 80px 20px 20px; width: 75%; max-width: 230px; border: 0.5px solid rgba(197, 160, 89, 0.3); margin: 0 auto; }
-        .w-cubes { display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; }
-        .w-wrap { width: 50px; height: 50px; perspective: 1000px; }
-        .w-cube { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 1.5s cubic-bezier(.4, 0, 0.2, 1); }
-        .w-face { position: absolute; width: 50px; height: 50px; background: #fff; border: 0.5px solid var(--w-gold); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; font-family: 'Cinzel', serif; color: var(--w-dark); }
-        .w-front { transform: rotateY(0deg) translateZ(25px); }
-        .w-back { transform: rotateY(180deg) translateZ(25px); }
-        .w-top { transform: rotateX(90deg) translateZ(25px); }
-        .w-bottom { transform: rotateX(-90deg) translateZ(25px); }
+    /* CALENDAR CUBE */
+    .w-card-box { background: var(--w-glass); padding: 25px 15px; border-radius: 80px 80px 20px 20px; width: 75%; max-width: 230px; border: 0.5px solid rgba(197, 160, 89, 0.3); margin: 0 auto; }
+    .w-cubes { display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; }
+    .w-wrap { width: 50px; height: 50px; perspective: 1000px; }
+    .w-cube { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 1.5s cubic-bezier(.4, 0, 0.2, 1); }
+    .w-face { position: absolute; width: 50px; height: 50px; background: #fff; border: 0.5px solid var(--w-gold); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; font-family: 'Cinzel', serif; color: var(--w-dark); }
+    .w-front { transform: rotateY(0deg) translateZ(25px); }
+    .w-back { transform: rotateY(180deg) translateZ(25px); }
+    .w-top { transform: rotateX(90deg) translateZ(25px); }
+    .w-bottom { transform: rotateX(-90deg) translateZ(25px); }
 
-        /* TIMER */
-        .w-timer-container { display: flex; justify-content: center; align-items: center; gap: 5px; margin-top: 5px; }
-        .w-t-unit { display: flex; flex-direction: column; align-items: center; min-width: 40px; }
-        .w-val { font-size: 1.4rem; color: var(--w-dark); }
-        .w-label { font-size: 0.5rem; text-transform: uppercase; color: var(--w-gold); letter-spacing: 1px; }
+    /* TIMER */
+    .w-timer-container { display: flex; justify-content: center; align-items: center; gap: 5px; margin-top: 5px; }
+    .w-t-unit { display: flex; flex-direction: column; align-items: center; min-width: 40px; }
+    .w-val { font-size: 1.4rem; color: var(--w-dark); }
+    .w-label { font-size: 0.5rem; text-transform: uppercase; color: var(--w-gold); letter-spacing: 1px; }
 
-        /* VENUE */
-        .w-venue-pre { font-family: 'Cinzel', serif; font-size: 0.65rem; color: var(--w-gold); text-transform: uppercase; margin-bottom: 8px; display: block; }
-        .w-venue-name { font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 4px; color: var(--w-dark); }
+    /* VENUE */
+    .w-venue-pre { font-family: 'Cinzel', serif; font-size: 0.65rem; color: var(--w-gold); text-transform: uppercase; margin-bottom: 8px; display: block; }
+    .w-venue-name { font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 4px; color: var(--w-dark); }
 
-        /* GALLERY */
-        .w-gallery-section {
-            padding: 40px 0 120px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            min-height: 320px;
-            touch-action: pan-y; /* vertical scroll allowed */
-            cursor: grab;
-        }
+    /* GALLERY */
+    .w-gallery-section {
+        padding: 40px 0 120px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        min-height: 320px;
+        touch-action: pan-y;
+        cursor: grab;
+    }
 
-        .w-image-stack {
-            position: relative;
-            width: 280px; 
-            height: 210px;
-        }
+    .w-image-stack { position: relative; width: 280px; height: 210px; }
 
-        .w-stack-img {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(58, 68, 55, 0.15);
-            border: 4px solid #fff;
-            transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
-            pointer-events: none; /* let container handle swipe */
-            user-select: none;
-            -webkit-user-drag: none;
-        }
+    .w-stack-img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 15px;
+        box-shadow: 0 15px 35px rgba(58, 68, 55, 0.15);
+        border: 4px solid #fff;
+        transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+        pointer-events: none; /* container handles swipe */
+        user-select: none;
+        -webkit-user-drag: none;
+    }
 
-        /* Initial Stack */
-        .img-1 { transform: translate(0, 0) rotate(0deg); z-index: 3; }
-        .img-2 { transform: translate(10px, 10px) rotate(3deg); z-index: 2; }
-        .img-3 { transform: translate(20px, 20px) rotate(6deg); z-index: 1; }
+    /* Initial Stack */
+    .img-1 { transform: translate(0, 0) rotate(0deg); z-index: 3; }
+    .img-2 { transform: translate(10px, 10px) rotate(3deg); z-index: 2; }
+    .img-3 { transform: translate(20px, 20px) rotate(6deg); z-index: 1; }
 
-        /* Spread Animation */
-        .scatter.img-1 { transform: translate(-110px, -20px) rotate(-8deg); }
-        .scatter.img-2 { transform: translate(0, 15px) rotate(0deg); }
-        .scatter.img-3 { transform: translate(110px, -20px) rotate(8deg); }
+    /* Spread Animation */
+    .scatter.img-1 { transform: translate(-110px, -20px) rotate(-8deg); }
+    .scatter.img-2 { transform: translate(0, 15px) rotate(0deg); }
+    .scatter.img-3 { transform: translate(110px, -20px) rotate(8deg); }
 
-        /* Carousel States */
-        .carousel-active .w-stack-img { opacity: 0; transform: scale(0.7) translate(0,0); }
-        .carousel-active .w-stack-img.active { 
-            opacity: 1; 
-            transform: scale(1.1) translate(0, 0); 
-            z-index: 20; 
-            box-shadow: 0 20px 40px rgba(113, 125, 108, 0.3);
-        }
-        .carousel-active .w-stack-img.next { opacity: 0.4; transform: scale(0.8) translate(280px, 0); z-index: 10; }
-        .carousel-active .w-stack-img.prev { opacity: 0.4; transform: scale(0.8) translate(-280px, 0); z-index: 10; }
+    /* Carousel States */
+    .carousel-active .w-stack-img { opacity: 0; transform: scale(0.7) translate(0,0); }
+    .carousel-active .w-stack-img.active { 
+        opacity: 1; 
+        transform: scale(1.1) translate(0, 0); 
+        z-index: 20; 
+        box-shadow: 0 20px 40px rgba(113, 125, 108, 0.3);
+    }
+    .carousel-active .w-stack-img.next { opacity: 0.4; transform: scale(0.8) translate(280px, 0); z-index: 10; }
+    .carousel-active .w-stack-img.prev { opacity: 0.4; transform: scale(0.8) translate(-280px, 0); z-index: 10; }
 
-        .is-dragging .w-stack-img { transition: transform 0.1s linear, opacity 0.3s ease !important; }
-    </style>
+    .is-dragging .w-stack-img { transition: transform 0.1s linear, opacity 0.3s ease !important; }
+</style>
 
-    <section id="w-hero">
-        <video id="w-video" autoplay muted playsinline loop>
-            <source src="./details.mp4" type="video/mp4">
-        </video>
-    </section>
+<section id="w-hero">
+    <video id="w-video" autoplay muted playsinline loop>
+        <source src="./details.mp4" type="video/mp4">
+    </video>
+</section>
 
-    <section class="w-section">
-        <div class="w-reveal">
-            <h2>Save the Date</h2>
-            <div class="w-sub">Chino & Diane</div>
-        </div>
-        <div class="w-reveal">
-            <div class="w-card-box">
-                <div class="w-cubes">
-                    <div class="w-wrap"><div class="w-cube" id="wC1"><div class="w-face w-front" id="wN1">1</div><div class="w-face w-back">0</div><div class="w-face w-top">4</div><div class="w-face w-bottom">7</div></div></div>
-                    <div class="w-wrap"><div class="w-cube" id="wC2"><div class="w-face w-front" id="wN2">9</div><div class="w-face w-back">2</div><div class="w-face w-top">5</div><div class="w-face w-bottom">8</div></div></div>
-                </div>
-                <div class="w-month-wrap">
-                    <span class="w-month-text">APRIL</span>
-                    <div class="w-year-line"></div>
-                    <span class="w-year-text">2026</span>
-                </div>
+<section class="w-section">
+    <div class="w-reveal">
+        <h2>Save the Date</h2>
+        <div class="w-sub">Chino & Diane</div>
+    </div>
+    <div class="w-reveal">
+        <div class="w-card-box">
+            <div class="w-cubes">
+                <div class="w-wrap"><div class="w-cube" id="wC1"><div class="w-face w-front" id="wN1">1</div><div class="w-face w-back">0</div><div class="w-face w-top">4</div><div class="w-face w-bottom">7</div></div></div>
+                <div class="w-wrap"><div class="w-cube" id="wC2"><div class="w-face w-front" id="wN2">9</div><div class="w-face w-back">2</div><div class="w-face w-top">5</div><div class="w-face w-bottom">8</div></div></div>
+            </div>
+            <div class="w-month-wrap">
+                <span class="w-month-text">APRIL</span>
+                <div class="w-year-line"></div>
+                <span class="w-year-text">2026</span>
             </div>
         </div>
-        <div class="w-reveal">
-            <div class="w-timer-container">
-                <div class="w-t-unit"><span class="w-val" id="wD">00</span><span class="w-label">Days</span></div>
-                <div class="w-t-unit"><span class="w-val" id="wH">00</span><span class="w-label">Hrs</span></div>
-                <div class="w-t-unit"><span class="w-val" id="wM">00</span><span class="w-label">Min</span></div>
-                <div class="w-t-unit"><span class="w-val" id="wS">00</span><span class="w-label">Sec</span></div>
-            </div>
+    </div>
+    <div class="w-reveal">
+        <div class="w-timer-container">
+            <div class="w-t-unit"><span class="w-val" id="wD">00</span><span class="w-label">Days</span></div>
+            <div class="w-t-unit"><span class="w-val" id="wH">00</span><span class="w-label">Hrs</span></div>
+            <div class="w-t-unit"><span class="w-val" id="wM">00</span><span class="w-label">Min</span></div>
+            <div class="w-t-unit"><span class="w-val" id="wS">00</span><span class="w-label">Sec</span></div>
         </div>
-        <div class="w-reveal">
-            <span class="w-venue-pre">The place to be for our wedding:</span>
-            <div class="w-venue-name">BISTRO ALEJANDRO</div>
-        </div>
-    </section>
+    </div>
+    <div class="w-reveal">
+        <span class="w-venue-pre">The place to be for our wedding:</span>
+        <div class="w-venue-name">BISTRO ALEJANDRO</div>
+    </div>
+</section>
 
-    <section class="w-gallery-section" id="wGalleryTrigger">
-        <div class="w-image-stack" id="wSlider">
-            <img src="./place.jpeg" class="w-stack-img img-1" id="gImg1">
-            <img src="./place2.png" class="w-stack-img img-2" id="gImg2">
-            <img src="./place3.png" class="w-stack-img img-3" id="gImg3">
-        </div>
-    </section>
+<section class="w-gallery-section" id="wGalleryTrigger">
+    <div class="w-image-stack" id="wSlider">
+        <img src="./place.jpeg" class="w-stack-img img-1" id="gImg1">
+        <img src="./place2.png" class="w-stack-img img-2" id="gImg2">
+        <img src="./place3.png" class="w-stack-img img-3" id="gImg3">
+    </div>
+</section>
 
-    <script>
-        (function() {
-            const gallerySection = document.getElementById('wGalleryTrigger');
-            const images = [document.getElementById('gImg1'), document.getElementById('gImg2'), document.getElementById('gImg3')];
-            let carouselActive = false, currentIndex = 0;
+<script>
+(function() {
+    const gallerySection = document.getElementById('wGalleryTrigger');
+    const images = [document.getElementById('gImg1'), document.getElementById('gImg2'), document.getElementById('gImg3')];
+    let carouselActive = false, currentIndex = 0;
 
-            // REVEAL OBSERVER
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("active"); });
-            }, { threshold: 0.1 });
-            document.querySelectorAll(".w-reveal").forEach(r => observer.observe(r));
+    // REVEAL
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("active"); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll(".w-reveal").forEach(r => observer.observe(r));
 
-            // GALLERY TRIGGER
-            const galleryObserver = new IntersectionObserver(entries => {
-                const entry = entries[0];
-                if (entry.isIntersecting) {
-                    images.forEach((img, i) => setTimeout(() => img.classList.add('scatter'), i * 150));
-                    setTimeout(() => {
-                        if (entry.isIntersecting) {
-                            carouselActive = true;
-                            gallerySection.classList.add('carousel-active');
-                            updateCarousel();
-                        }
-                    }, 800);
-                } else {
-                    carouselActive = false;
-                    gallerySection.classList.remove('carousel-active');
-                    images.forEach(img => { img.classList.remove('scatter'); img.style.transform = ''; img.style.opacity = ''; });
+    // GALLERY TRIGGER
+    const galleryObserver = new IntersectionObserver(entries => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+            images.forEach((img,i)=>setTimeout(()=>img.classList.add('scatter'),i*150));
+            setTimeout(()=>{ 
+                if(entry.isIntersecting){
+                    carouselActive=true;
+                    gallerySection.classList.add('carousel-active');
+                    updateCarousel();
                 }
-            }, { threshold: 0.4 });
-            galleryObserver.observe(gallerySection);
+            },800);
+        } else {
+            carouselActive=false;
+            gallerySection.classList.remove('carousel-active');
+            images.forEach(img=>{ img.classList.remove('scatter'); img.style.transform=''; img.style.opacity=''; });
+        }
+    }, {threshold:0.4});
+    galleryObserver.observe(gallerySection);
 
-            // CAROUSEL LOGIC
-            let startX = 0, startY = 0, isDragging = false, directionChosen = false;
-            const SWIPE_THRESHOLD = 10;
+    // CAROUSEL LOGIC - SMOOTH SWIPE ANYWHERE
+    let startX=0, isDragging=false, lastX=0, velocity=0, animating=false;
 
-            function updateCarousel(offset = 0) {
-                if (!carouselActive) return;
-                images.forEach((img, i) => {
-                    img.classList.remove('active', 'next', 'prev');
-                    let pos = (i - currentIndex + images.length) % images.length;
-                    if (pos === 0) { 
-                        img.classList.add('active'); 
-                        img.style.transform = `translateX(${offset}px) scale(${1.1 - Math.abs(offset/1200)})`;
-                        img.style.opacity = 1;
-                        img.style.zIndex = 20;
-                    } else if (pos === 1) { 
-                        img.classList.add('next'); 
-                        img.style.transform = `translateX(${280 + offset}px) scale(0.8)`; 
-                        img.style.opacity = 0.4;
-                        img.style.zIndex = 10;
-                    } else { 
-                        img.classList.add('prev'); 
-                        img.style.transform = `translateX(${-280 + offset}px) scale(0.8)`; 
-                        img.style.opacity = 0.4;
-                        img.style.zIndex = 10;
-                    }
-                });
+    function updateCarousel(offset=0){
+        if(!carouselActive) return;
+        images.forEach((img,i)=>{
+            img.classList.remove('active','next','prev');
+            let pos = (i-currentIndex+images.length)%images.length;
+            if(pos===0){
+                img.classList.add('active');
+                img.style.transform=`translateX(${offset}px) scale(${1.1 - Math.abs(offset/1200)})`;
+                img.style.opacity=1;
+                img.style.zIndex=20;
+            } else if(pos===1){
+                img.classList.add('next');
+                img.style.transform=`translateX(${280 + offset}px) scale(0.8)`;
+                img.style.opacity=0.4;
+                img.style.zIndex=10;
+            } else {
+                img.classList.add('prev');
+                img.style.transform=`translateX(${-280 + offset}px) scale(0.8)`;
+                img.style.opacity=0.4;
+                img.style.zIndex=10;
             }
+        });
+    }
 
-            const handleStart = (e) => {
-                if (!carouselActive) return;
-                isDragging = true;
-                directionChosen = false;
-                startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-                startY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
-                gallerySection.classList.add('is-dragging');
-            };
+    function animateMomentum(targetOffset){
+        if(animating) return;
+        animating=true;
+        let offset=targetOffset;
+        const step=()=> {
+            offset*=0.95; // smooth easing
+            if(Math.abs(offset)<1){ animating=false; updateCarousel(0); return; }
+            updateCarousel(offset);
+            requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+    }
 
-            const handleMove = (e) => {
-                if (!isDragging) return;
+    const handleStart = (e)=>{
+        if(!carouselActive) return;
+        isDragging=true;
+        startX=e.type.includes('touch')? e.touches[0].clientX: e.clientX;
+        lastX=startX;
+        velocity=0;
+        gallerySection.classList.add('is-dragging');
+    };
 
-                const currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-                const currentY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
-                const diffX = currentX - startX;
-                const diffY = currentY - startY;
+    const handleMove = (e)=>{
+        if(!isDragging) return;
+        const x=e.type.includes('touch')? e.touches[0].clientX: e.clientX;
+        const delta = x-lastX;
+        velocity = delta;
+        updateCarousel(x-startX);
+        lastX=x;
+    };
 
-                if (!directionChosen) {
-                    if (Math.abs(diffX) > SWIPE_THRESHOLD) {
-                        directionChosen = 'swipe';
-                    } else if (Math.abs(diffY) > SWIPE_THRESHOLD) {
-                        directionChosen = 'scroll';
-                    }
-                }
+    const handleEnd = (e)=>{
+        if(!isDragging) return;
+        isDragging=false;
+        gallerySection.classList.remove('is-dragging');
+        if(Math.abs(velocity)>20){
+            currentIndex=(currentIndex+(velocity<0?1:-1)+images.length)%images.length;
+        }
+        animateMomentum(velocity*5); // smooth snap
+    };
 
-                if (directionChosen === 'swipe') {
-                    if (e.cancelable) e.preventDefault();
-                    updateCarousel(diffX);
-                } else if (directionChosen === 'scroll') {
-                    isDragging = false; // allow vertical scroll
-                }
-            };
+    gallerySection.addEventListener('touchstart',handleStart,{passive:true});
+    gallerySection.addEventListener('mousedown',handleStart);
+    document.addEventListener('touchmove',handleMove,{passive:false});
+    document.addEventListener('mousemove',handleMove);
+    document.addEventListener('touchend',handleEnd);
+    document.addEventListener('mouseup',handleEnd);
 
-            const handleEnd = (e) => {
-                if (!isDragging) return;
-                const endX = e.type.includes('touch') ? (e.changedTouches[0] ? e.changedTouches[0].clientX : startX) : e.clientX;
-                const diff = startX - endX;
+    // TIMER & CUBES
+    let rot=0;
+    function spinCubes(){
+        const c1=document.getElementById("wC1"), c2=document.getElementById("wC2");
+        const n1=document.getElementById("wN1"), n2=document.getElementById("wN2");
+        if(!c1) return;
+        rot+=360;
+        c1.style.transform=`rotateX(${rot}deg) rotateY(${rot}deg)`;
+        c2.style.transform=`rotateX(${rot}deg) rotateY(${rot}deg)`;
+        const mix=setInterval(()=>{ n1.textContent=Math.floor(Math.random()*10); n2.textContent=Math.floor(Math.random()*10); },100);
+        setTimeout(()=>{ clearInterval(mix); n1.textContent="1"; n2.textContent="9"; },1500);
+    }
+    setInterval(spinCubes,6000); spinCubes();
 
-                gallerySection.classList.remove('is-dragging');
-
-                if (directionChosen === 'swipe' && Math.abs(diff) > 50) {
-                    currentIndex = (currentIndex + (diff > 0 ? 1 : -1) + images.length) % images.length;
-                }
-
-                isDragging = false;
-                directionChosen = false;
-                updateCarousel(0);
-            };
-
-            // Attach events to container
-            gallerySection.addEventListener('touchstart', handleStart, {passive: true});
-            gallerySection.addEventListener('mousedown', handleStart);
-            document.addEventListener('touchmove', handleMove, {passive: false});
-            document.addEventListener('mousemove', handleMove);
-            document.addEventListener('touchend', handleEnd);
-            document.addEventListener('mouseup', handleEnd);
-
-            // TIMER & CUBES
-            let rot = 0;
-            function spinCubes() {
-                const c1 = document.getElementById("wC1"), c2 = document.getElementById("wC2");
-                const n1 = document.getElementById("wN1"), n2 = document.getElementById("wN2");
-                if(!c1) return;
-                rot += 360;
-                c1.style.transform = `rotateX(${rot}deg) rotateY(${rot}deg)`;
-                c2.style.transform = `rotateX(${rot}deg) rotateY(${rot}deg)`;
-                const mix = setInterval(() => { n1.textContent = Math.floor(Math.random() * 10); n2.textContent = Math.floor(Math.random() * 10); }, 100);
-                setTimeout(() => { clearInterval(mix); n1.textContent = "1"; n2.textContent = "9"; }, 1500);
-            }
-            setInterval(spinCubes, 6000); spinCubes();
-
-            const target = new Date("April 19, 2026 10:00:00").getTime();
-            function updateTimer() {
-                const now = new Date().getTime(), diff = target - now;
-                if (diff < 0) return;
-                document.getElementById("wD").innerText = String(Math.floor(diff / 864e5)).padStart(2, '0');
-                document.getElementById("wH").innerText = String(Math.floor((diff % 864e5) / 36e5)).padStart(2, '0');
-                document.getElementById("wM").innerText = String(Math.floor((diff % 36e5) / 6e4)).padStart(2, '0');
-                document.getElementById("wS").innerText = String(Math.floor((diff % 6e4) / 1e3)).padStart(2, '0');
-            }
-            setInterval(updateTimer, 1000); updateTimer();
-        })();
-    </script>
+    const target=new Date("April 19, 2026 10:00:00").getTime();
+    function updateTimer(){
+        const now=new Date().getTime(), diff=target-now;
+        if(diff<0) return;
+        document.getElementById("wD").innerText=String(Math.floor(diff/864e5)).padStart(2,'0');
+        document.getElementById("wH").innerText=String(Math.floor((diff%864e5)/36e5)).padStart(2,'0');
+        document.getElementById("wM").innerText=String(Math.floor((diff%36e5)/6e4)).padStart(2,'0');
+        document.getElementById("wS").innerText=String(Math.floor((diff%6e4)/1e3)).padStart(2,'0');
+    }
+    setInterval(updateTimer,1000); updateTimer();
+})();
+</script>
 </div>
