@@ -137,7 +137,6 @@
         .w-time-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.9rem; color: var(--w-sage); margin-top: 10px; }
 
         /* 5. VENUE TEXT */
-    
         .w-venue-pre {
             font-family: 'Cinzel', serif;
             font-size: 0.65rem;
@@ -164,8 +163,8 @@
             align-items: center;
             position: relative;
             overflow: hidden;
-            min-height: 220px;
-            touch-action: pan-y;
+            min-height: 250px;
+            touch-action: pan-y; /* Allows vertical scrolling */
             cursor: grab;
         }
 
@@ -188,15 +187,15 @@
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             border: 4px solid #fff;
-            opacity: 1; /* Keep visible so the fold/unfold is seen */
             transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
-            pointer-events: none;
+            pointer-events: auto; /* Changed to allow interaction */
             user-select: none;
             -webkit-user-drag: none;
             z-index: 1;
+            touch-action: none; /* Critical: tells mobile browser to let us handle the touch */
         }
 
-        /* Initial Stacked Layout (The "Folded" State) */
+        /* Initial Stacked Layout */
         .img-1 { transform: translate(0, 0) rotate(0deg); z-index: 3; }
         .img-2 { transform: translate(8px, 8px) rotate(2deg); z-index: 2; }
         .img-3 { transform: translate(16px, 16px) rotate(4deg); z-index: 1; }
@@ -206,12 +205,10 @@
         .scatter.img-2 { transform: translate(0, 10px) rotate(0deg); }
         .scatter.img-3 { transform: translate(100px, -15px) rotate(6deg); }
 
-        /* Carousel Active State (after scatter) */
+        /* Carousel Active State */
         .carousel-active .w-stack-img {
             opacity: 0;
             transform: scale(0.8) translate(0, 0) rotate(0deg);
-            pointer-events: auto;
-            transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.3s ease;
         }
         .carousel-active .w-stack-img.active {
             opacity: 1;
@@ -232,7 +229,7 @@
     </style>
 
     <section id="w-hero">
-        <video id="w-video" autoplay muted playsinline>
+        <video id="w-video" autoplay muted playsinline loop>
             <source src="./details.mp4" type="video/mp4">
         </video>
     </section>
@@ -270,7 +267,7 @@
             <p class="w-time-text">Ten o'clock in the morning</p>
         </div>
 
-        <div class="w-reveal ">
+        <div class="w-reveal">
             <span class="w-venue-pre">The place to be for our wedding:</span>
             <div class="w-venue-name">BISTRO ALEJANDRO</div>
         </div>
@@ -297,16 +294,14 @@
             }, { threshold: 0.1 });
             document.querySelectorAll(".w-reveal").forEach(r => observer.observe(r));
 
-            // 2. BIDIRECTIONAL GALLERY OBSERVER (Centered Trigger)
+            // 2. GALLERY OBSERVER
             const galleryObserver = new IntersectionObserver(entries => {
                 const entry = entries[0];
                 if (entry.isIntersecting) {
-                    // PLAY ANIMATION (Unstack)
                     images.forEach((img, i) => {
                         setTimeout(() => img.classList.add('scatter'), i * 150);
                     });
                     
-                    // Delay activation of interactive carousel until scatter is done
                     setTimeout(() => {
                         if (entry.isIntersecting) {
                             carouselActive = true;
@@ -315,30 +310,29 @@
                         }
                     }, 800);
                 } else {
-                    // REVERSE ANIMATION (Fold back)
                     carouselActive = false;
                     gallerySection.classList.remove('carousel-active');
                     images.forEach(img => {
                         img.classList.remove('scatter');
-                        img.style.transform = ''; // Clear carousel overrides
+                        img.style.transform = '';
                         img.style.opacity = '';
                     });
                 }
-            }, { 
-                threshold: 0.7, // Trigger when 70% of section is in view (centered)
-                rootMargin: "0px" 
-            });
+            }, { threshold: 0.6 });
             galleryObserver.observe(gallerySection);
 
-            // 3. TOUCH/SWIPE ENGINE
+            // 3. IMPROVED SWIPE ENGINE
             let startX = 0, currentX = 0, isDragging = false;
+
             function updateCarousel(offset = 0) {
                 if (!carouselActive) return;
                 images.forEach((img, i) => {
                     img.classList.remove('active', 'next', 'prev');
                     let pos = (i - currentIndex + images.length) % images.length;
+                    
                     img.style.transform = '';
                     img.style.opacity = '';
+
                     if (pos === 0) { 
                         img.classList.add('active');
                         img.style.transform = `translateX(${offset}px) scale(${1 - Math.abs(offset/1200)})`;
@@ -353,36 +347,49 @@
                     }
                 });
             }
+
             const start = (e) => {
                 if (!carouselActive) return;
                 isDragging = true;
                 startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
                 gallerySection.classList.add('is-dragging');
             };
+
             const move = (e) => {
                 if (!isDragging) return;
                 currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
                 let walk = currentX - startX;
+                
+                // If dragging horizontally, prevent page scroll
+                if (Math.abs(walk) > 5 && e.cancelable) {
+                    e.preventDefault();
+                }
                 updateCarousel(walk);
             };
+
             const end = (e) => {
                 if (!isDragging) return;
                 isDragging = false;
                 gallerySection.classList.remove('is-dragging');
-                let endX = e.type.includes('touch') ? e.changedTouches[0].clientX : e.clientX;
+                
+                let endX = e.type.includes('touch') ? (e.changedTouches[0] ? e.changedTouches[0].clientX : currentX) : e.clientX;
                 let diff = startX - endX;
+                
                 if (Math.abs(diff) > 50) {
                     currentIndex = (currentIndex + (diff > 0 ? 1 : -1) + images.length) % images.length;
                 }
                 updateCarousel(0);
             };
 
+            // Event Listeners tied to the section, not the window
             gallerySection.addEventListener('mousedown', start);
-            window.addEventListener('mousemove', move);
-            window.addEventListener('mouseup', end);
-            gallerySection.addEventListener('touchstart', start, {passive: true});
-            gallerySection.addEventListener('touchmove', move, {passive: true});
-            gallerySection.addEventListener('touchend', end, {passive: true});
+            gallerySection.addEventListener('mousemove', move);
+            gallerySection.addEventListener('mouseup', end);
+            gallerySection.addEventListener('mouseleave', end);
+            
+            gallerySection.addEventListener('touchstart', start, {passive: false});
+            gallerySection.addEventListener('touchmove', move, {passive: false});
+            gallerySection.addEventListener('touchend', end);
 
             // 4. CUBE & TIMER
             let rot = 0;
