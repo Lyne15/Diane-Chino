@@ -8,7 +8,7 @@
         --w-dark: #3a4437;
         --w-gold: #c5a059;
         --w-cream: #fcfaf2;
-        --w-glass: rgba(255, 255, 255, 0.85);
+        --w-glass: rgba(255, 255, 255, 0.92);
         font-family: 'Playfair Display', serif;
         background: var(--w-cream);
         color: var(--w-dark);
@@ -18,92 +18,109 @@
         overflow-x: hidden;
         display: flex;
         flex-direction: column;
+        align-items: center; /* Sinisiguradong lahat ng direct children ay centered */
     }
 
     /* HERO VIDEO */
-    #w-hero { height: 85vh; width: 100%; background: #000; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; }
+    #w-hero { height: 80vh; width: 100%; background: #000; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; }
     #w-video { width: 100%; height: 100%; object-fit: cover; }
 
     /* CONTENT SECTIONS */
-    .w-section { padding: 50px 20px 0px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; }
-    .w-reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); margin-bottom: 10px; width: 100%; }
+    .w-section { 
+        width: 100%;
+        max-width: 600px;
+        padding: 50px 0px 20px 0px;
+        text-align: center; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        gap: 25px;
+    }
+    
+    .w-reveal { opacity: 0; transform: translateY(25px); transition: all 1s cubic-bezier(0.22, 1, 0.36, 1); width: 100%; display: flex; flex-direction: column; align-items: center; }
     .w-reveal.active { opacity: 1; transform: translateY(0); }
 
-    #w-root h2 { font-family: 'Great Vibes', cursive; font-size: clamp(2.8rem, 12vw, 3.5rem); color: var(--w-sage); margin: 0; }
-    .w-sub { font-family: 'Cinzel', serif; font-size: .7rem; letter-spacing: 3px; color: var(--w-gold); margin-top: 5px; text-transform: uppercase; }
+    #w-root h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 14vw, 4rem); color: var(--w-sage); margin: 0; width: 100%; }
+    .w-sub { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 4px; color: var(--w-gold); margin-top: 5px; text-transform: uppercase; }
 
-    /* CALENDAR CUBE */
-    .w-card-box { background: var(--w-glass); padding: 25px 15px; border-radius: 80px 80px 20px 20px; width: 75%; max-width: 230px; border: 0.5px solid rgba(197, 160, 89, 0.3); margin: 0 auto; }
-    .w-cubes { display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; }
-    .w-wrap { width: 50px; height: 50px; perspective: 1000px; }
+    /* CALENDAR - FIXED CENTERING */
+    .w-card-box { 
+        background: var(--w-glass); 
+        padding: 30px 15px; 
+        border-radius: 90px 90px 30px 30px; 
+        width: 240px; /* Fixed width para hindi gumalaw ang centering */
+        border: 1px solid rgba(197, 160, 89, 0.25); 
+        box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center content inside the card */
+    }
+    .w-cubes { 
+        display: flex; 
+        gap: 12px; 
+        justify-content: center; 
+        align-items: center;
+        margin-bottom: 15px; 
+        width: 100%;
+    }
+    .w-wrap { width: 55px; height: 55px; perspective: 1000px; }
     .w-cube { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 1.5s cubic-bezier(.4, 0, 0.2, 1); }
-    .w-face { position: absolute; width: 50px; height: 50px; background: #fff; border: 0.5px solid var(--w-gold); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; font-family: 'Cinzel', serif; color: var(--w-dark); }
-    .w-front { transform: rotateY(0deg) translateZ(25px); }
-    .w-back { transform: rotateY(180deg) translateZ(25px); }
-    .w-top { transform: rotateX(90deg) translateZ(25px); }
-    .w-bottom { transform: rotateX(-90deg) translateZ(25px); }
+    .w-face { position: absolute; width: 55px; height: 55px; background: #fff; border: 0.5px solid var(--w-gold); display: flex; align-items: center; justify-content: center; font-size: 1.7rem; font-family: 'Cinzel', serif; color: var(--w-dark); backface-visibility: hidden; }
+    .w-front { transform: rotateY(0deg) translateZ(27px); }
+    .w-back { transform: rotateY(180deg) translateZ(27px); }
+    .w-top { transform: rotateX(90deg) translateZ(27px); }
+    .w-bottom { transform: rotateX(-90deg) translateZ(27px); }
 
     /* TIMER */
-    .w-timer-container { display: flex; justify-content: center; align-items: center; gap: 5px; margin-top: 5px; }
-    .w-t-unit { display: flex; flex-direction: column; align-items: center; min-width: 40px; }
-    .w-val { font-size: 1.4rem; color: var(--w-dark); }
-    .w-label { font-size: 0.5rem; text-transform: uppercase; color: var(--w-gold); letter-spacing: 1px; }
+    .w-timer-container { display: flex; justify-content: center; gap: 12px; width: 100%; }
+    .w-val { font-size: 1.5rem; color: var(--w-dark); font-family: 'Cinzel', serif; }
+    .w-label { font-size: 0.55rem; text-transform: uppercase; color: var(--w-gold); letter-spacing: 1.5px; }
 
     /* VENUE */
-    .w-venue-pre { font-family: 'Cinzel', serif; font-size: 0.65rem; color: var(--w-gold); text-transform: uppercase; margin-bottom: 8px; display: block; }
-    .w-venue-name { font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 4px; color: var(--w-dark); }
+    .w-venue-pre { font-family: 'Cinzel', serif; font-size: 0.65rem; color: var(--w-gold); text-transform: uppercase; margin-bottom: 5px; letter-spacing: 2px; }
+    .w-venue-name { font-family: 'Cinzel', serif; font-size: 1.25rem; font-weight: 700; letter-spacing: 4px; color: var(--w-dark); }
 
     /* GALLERY */
     .w-gallery-section {
-        padding: 40px 0 120px 0;
+        padding: 10px 0 100px 0;
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
-        overflow: hidden;
-        min-height: 320px;
+        min-height: 350px;
         touch-action: pan-y;
-        cursor: grab;
+        width: 100%;
     }
 
-    .w-image-stack { position: relative; width: 280px; height: 210px; }
+    .w-image-stack { position: relative; width: 280px; height: 320px; display: flex; justify-content: center; align-items: center; }
 
     .w-stack-img {
         position: absolute;
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 15px;
-        box-shadow: 0 15px 35px rgba(58, 68, 55, 0.15);
-        border: 4px solid #fff;
-        transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
-        pointer-events: none; /* container handles swipe */
-        user-select: none;
-        -webkit-user-drag: none;
+        border-radius: 12px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        border: 5px solid #fff;
+        transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        pointer-events: none;
     }
 
-    /* Initial Stack */
-    .img-1 { transform: translate(0, 0) rotate(0deg); z-index: 3; }
-    .img-2 { transform: translate(10px, 10px) rotate(3deg); z-index: 2; }
-    .img-3 { transform: translate(20px, 20px) rotate(6deg); z-index: 1; }
+    /* Stack Styles */
+    .img-1 { transform: translate(0, 0) rotate(-2deg); z-index: 3; }
+    .img-2 { transform: translate(5px, 5px) rotate(1deg); z-index: 2; }
+    .img-3 { transform: translate(10px, 10px) rotate(4deg); z-index: 1; }
 
-    /* Spread Animation */
-    .scatter.img-1 { transform: translate(-110px, -20px) rotate(-8deg); }
-    .scatter.img-2 { transform: translate(0, 15px) rotate(0deg); }
-    .scatter.img-3 { transform: translate(110px, -20px) rotate(8deg); }
+    .scatter.img-1 { transform: translate(-90px, -10px) rotate(-6deg); }
+    .scatter.img-2 { transform: translate(0, 10px) rotate(0deg); }
+    .scatter.img-3 { transform: translate(90px, -10px) rotate(6deg); }
 
-    /* Carousel States */
-    .carousel-active .w-stack-img { opacity: 0; transform: scale(0.7) translate(0,0); }
-    .carousel-active .w-stack-img.active { 
-        opacity: 1; 
-        transform: scale(1.1) translate(0, 0); 
-        z-index: 20; 
-        box-shadow: 0 20px 40px rgba(113, 125, 108, 0.3);
-    }
-    .carousel-active .w-stack-img.next { opacity: 0.4; transform: scale(0.8) translate(280px, 0); z-index: 10; }
-    .carousel-active .w-stack-img.prev { opacity: 0.4; transform: scale(0.8) translate(-280px, 0); z-index: 10; }
+    .carousel-active .w-stack-img { opacity: 0; transform: scale(0.6) translateX(0); }
+    .carousel-active .w-stack-img.active { opacity: 1; transform: scale(1) translateX(0); z-index: 30; }
+    .carousel-active .w-stack-img.next { opacity: 0.4; transform: scale(0.8) translateX(200px); z-index: 20; }
+    .carousel-active .w-stack-img.prev { opacity: 0.4; transform: scale(0.8) translateX(-200px); z-index: 20; }
 
-    .is-dragging .w-stack-img { transition: transform 0.1s linear, opacity 0.3s ease !important; }
+    .is-dragging .w-stack-img { transition: transform 0.1s ease-out, opacity 0.2s ease; }
 </style>
 
 <section id="w-hero">
@@ -117,19 +134,21 @@
         <h2>Save the Date</h2>
         <div class="w-sub">Chino & Diane</div>
     </div>
+    
     <div class="w-reveal">
         <div class="w-card-box">
             <div class="w-cubes">
                 <div class="w-wrap"><div class="w-cube" id="wC1"><div class="w-face w-front" id="wN1">1</div><div class="w-face w-back">0</div><div class="w-face w-top">4</div><div class="w-face w-bottom">7</div></div></div>
                 <div class="w-wrap"><div class="w-cube" id="wC2"><div class="w-face w-front" id="wN2">9</div><div class="w-face w-back">2</div><div class="w-face w-top">5</div><div class="w-face w-bottom">8</div></div></div>
             </div>
-            <div class="w-month-wrap">
-                <span class="w-month-text">APRIL</span>
-                <div class="w-year-line"></div>
-                <span class="w-year-text">2026</span>
+            <div style="text-align: center; font-family: 'Cinzel', serif;">
+                <span style="font-size: 1.1rem; letter-spacing: 5px; font-weight: 700;">APRIL</span>
+                <div style="height: 1px; background: var(--w-gold); width: 30px; margin: 8px auto; opacity: 0.4;"></div>
+                <span style="font-size: 0.8rem; letter-spacing: 3px; color: var(--w-gold);">2026</span>
             </div>
         </div>
     </div>
+
     <div class="w-reveal">
         <div class="w-timer-container">
             <div class="w-t-unit"><span class="w-val" id="wD">00</span><span class="w-label">Days</span></div>
@@ -138,6 +157,7 @@
             <div class="w-t-unit"><span class="w-val" id="wS">00</span><span class="w-label">Sec</span></div>
         </div>
     </div>
+
     <div class="w-reveal">
         <span class="w-venue-pre">The place to be for our wedding:</span>
         <div class="w-venue-name">BISTRO ALEJANDRO</div>
@@ -156,133 +176,112 @@
 (function() {
     const gallerySection = document.getElementById('wGalleryTrigger');
     const images = [document.getElementById('gImg1'), document.getElementById('gImg2'), document.getElementById('gImg3')];
-    let carouselActive = false, currentIndex = 0;
+    let carouselActive = false;
+    let currentIndex = 0;
 
-    // REVEAL
-    const observer = new IntersectionObserver(entries => {
+    // REVEAL ANIMATION
+    const revealObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("active"); });
     }, { threshold: 0.1 });
-    document.querySelectorAll(".w-reveal").forEach(r => observer.observe(r));
+    document.querySelectorAll(".w-reveal").forEach(r => revealObserver.observe(r));
 
-    // GALLERY TRIGGER
+    // GALLERY LOGIC
     const galleryObserver = new IntersectionObserver(entries => {
         const entry = entries[0];
         if (entry.isIntersecting) {
-            images.forEach((img,i)=>setTimeout(()=>img.classList.add('scatter'),i*150));
-            setTimeout(()=>{ 
-                if(entry.isIntersecting){
-                    carouselActive=true;
+            images.forEach((img, i) => setTimeout(() => img.classList.add('scatter'), i * 120));
+            setTimeout(() => {
+                if(entry.isIntersecting) {
+                    carouselActive = true;
                     gallerySection.classList.add('carousel-active');
                     updateCarousel();
                 }
-            },800);
+            }, 1000);
         } else {
-            carouselActive=false;
+            carouselActive = false;
             gallerySection.classList.remove('carousel-active');
-            images.forEach(img=>{ img.classList.remove('scatter'); img.style.transform=''; img.style.opacity=''; });
+            images.forEach(img => {
+                img.classList.remove('scatter', 'active', 'next', 'prev');
+                img.style.transform = ''; img.style.opacity = '';
+            });
         }
-    }, {threshold:0.4});
+    }, { threshold: 0.4 });
     galleryObserver.observe(gallerySection);
 
-    // CAROUSEL LOGIC - SMOOTH SWIPE ANYWHERE
-    let startX=0, isDragging=false, lastX=0, velocity=0, animating=false;
-
-    function updateCarousel(offset=0){
-        if(!carouselActive) return;
-        images.forEach((img,i)=>{
-            img.classList.remove('active','next','prev');
-            let pos = (i-currentIndex+images.length)%images.length;
-            if(pos===0){
+    function updateCarousel(offset = 0) {
+        if (!carouselActive) return;
+        images.forEach((img, i) => {
+            img.classList.remove('active', 'next', 'prev');
+            let pos = (i - currentIndex + images.length) % images.length;
+            if (pos === 0) {
                 img.classList.add('active');
-                img.style.transform=`translateX(${offset}px) scale(${1.1 - Math.abs(offset/1200)})`;
-                img.style.opacity=1;
-                img.style.zIndex=20;
-            } else if(pos===1){
+                img.style.transform = `translateX(${offset}px) scale(${1 - Math.abs(offset/1000)})`;
+                img.style.opacity = 1;
+            } else if (pos === 1) {
                 img.classList.add('next');
-                img.style.transform=`translateX(${280 + offset}px) scale(0.8)`;
-                img.style.opacity=0.4;
-                img.style.zIndex=10;
+                img.style.transform = `translateX(${200 + offset}px) scale(0.8)`;
+                img.style.opacity = 0.4;
             } else {
                 img.classList.add('prev');
-                img.style.transform=`translateX(${-280 + offset}px) scale(0.8)`;
-                img.style.opacity=0.4;
-                img.style.zIndex=10;
+                img.style.transform = `translateX(${-200 + offset}px) scale(0.8)`;
+                img.style.opacity = 0.4;
             }
         });
     }
 
-    function animateMomentum(targetOffset){
-        if(animating) return;
-        animating=true;
-        let offset=targetOffset;
-        const step=()=> {
-            offset*=0.95; // smooth easing
-            if(Math.abs(offset)<1){ animating=false; updateCarousel(0); return; }
-            updateCarousel(offset);
-            requestAnimationFrame(step);
-        };
-        requestAnimationFrame(step);
-    }
-
-    const handleStart = (e)=>{
-        if(!carouselActive) return;
-        isDragging=true;
-        startX=e.type.includes('touch')? e.touches[0].clientX: e.clientX;
-        lastX=startX;
-        velocity=0;
+    let startX = 0, isDragging = false, currentOffset = 0;
+    const handleStart = (e) => {
+        if (!carouselActive) return;
+        isDragging = true;
+        startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
         gallerySection.classList.add('is-dragging');
     };
-
-    const handleMove = (e)=>{
-        if(!isDragging) return;
-        const x=e.type.includes('touch')? e.touches[0].clientX: e.clientX;
-        const delta = x-lastX;
-        velocity = delta;
-        updateCarousel(x-startX);
-        lastX=x;
+    const handleMove = (e) => {
+        if (!isDragging) return;
+        const x = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        currentOffset = x - startX;
+        updateCarousel(currentOffset);
     };
-
-    const handleEnd = (e)=>{
-        if(!isDragging) return;
-        isDragging=false;
+    const handleEnd = () => {
+        if (!isDragging) return;
+        isDragging = false;
         gallerySection.classList.remove('is-dragging');
-        if(Math.abs(velocity)>20){
-            currentIndex=(currentIndex+(velocity<0?1:-1)+images.length)%images.length;
-        }
-        animateMomentum(velocity*5); // smooth snap
+        if (Math.abs(currentOffset) > 70) currentIndex = (currentIndex + (currentOffset < 0 ? 1 : -1) + images.length) % images.length;
+        currentOffset = 0;
+        updateCarousel(0);
     };
 
-    gallerySection.addEventListener('touchstart',handleStart,{passive:true});
-    gallerySection.addEventListener('mousedown',handleStart);
-    document.addEventListener('touchmove',handleMove,{passive:false});
-    document.addEventListener('mousemove',handleMove);
-    document.addEventListener('touchend',handleEnd);
-    document.addEventListener('mouseup',handleEnd);
+    gallerySection.addEventListener('touchstart', handleStart, {passive: true});
+    gallerySection.addEventListener('mousedown', handleStart);
+    window.addEventListener('touchmove', handleMove, {passive: false});
+    window.addEventListener('mousemove', handleMove);
+    window.addEventListener('touchend', handleEnd);
+    window.addEventListener('mouseup', handleEnd);
 
-    // TIMER & CUBES
-    let rot=0;
-    function spinCubes(){
-        const c1=document.getElementById("wC1"), c2=document.getElementById("wC2");
-        const n1=document.getElementById("wN1"), n2=document.getElementById("wN2");
-        if(!c1) return;
-        rot+=360;
-        c1.style.transform=`rotateX(${rot}deg) rotateY(${rot}deg)`;
-        c2.style.transform=`rotateX(${rot}deg) rotateY(${rot}deg)`;
-        const mix=setInterval(()=>{ n1.textContent=Math.floor(Math.random()*10); n2.textContent=Math.floor(Math.random()*10); },100);
-        setTimeout(()=>{ clearInterval(mix); n1.textContent="1"; n2.textContent="9"; },1500);
+    // CUBES & TIMER
+    let rot = 0;
+    function spinCubes() {
+        const c1 = document.getElementById("wC1"), c2 = document.getElementById("wC2");
+        const n1 = document.getElementById("wN1"), n2 = document.getElementById("wN2");
+        if (!c1) return;
+        rot += 360;
+        c1.style.transform = `rotateX(${rot}deg) rotateY(${rot}deg)`;
+        c2.style.transform = `rotateX(${rot}deg) rotateY(${rot}deg)`;
+        const mix = setInterval(() => { n1.textContent = Math.floor(Math.random() * 10); n2.textContent = Math.floor(Math.random() * 10); }, 100);
+        setTimeout(() => { clearInterval(mix); n1.textContent = "1"; n2.textContent = "9"; }, 1500);
     }
-    setInterval(spinCubes,6000); spinCubes();
+    setInterval(spinCubes, 7000); spinCubes();
 
-    const target=new Date("April 19, 2026 10:00:00").getTime();
-    function updateTimer(){
-        const now=new Date().getTime(), diff=target-now;
-        if(diff<0) return;
-        document.getElementById("wD").innerText=String(Math.floor(diff/864e5)).padStart(2,'0');
-        document.getElementById("wH").innerText=String(Math.floor((diff%864e5)/36e5)).padStart(2,'0');
-        document.getElementById("wM").innerText=String(Math.floor((diff%36e5)/6e4)).padStart(2,'0');
-        document.getElementById("wS").innerText=String(Math.floor((diff%6e4)/1e3)).padStart(2,'0');
+    const target = new Date("April 19, 2026 10:00:00").getTime();
+    function updateTimer() {
+        const now = new Date().getTime(), diff = target - now;
+        if (diff < 0) return;
+        document.getElementById("wD").innerText = String(Math.floor(diff / 864e5)).padStart(2, '0');
+        document.getElementById("wH").innerText = String(Math.floor((diff % 864e5) / 36e5)).padStart(2, '0');
+        document.getElementById("wM").innerText = String(Math.floor((diff % 36e5) / 6e4)).padStart(2, '0');
+        document.getElementById("wS").innerText = String(Math.floor((diff % 6e4) / 1e3)).padStart(2, '0');
     }
-    setInterval(updateTimer,1000); updateTimer();
+    setInterval(updateTimer, 1000); updateTimer();
 })();
 </script>
 </div>
