@@ -289,80 +289,127 @@
     updateTimer();
 
     /* ===== GALLERY ===== */
-    const galleryContainer=document.getElementById('galleryContainer');
-    fetch('gallery.html').then(r=>r.text()).then(html=>{
-        galleryContainer.innerHTML=html;
-        const gallerySection = galleryContainer.querySelector('#wSlider');
-        if(!gallerySection) return;
+    const galleryContainer = document.getElementById('galleryContainer');
+    fetch('gallery.html').then(r => r.text()).then(html => {
+        galleryContainer.innerHTML = html;
 
-        const images=[
+        const gallerySection = galleryContainer.querySelector('#wSlider');
+        if (!gallerySection) return;
+
+        const images = [
             galleryContainer.querySelector('#gImg1'),
             galleryContainer.querySelector('#gImg2'),
             galleryContainer.querySelector('#gImg3')
         ];
-        let carouselActive=false;
-        let currentIndex=0;
 
-        images.forEach((img,i)=>setTimeout(()=>img.classList.add('scatter'),i*150));
-        setTimeout(()=>{
-            carouselActive=true;
-            gallerySection.classList.add('carousel-active');
-            updateCarousel();
-        },500);
+        let carouselActive = false;
+        let currentIndex = 0;
 
-        function updateCarousel(offset=0){
-            if(!carouselActive) return;
-            images.forEach((img,i)=>{
-                img.classList.remove('active','next','prev');
-                let pos=(i-currentIndex+images.length)%images.length;
-                if(pos===0){
+        /* ===== INTRO ANIMATION ===== */
+        function playIntroAnimation() {
+            images.forEach(img => {
+                img.classList.remove('intro', 'scatter', 'active', 'next', 'prev');
+                img.style.opacity = 0;
+            });
+
+            images.forEach((img, i) => {
+                setTimeout(() => {
+                    img.classList.add('scatter', 'intro');
+                }, i * 150);
+            });
+
+            setTimeout(() => {
+                carouselActive = true;
+                gallerySection.classList.add('carousel-active');
+                updateCarousel();
+            }, 500);
+        }
+
+        /* ===== CAROUSEL FUNCTION ===== */
+        function updateCarousel(offset = 0) {
+            if (!carouselActive) return;
+            images.forEach((img, i) => {
+                img.classList.remove('active', 'next', 'prev');
+                let pos = (i - currentIndex + images.length) % images.length;
+                if (pos === 0) {
                     img.classList.add('active');
-                    img.style.transform=`translateX(${offset}px) scale(${1-Math.abs(offset/1000)}) rotate(${offset/30}deg)`;
-                    img.style.opacity=1; img.style.zIndex=10;
-                } else if(pos===1){
+                    img.style.transform = `translateX(${offset}px) scale(${1 - Math.abs(offset / 1000)}) rotate(${offset / 30}deg)`;
+                    img.style.opacity = 1;
+                    img.style.zIndex = 10;
+                } else if (pos === 1) {
                     img.classList.add('next');
-                    img.style.transform=`translateX(${280+offset}px) scale(0.75)`;
-                    img.style.opacity=0.3; img.style.zIndex=5;
-                } else{
+                    img.style.transform = `translateX(${280 + offset}px) scale(0.75)`;
+                    img.style.opacity = 0.3;
+                    img.style.zIndex = 5;
+                } else {
                     img.classList.add('prev');
-                    img.style.transform=`translateX(${-280+offset}px) scale(0.75)`;
-                    img.style.opacity=0.3; img.style.zIndex=5;
+                    img.style.transform = `translateX(${-280 + offset}px) scale(0.75)`;
+                    img.style.opacity = 0.3;
+                    img.style.zIndex = 5;
                 }
             });
         }
 
         /* ===== TOUCH & SWIPE ===== */
-        let startX=0, startY=0, isDragging=false, currentOffset=0, isScrolling=false;
-        const handleStart=(e)=>{
-            const touch=e.type.includes('touch')?e.touches[0]:e;
-            startX=touch.clientX; startY=touch.clientY;
-            isDragging=true; isScrolling=false; currentOffset=0;
-            images.forEach(img=>img.style.transition='none');
+        let startX = 0, startY = 0, isDragging = false, currentOffset = 0, isScrolling = false;
+
+        const handleStart = (e) => {
+            const touch = e.type.includes('touch') ? e.touches[0] : e;
+            startX = touch.clientX; startY = touch.clientY;
+            isDragging = true; isScrolling = false; currentOffset = 0;
+            images.forEach(img => img.style.transition = 'none');
         };
-        const handleMove=(e)=>{
-            if(!isDragging || isScrolling) return;
-            const touch=e.type.includes('touch')?e.touches[0]:e;
-            const diffX=touch.clientX-startX;
-            const diffY=touch.clientY-startY;
-            if(!isScrolling && Math.abs(diffY)>Math.abs(diffX) && Math.abs(diffY)>10){ isScrolling=true; isDragging=false; return; }
-            if(Math.abs(diffX)>5){ if(e.cancelable) e.preventDefault(); currentOffset=diffX; updateCarousel(currentOffset); }
+
+        const handleMove = (e) => {
+            if (!isDragging || isScrolling) return;
+            const touch = e.type.includes('touch') ? e.touches[0] : e;
+            const diffX = touch.clientX - startX;
+            const diffY = touch.clientY - startY;
+            if (!isScrolling && Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 10) {
+                isScrolling = true;
+                isDragging = false;
+                return;
+            }
+            if (Math.abs(diffX) > 5) {
+                if (e.cancelable) e.preventDefault();
+                currentOffset = diffX;
+                updateCarousel(currentOffset);
+            }
         };
-        const handleEnd=()=>{
-            if(!isDragging) return;
-            isDragging=false;
-            images.forEach(img=>img.style.transition='transform 0.5s cubic-bezier(0.2,0.8,0.2,1), opacity 0.5s ease');
-            if(Math.abs(currentOffset)>60){ currentIndex=(currentIndex+(currentOffset<0?1:-1)+images.length)%images.length; }
-            currentOffset=0; updateCarousel(0);
+
+        const handleEnd = () => {
+            if (!isDragging) return;
+            isDragging = false;
+            images.forEach(img => img.style.transition = 'transform 0.5s cubic-bezier(0.2,0.8,0.2,1), opacity 0.5s ease');
+            if (Math.abs(currentOffset) > 60) {
+                currentIndex = (currentIndex + (currentOffset < 0 ? 1 : -1) + images.length) % images.length;
+            }
+            currentOffset = 0;
+            updateCarousel(0);
         };
-        gallerySection.addEventListener('touchstart',handleStart,{passive:true});
-        gallerySection.addEventListener('mousedown',handleStart);
-        gallerySection.addEventListener('touchmove',handleMove,{passive:false});
-        gallerySection.addEventListener('mousemove',handleMove);
-        window.addEventListener('touchend',handleEnd);
-        window.addEventListener('mouseup',handleEnd);
+
+        gallerySection.addEventListener('touchstart', handleStart, { passive: true });
+        gallerySection.addEventListener('mousedown', handleStart);
+        gallerySection.addEventListener('touchmove', handleMove, { passive: false });
+        gallerySection.addEventListener('mousemove', handleMove);
+        window.addEventListener('touchend', handleEnd);
+        window.addEventListener('mouseup', handleEnd);
+
+        /* ===== REPLAY INTRO WHEN SCROLLING INTO VIEW ===== */
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    carouselActive = false;
+                    gallerySection.classList.remove('carousel-active');
+                    playIntroAnimation();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(gallerySection);
+
+        // Initial animation
+        playIntroAnimation();
     });
 })();
 </script>
-
-</body>
-</html>
