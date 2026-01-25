@@ -1,62 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery</title>
-    <style>
-        body {
-            margin: 0;
-            background: #78651a; /* Matches --w-cream */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery</title>
+<style>
+    body {
+        margin: 0;
+        background: #78651a; /* Matches --w-cream */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow: hidden;
+    }
 
-        .w-gallery-section {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            min-height: 440px;
-            overflow: hidden;
-            touch-action: pan-y;
-            user-select: none;
-        }
+    .w-gallery-section {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        min-height: 440px;
+        overflow: hidden;
+        touch-action: pan-x; /* Allow horizontal swipe */
+        user-select: none;
+    }
 
-        .w-image-stack { position: relative; width: 280px; height: 350px; display: flex; justify-content: center; align-items: center; z-index: 5; }
+    .w-image-stack {
+        position: relative;
+        width: 280px;
+        height: 350px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 5;
+    }
 
-        .w-stack-img {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-            border: 8px solid #fff;
-            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s ease;
-            pointer-events: none; 
-            will-change: transform, opacity;
-        }
+    .w-stack-img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        border: 8px solid #fff;
+        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s ease;
+        will-change: transform, opacity;
+    }
 
-        /* Stack Initial States */
-        .img-1 { transform: translate(0, 0) rotate(-2deg); z-index: 3; }
-        .img-2 { transform: translate(8px, 8px) rotate(2deg); z-index: 2; }
-        .img-3 { transform: translate(-8px, 12px) rotate(-1deg); z-index: 1; }
+    /* Stack Initial States */
+    .img-1 { transform: translate(0, 0) rotate(-2deg); z-index: 3; }
+    .img-2 { transform: translate(8px, 8px) rotate(2deg); z-index: 2; }
+    .img-3 { transform: translate(-8px, 12px) rotate(-1deg); z-index: 1; }
 
-        .scatter.img-1 { transform: translate(-15px, -10px) rotate(-3deg); }
-        .scatter.img-2 { transform: translate(15px, 5px) rotate(3deg); }
-        .scatter.img-3 { transform: translate(0, 15px) rotate(0deg); }
+    .scatter.img-1 { transform: translate(-15px, -10px) rotate(-3deg); }
+    .scatter.img-2 { transform: translate(15px, 5px) rotate(3deg); }
+    .scatter.img-3 { transform: translate(0, 15px) rotate(0deg); }
 
-        /* Carousel State */
-        .carousel-active .w-stack-img { opacity: 0; transform: scale(0.6) translateX(0); }
-        .carousel-active .w-stack-img.active { opacity: 1; transform: scale(1) translateX(0); z-index: 10; }
-        .carousel-active .w-stack-img.next { opacity: 0.3; transform: scale(0.75) translateX(280px); z-index: 5; }
-        .carousel-active .w-stack-img.prev { opacity: 0.3; transform: scale(0.75) translateX(-280px); z-index: 5; }
-    </style>
+    /* Carousel State */
+    .carousel-active .w-stack-img { opacity: 0; transform: scale(0.6) translateX(0); }
+    .carousel-active .w-stack-img.active { opacity: 1; transform: scale(1) translateX(0); z-index: 10; }
+    .carousel-active .w-stack-img.next { opacity: 0.3; transform: scale(0.75) translateX(280px); z-index: 5; }
+    .carousel-active .w-stack-img.prev { opacity: 0.3; transform: scale(0.75) translateX(-280px); z-index: 5; }
+</style>
 </head>
 <body>
 
@@ -71,11 +78,15 @@
 <script>
 (function() {
     const gallerySection = document.getElementById('wGalleryTrigger');
-    const images = [document.getElementById('gImg1'), document.getElementById('gImg2'), document.getElementById('gImg3')];
+    const images = [
+        document.getElementById('gImg1'),
+        document.getElementById('gImg2'),
+        document.getElementById('gImg3')
+    ];
     let carouselActive = false;
     let currentIndex = 0;
 
-    // Gallery Activation Logic
+    // Activate gallery when in view
     const galleryObserver = new IntersectionObserver(entries => {
         const entry = entries[0];
         if (entry.isIntersecting && !carouselActive) {
@@ -90,10 +101,10 @@
     galleryObserver.observe(gallerySection);
 
     function updateCarousel(offset = 0) {
-        if (!carouselActive) return;
         images.forEach((img, i) => {
             img.classList.remove('active', 'next', 'prev');
             let pos = (i - currentIndex + images.length) % images.length;
+
             if (pos === 0) {
                 img.classList.add('active');
                 img.style.transform = `translateX(${offset}px) scale(${1 - Math.abs(offset/1000)}) rotate(${offset/30}deg)`;
@@ -115,18 +126,18 @@
 
     let startX = 0, startY = 0, isDragging = false, currentOffset = 0, isScrolling = false;
 
-    const handleStart = (e) => {
+    function handleStart(e) {
         if (!carouselActive) return;
         const touch = e.type.includes('touch') ? e.touches[0] : e;
         startX = touch.clientX;
         startY = touch.clientY;
         isDragging = true;
-        isScrolling = false; 
+        isScrolling = false;
         currentOffset = 0;
         images.forEach(img => img.style.transition = 'none');
-    };
+    }
 
-    const handleMove = (e) => {
+    function handleMove(e) {
         if (!isDragging || isScrolling) return;
         const touch = e.type.includes('touch') ? e.touches[0] : e;
         const diffX = touch.clientX - startX;
@@ -135,7 +146,7 @@
         if (!isScrolling && Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 10) {
             isScrolling = true;
             isDragging = false;
-            return; 
+            return;
         }
 
         if (Math.abs(diffX) > 5) {
@@ -143,21 +154,22 @@
             currentOffset = diffX;
             updateCarousel(currentOffset);
         }
-    };
+    }
 
-    const handleEnd = () => {
+    function handleEnd() {
         if (!isDragging) return;
         isDragging = false;
         images.forEach(img => img.style.transition = 'transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.5s ease');
-        
+
         if (Math.abs(currentOffset) > 60) {
             currentIndex = (currentIndex + (currentOffset < 0 ? 1 : -1) + images.length) % images.length;
         }
+
         currentOffset = 0;
         updateCarousel(0);
-    };
+    }
 
-    gallerySection.addEventListener('touchstart', handleStart, {passive: true});
+    gallerySection.addEventListener('touchstart', handleStart, {passive: false});
     gallerySection.addEventListener('mousedown', handleStart);
     gallerySection.addEventListener('touchmove', handleMove, {passive: false});
     gallerySection.addEventListener('mousemove', handleMove);
@@ -165,5 +177,6 @@
     window.addEventListener('mouseup', handleEnd);
 })();
 </script>
+
 </body>
 </html>
