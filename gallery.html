@@ -8,7 +8,9 @@
 </div>
 
 <style>
-/* Only gallery styles */
+/* =====================
+   GALLERY STYLES
+===================== */
 .w-gallery-section {
     width: 100%;
     display: flex;
@@ -16,10 +18,11 @@
     align-items: center;
     position: relative;
     overflow: hidden;
-    touch-action: pan-y;
+    touch-action: pan-y; /* allows vertical scroll */
     user-select: none;
     padding-bottom: 60px;
 }
+
 .w-image-stack {
     position: relative;
     width: 280px;
@@ -29,6 +32,7 @@
     align-items: center;
     z-index: 5;
 }
+
 .w-stack-img {
     position: absolute;
     width: 100%;
@@ -38,19 +42,37 @@
     box-shadow: 0 12px 25px rgba(0,0,0,0.15);
     border: 8px solid #fff;
     transition: transform 0.6s cubic-bezier(0.23,1,0.32,1), opacity 0.6s ease;
-    pointer-events: none; 
+    pointer-events: auto; /* allows swipe detection on image */
     will-change: transform, opacity;
 }
+
 .img-1 { transform: translate(0,0) rotate(-2deg); z-index:3; }
 .img-2 { transform: translate(8px,8px) rotate(2deg); z-index:2; }
 .img-3 { transform: translate(-8px,12px) rotate(-1deg); z-index:1; }
+
 .scatter.img-1 { transform: translate(-15px,-10px) rotate(-3deg); }
 .scatter.img-2 { transform: translate(15px,5px) rotate(3deg); }
 .scatter.img-3 { transform: translate(0,15px) rotate(0deg); }
-.carousel-active .w-stack-img { opacity:0; transform: scale(0.6) translateX(0); }
-.carousel-active .w-stack-img.active { opacity:1; transform: scale(1) translateX(0); z-index:10; }
-.carousel-active .w-stack-img.next { opacity:0.3; transform: scale(0.75) translateX(280px); z-index:5; }
-.carousel-active .w-stack-img.prev { opacity:0.3; transform: scale(0.75) translateX(-280px); z-index:5; }
+
+.carousel-active .w-stack-img { 
+    opacity: 0; 
+    transform: scale(0.6) translateX(0); 
+}
+.carousel-active .w-stack-img.active { 
+    opacity: 1; 
+    transform: scale(1) translateX(0); 
+    z-index: 10; 
+}
+.carousel-active .w-stack-img.next { 
+    opacity: 0.3; 
+    transform: scale(0.75) translateX(280px); 
+    z-index: 5; 
+}
+.carousel-active .w-stack-img.prev { 
+    opacity: 0.3; 
+    transform: scale(0.75) translateX(-280px); 
+    z-index: 5; 
+}
 </style>
 
 <script>
@@ -95,36 +117,56 @@
         });
     }
 
-    // Touch/Swipe
+    // TOUCH / SWIPE
     let startX=0, startY=0, isDragging=false, currentOffset=0, isScrolling=false;
+
     const handleStart=(e)=>{
         const touch=e.type.includes('touch')?e.touches[0]:e;
         startX=touch.clientX; startY=touch.clientY;
         isDragging=true; isScrolling=false; currentOffset=0;
         images.forEach(img=>img.style.transition='none');
     };
+
     const handleMove=(e)=>{
-        if(!isDragging || isScrolling) return;
+        if(!isDragging) return;
         const touch=e.type.includes('touch')?e.touches[0]:e;
-        const diffX=touch.clientX-startX;
-        const diffY=touch.clientY-startY;
-        if(!isScrolling && Math.abs(diffY)>Math.abs(diffX) && Math.abs(diffY)>10){ isScrolling=true; isDragging=false; return; }
-        if(Math.abs(diffX)>5){ if(e.cancelable) e.preventDefault(); currentOffset=diffX; updateCarousel(currentOffset);}
+        const diffX = touch.clientX - startX;
+        const diffY = touch.clientY - startY;
+
+        // Determine if scrolling vertically
+        if(!isScrolling && Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 5){
+            isScrolling = true;
+            isDragging = false; // vertical scroll, don't swipe
+            return;
+        }
+
+        // Horizontal swipe detected
+        if(Math.abs(diffX) > 5){
+            e.preventDefault(); // only prevent if horizontal
+            currentOffset = diffX;
+            updateCarousel(currentOffset);
+        }
     };
+
     const handleEnd=()=>{
         if(!isDragging) return;
         isDragging=false;
         images.forEach(img=>img.style.transition='transform 0.5s cubic-bezier(0.2,0.8,0.2,1), opacity 0.5s ease');
-        if(Math.abs(currentOffset)>60){ currentIndex=(currentIndex+(currentOffset<0?1:-1)+images.length)%images.length; }
-        currentOffset=0; updateCarousel(0);
+        if(Math.abs(currentOffset) > 60){
+            currentIndex = (currentIndex + (currentOffset < 0 ? 1 : -1) + images.length) % images.length;
+        }
+        currentOffset=0;
+        updateCarousel(0);
     };
-    gallerySection.addEventListener('touchstart',handleStart,{passive:true});
-    gallerySection.addEventListener('mousedown',handleStart);
-    gallerySection.addEventListener('touchmove',handleMove,{passive:false});
-    gallerySection.addEventListener('mousemove',handleMove);
-    window.addEventListener('touchend',handleEnd);
-    window.addEventListener('mouseup',handleEnd);
+
+    gallerySection.addEventListener('touchstart', handleStart, {passive:true});
+    gallerySection.addEventListener('mousedown', handleStart);
+    gallerySection.addEventListener('touchmove', handleMove, {passive:false});
+    gallerySection.addEventListener('mousemove', handleMove);
+    window.addEventListener('touchend', handleEnd);
+    window.addEventListener('mouseup', handleEnd);
 })();
+
 </script>
 
 
