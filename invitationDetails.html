@@ -98,20 +98,20 @@
     .w-venue-pre { font-size: 1.1rem; font-style: italic; opacity: 0.8; margin-bottom: 5px; }
     .w-venue-name { font-family: 'Cinzel', serif; font-size: 1.3rem; font-weight: 700; letter-spacing: 3px; color: var(--w-dark); }
 
-    /* GALLERY SECTION - SPACED OUT */
+    /* GALLERY SECTION - UPDATED FOR CONSISTENCY */
     .w-gallery-section {
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
-        min-height: 400px;
+        min-height: 440px;
         overflow: hidden;
-        touch-action: pan-y;
+        touch-action: pan-y; /* Pinapayagan ang vertical scroll pero kontrolado sa JS */
         user-select: none;
     }
 
-    .w-image-stack { position: relative; width: 270px; height: 340px; display: flex; justify-content: center; align-items: center; }
+    .w-image-stack { position: relative; width: 280px; height: 350px; display: flex; justify-content: center; align-items: center; z-index: 5; }
 
     .w-stack-img {
         position: absolute;
@@ -119,7 +119,7 @@
         height: 100%;
         object-fit: cover;
         border-radius: 8px;
-        box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+        box-shadow: 0 12px 25px rgba(0,0,0,0.15);
         border: 8px solid #fff;
         transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s ease;
         pointer-events: none; 
@@ -138,8 +138,8 @@
     /* Carousel State */
     .carousel-active .w-stack-img { opacity: 0; transform: scale(0.6) translateX(0); }
     .carousel-active .w-stack-img.active { opacity: 1; transform: scale(1) translateX(0); z-index: 10; }
-    .carousel-active .w-stack-img.next { opacity: 0.35; transform: scale(0.8) translateX(250px); z-index: 5; }
-    .carousel-active .w-stack-img.prev { opacity: 0.35; transform: scale(0.8) translateX(-250px); z-index: 5; }
+    .carousel-active .w-stack-img.next { opacity: 0.3; transform: scale(0.75) translateX(280px); z-index: 5; }
+    .carousel-active .w-stack-img.prev { opacity: 0.3; transform: scale(0.75) translateX(-280px); z-index: 5; }
 </style>
 
 <section id="w-hero">
@@ -198,25 +198,24 @@
     let carouselActive = false;
     let currentIndex = 0;
 
-    // Intersection Observer
+    // Intersection Observer for generic reveals
     const revealObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("active"); });
     }, { threshold: 0.1 });
     document.querySelectorAll(".w-reveal").forEach(r => revealObserver.observe(r));
 
+    // Gallery Activation Logic (Improved Threshold)
     const galleryObserver = new IntersectionObserver(entries => {
         const entry = entries[0];
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !carouselActive) {
             images.forEach((img, i) => setTimeout(() => img.classList.add('scatter'), i * 150));
             setTimeout(() => {
-                if(entry.isIntersecting) {
-                    carouselActive = true;
-                    gallerySection.classList.add('carousel-active');
-                    updateCarousel();
-                }
-            }, 1200);
+                carouselActive = true;
+                gallerySection.classList.add('carousel-active');
+                updateCarousel();
+            }, 1000);
         }
-    }, { threshold: 0.3 });
+    }, { threshold: 0.2 });
     galleryObserver.observe(gallerySection);
 
     function updateCarousel(offset = 0) {
@@ -226,21 +225,24 @@
             let pos = (i - currentIndex + images.length) % images.length;
             if (pos === 0) {
                 img.classList.add('active');
-                img.style.transform = `translateX(${offset}px) scale(${1 - Math.abs(offset/1500)}) rotate(${offset/25}deg)`;
+                img.style.transform = `translateX(${offset}px) scale(${1 - Math.abs(offset/1000)}) rotate(${offset/30}deg)`;
                 img.style.opacity = 1;
+                img.style.zIndex = 10;
             } else if (pos === 1) {
                 img.classList.add('next');
-                img.style.transform = `translateX(${260 + offset}px) scale(0.8)`;
-                img.style.opacity = 0.35;
+                img.style.transform = `translateX(${280 + offset}px) scale(0.75)`;
+                img.style.opacity = 0.3;
+                img.style.zIndex = 5;
             } else {
                 img.classList.add('prev');
-                img.style.transform = `translateX(${-260 + offset}px) scale(0.8)`;
-                img.style.opacity = 0.35;
+                img.style.transform = `translateX(${-280 + offset}px) scale(0.75)`;
+                img.style.opacity = 0.3;
+                img.style.zIndex = 5;
             }
         });
     }
 
-    // Scroll-Friendly Gestures
+    // Gesture Logic with Scroll-Prevention
     let startX = 0, startY = 0, isDragging = false, currentOffset = 0, isScrolling = false;
 
     const handleStart = (e) => {
@@ -250,6 +252,7 @@
         startY = touch.clientY;
         isDragging = true;
         isScrolling = false; 
+        currentOffset = 0;
         images.forEach(img => img.style.transition = 'none');
     };
 
@@ -259,15 +262,17 @@
         const diffX = touch.clientX - startX;
         const diffY = touch.clientY - startY;
 
-        if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 5) {
+        // Detect if movement is primarily vertical
+        if (!isScrolling && Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 10) {
             isScrolling = true;
             isDragging = false;
             return; 
         }
 
-        if (Math.abs(diffX) > 10) {
+        // Horizontal Swipe Lock
+        if (Math.abs(diffX) > 5) {
+            if (e.cancelable) e.preventDefault(); // This stops the page from scrolling
             currentOffset = diffX;
-            if (e.cancelable) e.preventDefault();
             updateCarousel(currentOffset);
         }
     };
@@ -276,7 +281,8 @@
         if (!isDragging) return;
         isDragging = false;
         images.forEach(img => img.style.transition = 'transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.5s ease');
-        if (Math.abs(currentOffset) > 70) {
+        
+        if (Math.abs(currentOffset) > 60) {
             currentIndex = (currentIndex + (currentOffset < 0 ? 1 : -1) + images.length) % images.length;
         }
         currentOffset = 0;
@@ -285,7 +291,7 @@
 
     gallerySection.addEventListener('touchstart', handleStart, {passive: true});
     gallerySection.addEventListener('mousedown', handleStart);
-    gallerySection.addEventListener('touchmove', handleMove, {passive: false});
+    gallerySection.addEventListener('touchmove', handleMove, {passive: false}); // passive: false is vital
     gallerySection.addEventListener('mousemove', handleMove);
     window.addEventListener('touchend', handleEnd);
     window.addEventListener('mouseup', handleEnd);
