@@ -4,59 +4,897 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Grand Bridgerton Invitation</title>
+
+    <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+       body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Playfair Display', serif;
+    overflow-x: hidden; /* important */
+    overflow-y: auto;   /* IMPORTANT: allow page to grow */
+
+    /* Background settings */
+    background: url('./diangandchinoimage.png') no-repeat center center / cover;
+    min-height: 100vh; /* instead of fixed 100vh */
+
+    background-color: #000;
+}
+
+
+
+/* --- COLOR PALETTE ---
+    Sage Green: #757C6A (Darker), #939A88 (Lighter)
+    Gold/Yellow: #D4AF37 (Gold Accent), #F8F7EE (Cream/Light Yellow)
+    Text/Accent: #4B5320 (Dark Olive/Sage)
+*/
+
+/* Fullscreen Video Background */
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -2;
+    opacity: 0;
+    transition: opacity 2s ease; /* Mas matagal na transition para mas cinematic */
+}
+.video-background.active { opacity: 1; }
+.video-background video { width: 100%; height: 100%; object-fit: cover; }
+
+/* --- GLOBAL FAIRY/GLITTER OVERLAY (Motion Effect) --- */
+/* Naglalagay ng subtle moving dots/glitter effect sa buong screen */
+.main-content.active::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Gold/White subtle dots */
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.8;
+    z-index: -1;
+    animation: glitterMotion 20s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes glitterMotion {
+    0% { background-position: 0 0; }
+    100% { background-position: 500px 500px; }
+}
+
+
+/* --- 1. LANDING SCREEN --- */
+
+
+#landingScreen {
+    position: absolute;
+    top: 71%;;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
+/* ---------- Start Button (royal seal) ---------- */
+/* ---------- Start Button (Elegant Bridgerton Style) ---------- */
+#startButton {
+    padding: 14px 40px;
+    background: linear-gradient(
+        135deg,
+        #d8c8a0 0%,
+        #cbb78a 40%,
+        #b49e6b 100%
+    );
+    color: #031d0b;
+    border: 2.5px solid #D4AF37;
+    border-radius: 40px;
+
+    font-size: 1.1rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+
+    cursor: pointer;
+    margin-top: 25px;
+
+    /* Elegant glow */
+    box-shadow:
+        0 4px 12px rgba(212,175,55,0.45),
+        inset 0 0 12px rgba(255,255,255,0.25);
+
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    text-transform: uppercase;
+}
+
+/* Soft shimmering light sweeping across */
+#startButton::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255,255,255,0.45) 50%,
+        transparent 100%
+    );
+    transform: skewX(-20deg);
+    transition: all 0.6s ease;
+}
+
+#startButton:hover::before {
+    left: 100%;
+}
+
+#startButton:hover {
+    background: linear-gradient(
+        135deg,
+        #cbb78a 0%,
+        #d8c8a0 50%,
+        #e9ddc2 100%
+    );
+    box-shadow: 
+        0 0 20px rgba(212,175,55,0.8),
+        inset 0 0 15px rgba(255,255,255,0.35);
+    transform: translateY(-2px);
+}
+
+/* Tighter look for mobile */
+@media(max-width:480px) {
+    #startButton {
+        padding: 12px 32px;
+        font-size: 1rem;
+        letter-spacing: 1.3px;
+    }
+}
+
+
+/* --- 2. NAME INPUT STYLES (Formal Box) --- */
+/* --- 1. START BUTTON STYLING --- */
+#startButton {
+    padding: 14px 40px;
+    background: linear-gradient(
+        135deg,
+        #d8c8a0 0%,
+        #cbb78a 40%,
+        #b49e6b 100%
+    );
+    color: #031d0b;
+    border: 2.5px solid #D4AF37;
+    border-radius: 40px;
+
+    font-size: 1.1rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+
+    cursor: pointer;
+    margin-top: 25px;
+
+    /* Elegant glow */
+    box-shadow:
+        0 4px 12px rgba(212,175,55,0.45),
+        inset 0 0 12px rgba(255,255,255,0.25);
+
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    text-transform: uppercase;
+}
+
+/* Soft shimmering light sweeping across */
+#startButton::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255,255,255,0.45) 50%,
+        transparent 100%
+    );
+    transform: skewX(-20deg);
+    transition: all 0.6s ease;
+}
+
+#startButton:hover::before {
+    left: 100%;
+}
+
+#startButton:hover {
+    background: linear-gradient(
+        135deg,
+        #cbb78a 0%,
+        #d8c8a0 50%,
+        #e9ddc2 100%
+    );
+    box-shadow: 
+        0 0 20px rgba(212,175,55,0.8),
+        inset 0 0 15px rgba(255,255,255,0.35);
+    transform: translateY(-2px);
+}
+
+/* Tighter look for mobile */
+@media(max-width:480px) {
+    #startButton {
+        padding: 12px 32px;
+        font-size: 1rem;
+        letter-spacing: 1.3px;
+    }
+}
+
+
+/* --- 2. NAME INPUT STYLES (Formal Box) --- */
+/* --- Root Variables para sa Kulay (Para sa Consistency) --- */
+:root {
+    --color-text: #4a4a4a; /* Madilim na Gray */
+    --color-gold-light: #f3e5c9; /* Light Gold */
+    --color-gold-dark: #e0cca4; /* Darker Gold for gradient */
+    --color-background-blur: rgba(255, 255, 255, 0.35); /* Puti na may opacity para sa glass effect */
+    --color-input-bg: rgba(255, 255, 255, 0.6); /* Mas puti para sa input background */
+    --color-button-shadow: rgba(199, 172, 108, 0.6); 
+}
+
+
+/* --- Container: Glassmorphism Effect with Visibility Toggle --- */
+.name-input-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    width: 90%;
+    max-width: 320px;
+    padding: 28px 25px;
+    border-radius: 40px;
+
+    /* Glass Effect */
+    background: var(--color-background-blur);
+    backdrop-filter: blur(20px); 
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+
+    /* --- VISIBILITY TOGGLE --- */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* --- Active State --- */
+.name-input-container.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* --- Typography Styling --- */
+.greeting-title {
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 2.8rem; 
+    font-style: italic;
+    font-weight: 500;
+    color: var(--color-text);
+    margin: -10px 0 5px 0; 
+    line-height: 1.2;
+}
+
+.greeting-text {
+    font-size: 0.95rem;
+    color: var(--color-text);
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+/* --- Input Row (Text Field at Button) --- */
+.input-row {
+    display: flex;
+    width: 100%;
+    height: 44px; 
+    gap: 0;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05); 
+}
+
+#guestNameInput {
+    flex: 1;
+    padding: 0 16px;
+    font-size: 1rem;
+    border-radius: 22px 0 0 22px;
+    border: none;
+    background: var(--color-input-bg);
+    color: var(--color-text);
+    outline: none;
+    height: 100%;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+#guestNameInput:focus {
+    background: rgba(255,255,255,0.8);
+}
+
+/* --- Button Styling (Gold/Metallic Effect) --- */
+#submitNameButton {
+    padding: 0 18px; 
+    height: 100%;
+    border-radius: 0 22px 22px 0;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: capitalize;
+
+    /* Gold Gradient */
+    background: linear-gradient(to bottom, var(--color-gold-light) 0%, var(--color-gold-dark) 100%);
+    color: var(--color-text); 
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.2s ease;
+    flex-shrink: 0;
+
+    /* Gold Border/Shine Effect */
+    box-shadow: 
+        0 2px 4px var(--color-button-shadow),
+        inset 0 1px 1px rgba(255,255,255,0.7);
+}
+
+#submitNameButton:hover {
+    background: linear-gradient(to top, var(--color-gold-light) 0%, var(--color-gold-dark) 100%);
+    box-shadow: 
+        0 1px 2px var(--color-button-shadow),
+        inset 0 1px 1px rgba(255,255,255,0.8);
+}
+
+.error-message {
+    margin-top: 2px;
+    min-height: 16px;
+    font-size: 0.75rem;
+    color: #8b0000;
+    font-weight: 600;
+}
+
+
+
+/* --- 3. ENVELOPE (Formal Wrapper - Water Bubble/Flip) --- */
+#mainContent {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+#mainContent.active { opacity: 1; visibility: visible; }
+
+.envelope-wrapper {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    background: #F8F7EE; /* Light Yellow/Cream Envelope Body */
+    cursor: pointer;
+    box-shadow: 0 20px 50px rgba(0,0,0,1.5);
+    border: 1px solid #757C6A;
+    
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease, box-shadow 0.5s ease;
+}
+
+.envelope-wrapper.visible {
+    opacity: 1;
+    visibility: visible;
+    animation: float 3s ease-in-out infinite; 
+}
+
+.envelope-wrapper.input-active {
+    animation: none;
+    cursor: default;
+    box-shadow: 0 20px 50px rgba(0,0,0,1.5);
+}
+
+/* GLOWING (GOLD/YELLOW) */
+.envelope-wrapper.glowing {
+    animation: float 3s ease-in-out infinite, envelopeGlow 1.5s infinite alternate;
+}
+
+@keyframes envelopeGlow {
+    0% { box-shadow: 0 20px 50px rgba(0,0,0,1.5); }
+    /* Gold Glow */
+    100% { box-shadow: 0 0 60px rgba(255, 215, 0, 1), 0 20px 50px rgba(0,0,0,1.5); } 
+}
+
+/* --- CURSOR HINT ANIMATION (Gold Arrow) --- */
+.cursor-hint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-70%, -100%); 
+    width: 30px; 
+    height: 30px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s;
+    /* Arrow SVG - Gold fill */
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23D4AF37" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2V8h2v8zM12 7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>') no-repeat center center;
+    background-size: contain;
+    z-index: 10;
+    animation: bounce 1.2s infinite; 
+}
+
+.cursor-hint.active {
+    opacity: 1;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translate(-70%, -100%) scale(1); }
+    50% { transform: translate(-75%, -110%) scale(1.05); } 
+}
+
+
+/* --- CARD AND FLAPS (The Envelope Structure) --- */
+
+/* Flap definitions to ensure envelope structure is visible */
+.envelope .side { position: absolute; top: 0; width: 0; height: 0; border-top: 100px solid transparent; border-bottom: 100px solid transparent; z-index: 3; }
+.envelope .side.left { left: 0; border-left: 150px solid #939A88; } /* Lighter Sage */
+.envelope .side.right { right: 0; border-right: 150px solid #939A88; } /* Lighter Sage */
+.envelope .bottom { position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-bottom: 115px solid #757C6A; z-index: 4; } /* Darker Sage */
+.envelope .lid {
+    position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-top: 100px solid #939A88; 
+    transform-origin: top;
+    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Dramatic Flip */
+    z-index: 5;
+}
+
+
+/* Card inside the envelope */
+.card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 253px;
+    height: 160px;
+    background: #FEFCF7; /* Creamy White Card */
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 2; 
+    
+    /* Bridgerton Card Border */
+    border: 5px outset #D4AF37; /* Gold Outset border for texture */
+    
+    /* Initially hidden */
+    opacity: 0;
+    visibility: hidden;
+    
+    transition: all 0.5s ease-in-out, opacity 0.1s; 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+}
+
+.envelope-wrapper.open .card {
+    /* Once open, the card appears and slides up */
+    opacity: 1;
+    visibility: visible;
+    top: -40px; 
+    z-index: 2;
+    transition-delay: 0.3s;
+}
+
+.envelope-wrapper.open .lid {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+/* Full Screen Styles */
+.card.full-screen {
+    position: fixed;
+    top: 50% !important; left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 95vw; height: 95vh; z-index: 9999;
+    
+    /* Full Screen Bridgerton Box */
+    box-shadow: 0 0 0 100vh rgba(0,0,0,0.8), 0 0 30px rgba(212, 175, 55, 0.8); 
+    background: #FEFCF7; 
+    border: 10px double #D4AF37; /* Double Gold border on the main page */
+    
+    overflow-y: auto; overflow-x: hidden;
+    border-radius: 8px; 
+    justify-content: flex-start; align-items: flex-start; 
+}
+.card.full-screen .invitation-image.initial { display: none; }
+#fullDetailsContainer { display: none; }
+.card.full-screen #fullDetailsContainer { display: block; width: 100%; height: auto; }
+
+/* Close Button (Gold) */
+.close-icon {
+    display: none; /* Initially hidden */
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 2.5rem;
+    color: #D4AF37; 
+    text-shadow: 0 0 5px #757C6A;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    z-index: 10000;
+}
+.card.full-screen .close-icon { display: block; }
+.close-icon:hover {
+    transform: scale(1.1) rotate(10deg);
+}
+
+.card.full-screen ~ .side, .card.full-screen ~ .bottom, .card.full-screen ~ .lid { opacity: 0; transition: opacity 0.3s ease; }
+
+/* Floating Animation */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+
+/* --- INVITATION CONTENT STYLES (for invitationDetails.html) --- */
+
+.invitation-scrollable-content {
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: 'Cormorant Garamond', serif;
+    color: #4B5320; /* Darker Sage/Olive Text */
+}
+
+.invitation-scrollable-content h2 {
+    font-size: 3.5rem;
+    color: #D4AF37; /* Gold */
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px #939A88;
+    border-bottom: 2px solid #757C6A;
+    padding-bottom: 15px;
+}
+
+.invitation-scrollable-content h3 {
+    font-size: 2rem;
+    color: #757C6A; /* Sage Green */
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+.invitation-scrollable-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* Personalized Message Box */
+#personalizedGreeting {
+    background-color: #E5E7E4 !important; /* Lighter Sage/Cream Background */
+    border-top: 5px double #D4AF37 !important; /* Gold double line */
+    border-bottom: 5px double #D4AF37 !important;
+    color: #4B5320 !important;
+    font-size: 1.3rem !important;
+    padding: 30px !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* --- BRIDGERTON GLITTER EFFECT (Fairy Motion) --- */
+/* Ito ang CSS para sa mga lumilipad na "glitters" kapag nag-open ang card */
+.bridgerton-glitter {
+    position: fixed;
+    border-radius: 50%; 
+    z-index: 10000;
+    pointer-events: none;
+    background-color: #D4AF37; /* Default Gold */
+}
+
+/* --- RSVP Button Styles (Bridgerton Specific) --- */
+
+/* Note: Ang styles na ito ay nasa loob ng <style> tag sa invitationDetails.html para sa full control */
+/* Pero inilista ko dito ang CSS class names para sa reference: */
+
+/* .rsvp-container, .rsvp-btn */ 
+/* .bridgerton-confirm (Sage Green/Gold) */
+/* .bridgerton-decline (Cream/Sage) */
+    </style>
 </head>
 
 <body>
+
+    <!-- 🎥 VIDEO BACKGROUND -->
     <div class="video-background">
         <video id="bgVideo" loop muted playsinline>
             <source src="./videoCastleGate.mp4" type="video/mp4">
         </video>
     </div>
 
+    <!-- 🎵 BACKGROUND MUSIC -->
     <audio id="bgMusic" loop>
         <source src="./palagiViolin.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- 🌸 LANDING SCREEN -->
     <div id="landingScreen">
-        <!-- <h1>An Invitation Awaits</h1> -->
         <button id="startButton">Chino & Diane</button>
     </div>
-    
-<div class="name-input-container" id="nameInputContainer">
-    <p class="greeting-title">A Message From Chino & Diane</p> 
-    <p class="greeting-text">A tender note of love, whispered only for you, will be revealed at the very end of this invitation.</p>
-    <div class="input-row">
-        <input type="text" id="guestNameInput" placeholder="enter your first name..." required>
-        <button id="submitNameButton">Enter</button>
+
+    <!-- 💌 NAME INPUT SCREEN -->
+    <div class="name-input-container" id="nameInputContainer">
+        <p class="greeting-title">A Message From Chino & Diane</p>
+        <p class="greeting-text">
+            A tender note of love, whispered only for you, will be revealed at the very end of this invitation.
+        </p>
+        <div class="input-row">
+            <input type="text" id="guestNameInput" placeholder="Enter your first name..." required>
+            <button id="submitNameButton">Enter</button>
+        </div>
+        <p id="nameError" class="error-message"></p>
     </div>
-    <p id="nameError" class="error-message"></p>
-</div>
 
-
-
-
+    <!-- ✉️ MAIN INVITATION -->
     <div class="main-content" id="mainContent">
         <div class="envelope-wrapper" id="envelope">
             <div class="cursor-hint" id="cursorHint"></div>
+
             <div class="envelope">
                 <div class="card" id="card">
                     <div class="card-content">
-                        <img src="./card.png" alt="Wedding/Event Invitation" class="invitation-image initial"> 
-                        <div id="fullDetailsContainer"></div> 
+                        <img src="./card.png" alt="Invitation" class="invitation-image initial">
+                        <div id="fullDetailsContainer"></div>
                     </div>
                     <span class="close-icon" id="closeBtn">&times;</span>
-                </div> 
+                </div>
+
                 <div class="side left"></div>
                 <div class="side right"></div>
-                <div class="bottom"></div> 
+                <div class="bottom"></div>
                 <div class="lid"></div>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // --- Element Definitions ---
+const landingScreen = document.getElementById('landingScreen');
+const startButton = document.getElementById('startButton');
+const mainContent = document.getElementById('mainContent');
+const bgVideo = document.getElementById('bgVideo');
+const bgMusic = document.getElementById('bgMusic');
+
+const envelope = document.getElementById('envelope');
+const card = document.getElementById('card');
+const closeBtn = document.getElementById('closeBtn');
+const detailsContainer = document.getElementById('fullDetailsContainer');
+const cursorHint = document.getElementById('cursorHint'); 
+
+const nameInputContainer = document.getElementById('nameInputContainer');
+const nameInput = document.getElementById('guestNameInput');
+const submitButton = document.getElementById('submitNameButton');
+const nameError = document.getElementById('nameError');
+
+// --- State Variables ---
+let detailsLoaded = false;
+let personalizedMessageShown = false; 
+let guestData = []; 
+let personalizedGreeting = {}; 
+let nameVerified = false; 
+let hintTimer;
+
+const DEFAULT_MESSAGE = {
+    message: "We appreciate you visiting our invitation. We are so happy to have you!",
+    name: "Esteemed Guest"
+};
+
+// --- Helper Functions ---
+
+function normalizeName(input) {
+    if (!input) return "";
+    return input.trim().replace(/[-\s]/g, '').toUpperCase();
+}
+
+function findMatchingGuest(input) {
+    if (!input) return null;
+    for (const guest of guestData) {
+        if (guest.names.includes(input)) {
+            return {
+                message: guest.message,
+                name: guest.names[0] 
+            };
+        }
+    }
+    return null;
+}
+
+// FIX: Function para patakbuhin ang script sa loob ng invitationDetails.html
+function executeInjectedScripts(container) {
+    const scripts = container.querySelectorAll("script");
+    scripts.forEach(oldScript => {
+        const newScript = document.createElement("script");
+        newScript.text = oldScript.text;
+        oldScript.parentNode.replaceChild(newScript, oldScript);
+    });
+}
+
+async function loadDataAndDetails() {
+    if (detailsLoaded) return; 
+    
+    // 1. Load Guest Data
+    try {
+        const response = await fetch('./guestData.json');
+        guestData = await response.json();
+    } catch (error) {
+        console.error('Error loading guest list:', error);
+    }
+    
+    // 2. Load Invitation Details (HTML)
+    try {
+        const response = await fetch('./invitationDetails.html');
+        const html = await response.text();
+        detailsContainer.innerHTML = html;
+        
+        // Patakbuhin ang scripts para sa video, timer, at cube
+        executeInjectedScripts(detailsContainer);
+        
+        detailsLoaded = true;
+        
+        // Create Personalized Greeting placeholder
+        const messageDiv = document.createElement('div');
+        messageDiv.id = 'personalizedGreeting';
+        messageDiv.className = 'invitation-scrollable-content'; // Match your CSS class
+        detailsContainer.appendChild(messageDiv); 
+        
+    } catch (error) {
+        console.error('Error loading details:', error);
+    }
+}
+
+function showPersonalizedMessage() {
+    if (!detailsLoaded || personalizedMessageShown) return;
+    
+    const messageElement = document.getElementById('personalizedGreeting');
+    if (messageElement) {
+        const rawName = nameInput.value.trim();
+        const actualName = personalizedGreeting.name || rawName || DEFAULT_MESSAGE.name;
+        const messageToShow = personalizedGreeting.message || DEFAULT_MESSAGE.message;
+        
+        messageElement.innerHTML = `<strong>A Special Message for ${actualName}:</strong><br>${messageToShow}`;
+        personalizedMessageShown = true;
+    }
+}
+
+function triggerBridgertonConfetti(element) {
+    const rect = element.getBoundingClientRect();
+    const count = 30; 
+    for (let i = 0; i < count; i++) {
+        const glitter = document.createElement('div');
+        glitter.classList.add('bridgerton-glitter');
+        const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * rect.width * 0.3;
+        const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * rect.height * 0.3;
+        glitter.style.left = `${x}px`;
+        glitter.style.top = `${y}px`;
+        glitter.style.backgroundColor = Math.random() > 0.5 ? '#D4AF37' : '#939A88'; 
+        const size = Math.random() * 5 + 3;
+        glitter.style.width = `${size}px`;
+        glitter.style.height = `${size}px`;
+        document.body.appendChild(glitter);
+        const finalX = x + (Math.random() - 0.5) * 400;
+        const finalY = y - 50 + (Math.random() - 0.5) * 200; 
+        glitter.animate([
+            { transform: `scale(${Math.random() * 0.8 + 0.2}) rotate(${Math.random() * 360}deg)`, opacity: 1, offset: 0 },
+            { transform: `translate(${finalX - x}px, ${finalY - y}px) rotate(${Math.random() * 720}deg)`, opacity: 0, offset: 1 }
+        ], { duration: 1500 + Math.random() * 1000, easing: 'ease-out', fill: 'forwards' });
+        setTimeout(() => glitter.remove(), 2500);
+    }
+}
+
+// --- Event Handlers ---
+
+startButton.addEventListener('click', () => {
+    landingScreen.style.display = 'none';
+    mainContent.classList.add('active');
+    document.querySelector('.video-background').classList.add('active');
+    bgVideo.play().catch(e => console.log("Video play blocked"));
+    bgMusic.play().catch(e => console.log("Music play blocked"));
+    setTimeout(showEnvelope, 6000); 
+});
+
+function showEnvelope() {
+    envelope.classList.add('visible');
+    hintTimer = setTimeout(() => {
+        envelope.classList.add('glowing');
+        cursorHint.classList.add('active');
+    }, 2000); 
+    loadDataAndDetails(); 
+}
+
+envelope.addEventListener('click', () => {
+    if (nameVerified || nameInputContainer.classList.contains('active')) return; 
+    clearTimeout(hintTimer);
+    envelope.classList.remove('glowing');
+    cursorHint.classList.remove('active');
+    envelope.classList.add('input-active');
+    nameInputContainer.classList.add('active');
+    nameInput.focus();
+});
+
+submitButton.addEventListener('click', () => {
+    const rawInput = nameInput.value;
+    const normalized = normalizeName(rawInput);
+    
+    if (normalized.length === 0) {
+        nameError.textContent = "Please enter your first name.";
+        return;
+    }
+
+    const match = findMatchingGuest(normalized);
+    
+    if (match || normalized === "GUEST") { // Allow "GUEST" for testing
+        personalizedGreeting = match || DEFAULT_MESSAGE;
+        nameVerified = true;
+        nameError.textContent = "";
+        nameInputContainer.classList.remove('active'); 
+        envelope.classList.add('open');
+        triggerBridgertonConfetti(envelope); 
+        
+        setTimeout(() => {
+            card.classList.add('full-screen');
+            // IMPORTANT: Allow scrolling inside the card
+            document.body.style.overflow = 'hidden'; 
+            showPersonalizedMessage();
+        }, 1000); 
+    } else {
+        nameError.textContent = "Name not found. Please check spelling.";
+    }
+});
+
+closeBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); 
+    card.classList.remove('full-screen');
+    // IMPORTANT: Return scrolling to the main body
+    document.body.style.overflow = 'auto'; 
+});
+    </script>
+
 </body>
 </html>
