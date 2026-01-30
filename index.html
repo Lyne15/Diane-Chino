@@ -9,9 +9,10 @@
     
     <style>
         :root {
-            --sage-dark: #2d3b2d;
-            --sage-mid: #3e4f3e;
-            --sage-light: #4a5d4a;
+            /* Realistic Deep Sage Green Palette */
+            --color-sage-light: #6b7a63; /* Main Flaps */
+            --color-sage-mid: #55634f;   /* Side Flaps (for depth) */
+            --color-sage-dark: #3e493a;  /* Interior/Back */
             --color-gold: #D4AF37;
             --fairy-glow: rgba(212, 175, 55, 0.6);
         }
@@ -29,10 +30,12 @@
             margin: 0;
         }
 
+        /* Video Background */
         .video-background {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
+            overflow: hidden;
             z-index: -2;
             opacity: 0;
             transition: opacity 2s ease;
@@ -40,6 +43,7 @@
         .video-background.active { opacity: 1; }
         .video-background video { width: 100%; height: 100%; object-fit: cover; }
 
+        /* Landing Screen */
         #landingScreen {
             position: absolute;
             top: 71%; left: 0; width: 100%;
@@ -57,18 +61,18 @@
             font-weight: 600;
             letter-spacing: 1.8px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(212,175,55,0.45);
+            box-shadow: 0 4px 12px rgba(212,175,55,0.45), inset 0 0 12px rgba(255,255,255,0.25);
             transition: all 0.3s ease;
             text-transform: uppercase;
         }
 
         #musicToggle {
             position: fixed; bottom: 25px; left: 25px;
-            z-index: 1000002; width: 45px; height: 45px;
+            z-index: 100002; width: 45px; height: 45px;
             border-radius: 50%; background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(5px); border: 1px solid var(--color-gold);
             color: var(--color-gold); display: none; align-items: center; justify-content: center;
-            cursor: pointer;
+            cursor: pointer; font-size: 1.2rem;
         }
 
         #mainContent {
@@ -79,110 +83,134 @@
         }
         #mainContent.active { opacity: 1; visibility: visible; }
 
-        /* --- ENVELOPE --- */
+        /* --- ENVELOPE CORE --- */
         .envelope-wrapper {
             position: relative;
-            width: 400px; height: 280px;
+            width: 300px; height: 200px;
+            cursor: pointer;
             opacity: 0; visibility: hidden;
             transition: opacity 0.5s ease;
-            perspective: 1500px;
         }
 
         .envelope-wrapper.visible {
             opacity: 1; visibility: visible;
-            animation: float 3s ease-in-out infinite;
+            animation: float 3s ease-in-out infinite, royal-glow 2s infinite ease-in-out;
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%; height: 100%;
+            background-color: var(--color-sage-dark); /* Interior color */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+
+        /* --- ENVELOPE LAYERS --- */
+        .envelope .side { 
+            position: absolute; top: 0; width: 0; height: 0; 
+            border-top: 100px solid transparent; border-bottom: 100px solid transparent; 
+            z-index: 4; 
+        }
+        /* Added slight darkening to sides for 3D effect */
+        .envelope .side.left { left: 0; border-left: 150px solid var(--color-sage-mid); }
+        .envelope .side.right { right: 0; border-right: 150px solid var(--color-sage-mid); }
+        
+        .envelope .bottom { 
+            position: absolute; bottom: 0; left: 0; width: 0; height: 0; 
+            border-left: 150px solid transparent; border-right: 150px solid transparent; 
+            border-bottom: 115px solid var(--color-sage-light); 
+            z-index: 5; 
+            filter: drop-shadow(0 -5px 10px rgba(0,0,0,0.1));
+        }
+
+        .envelope .lid {
+            position: absolute; top: 0; left: 0; width: 0; height: 0; 
+            border-left: 150px solid transparent; border-right: 150px solid transparent; 
+            border-top: 110px solid var(--color-sage-light); 
+            transform-origin: top; 
+            transition: transform 0.8s ease; 
+            z-index: 6; 
         }
 
         /* --- THE CARD --- */
         .card {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
-            width: 360px; height: 250px;
-            background: #FEFCF7;
+            position: absolute; 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%);
+            width: 260px; height: 170px; 
+            background: #FEFCF7; 
             border: 4px double var(--color-gold);
-            z-index: 2; /* Likod ng flaps */
-            opacity: 0;
-            /* Smooth transition para sa pag-akyat at pag-expand */
-            transition: 
-                top 1.8s cubic-bezier(0.4, 0, 0.2, 1), 
-                transform 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-                width 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-                height 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.8s ease;
+            z-index: 2; 
+            opacity: 0; 
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
         }
 
-        .envelope-svg {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-        }
-
-        .svg-back { z-index: 1; }
-        .svg-front { z-index: 4; }
-        .svg-lid { 
-            z-index: 5; 
-            transform-origin: top;
-            /* Dahan-dahang pagbubukas ng lid */
-            transition: transform 1.5s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-        }
-
-        /* ANIMATION STATES */
-        .envelope-wrapper.open .svg-lid { 
-            transform: rotateX(160deg);
-            z-index: 1; 
-        }
-
+        .envelope-wrapper.open .lid { transform: rotateX(180deg); z-index: 1; }
+        .envelope-wrapper.open .wax-seal-img { opacity: 0; }
         .envelope-wrapper.open .card { 
             opacity: 1; 
-            top: -10%; /* Silip muna sa itaas */
-            z-index: 6; 
+            top: -50px; 
         }
 
-        /* Full Screen Soft Transition */
-        .card.full-screen {
-            top: 50% !important;
-            left: 50% !important;
-            width: 95vw !important;
-            height: 95vh !important;
-            transform: translate(-50%, -50%) scale(1) !important;
-            z-index: 1000000 !important;
-            position: fixed !important;
-            overflow-y: auto;
+        .wax-seal-img {
+            position: absolute; top: 43%; left: 50%; transform: translate(-50%, -15%);
+            width: 53px; z-index: 10;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+            transition: opacity 0.4s ease;
         }
 
+        /* --- INPUT STYLE --- */
+        .name-input-container {
+            position: fixed; top: 50%; left: 50%; 
+            transform: translate(-50%, -50%) scale(0.9);
+            z-index: 2000; display: flex; flex-direction: column; align-items: center;
+            width: 90%; max-width: 380px; padding: 40px 30px; 
+            border-radius: 40px 5px 40px 5px;
+            background: rgba(255, 255, 255, 0.15); 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1.5px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 20px var(--fairy-glow);
+            opacity: 0; visibility: hidden; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .name-input-container.active { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+        
+        .name-input-container p {
+            font-family: 'Cormorant Garamond', serif; color: #fdfaf0; 
+            text-shadow: 0 0 10px var(--color-gold); font-size: 1.7rem; text-align: center; margin: 0 0 20px 0;
+        }
+
+        .input-row { 
+            display: flex; width: 100%; height: 48px; 
+            background: white; border-radius: 25px; overflow: hidden; 
+        }
+        #guestNameInput { 
+            flex: 1; padding: 0 20px; border: none; outline: none; 
+            font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem;
+        }
+        #submitNameButton { 
+            padding: 0 25px; border: none; background: linear-gradient(135deg, #d4af37, #b49e6b); 
+            color: white; font-family: 'Playfair Display', serif; font-weight: bold; cursor: pointer;
+        }
+
+        /* --- FULLSCREEN CARD --- */
+        .card.full-screen { 
+            position: fixed !important; top: 0 !important; left: 0 !important; 
+            width: 100% !important; height: 100% !important; 
+            z-index: 999999 !important; border: none !important;
+            overflow-y: auto !important; background: #FEFCF7 !important;
+            transform: none !important;
+        }
         .close-icon { 
             display: none; position: fixed; top: 20px; right: 20px; 
-            font-size: 2.5rem; color: var(--color-gold); cursor: pointer; 
-            z-index: 1000001; background: white; border-radius: 50%; 
-            width: 50px; height: 50px; line-height: 45px; text-align: center;
+            font-size: 2.5rem; color: var(--color-gold); cursor: pointer; z-index: 1000001; 
+            background: white; border-radius: 50%; width: 50px; height: 50px;
+            line-height: 45px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
         .card.full-screen .close-icon { display: block; }
 
-        .wax-seal-img {
-            position: absolute; top: 48%; left: 50%; transform: translate(-50%, -50%);
-            width: 65px; z-index: 15;
-            transition: opacity 0.5s ease;
-        }
-        .envelope-wrapper.open .wax-seal-img { opacity: 0; }
-
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
-
-        /* --- NAME INPUT --- */
-        .name-input-container {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
-            z-index: 2000; display: flex; flex-direction: column; align-items: center;
-            width: 90%; max-width: 380px; padding: 40px 30px; border-radius: 20px;
-            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); border: 1.5px solid var(--color-gold);
-            opacity: 0; visibility: hidden; transition: all 0.5s ease;
-        }
-        .name-input-container.active { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
-        .input-row { display: flex; width: 100%; height: 48px; background: white; border-radius: 25px; overflow: hidden; }
-        #guestNameInput { flex: 1; padding: 0 20px; border: none; outline: none; font-size: 1.1rem; }
-        #submitNameButton { padding: 0 25px; border: none; background: var(--color-gold); color: white; cursor: pointer; }
+        @keyframes royal-glow { 0%, 100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); } 50% { box-shadow: 0 0 45px rgba(212, 175, 55, 0.8); } }
     </style>
 </head>
 <body>
@@ -204,34 +232,29 @@
     </div>
 
     <div class="name-input-container" id="nameInputContainer">
-        <p style="color: white; font-family: 'Playfair Display';">A Message From Chino & Diane</p>
+        <p>A Message From Chino & Diane</p>
         <div class="input-row">
             <input type="text" id="guestNameInput" placeholder="Enter your first name...">
             <button id="submitNameButton">Enter</button>
         </div>
-        <p id="nameError" style="color:#ffbaba; font-size: 0.9rem; margin-top:10px;"></p>
+        <p id="nameError" style="color:#ffbaba; font-size: 0.9rem; margin-top:10px; text-shadow:none;"></p>
     </div>
 
     <div id="mainContent">
         <div class="envelope-wrapper" id="envelope">
-            
-            <svg class="envelope-svg svg-back" viewBox="0 0 400 280">
-                <rect width="400" height="280" fill="#1b241b" />
-            </svg>
-
-            <div class="card" id="card">
-                <span class="close-icon" id="closeBtn">&times;</span>
-                <div id="fullDetailsContainer"></div>
-            </div>
-
-            <svg class="envelope-svg svg-front" viewBox="0 0 400 280">
-                <path d="M0,0 L180,140 L0,280 Z" fill="var(--sage-dark)" />
-                <path d="M400,0 L220,140 L400,280 Z" fill="var(--sage-dark)" />
-                <path d="M0,280 L200,120 L400,280 Z" fill="var(--sage-mid)" stroke="var(--color-gold)" stroke-width="0.5" />
-                <path class="svg-lid" d="M0,0 L200,160 L400,0 Z" fill="var(--sage-mid)" stroke="var(--color-gold)" stroke-width="1.5" />
-            </svg>
-
             <img src="./sealed.png" alt="Seal" class="wax-seal-img">
+            
+            <div class="envelope">
+                <div class="card" id="card">
+                    <span class="close-icon" id="closeBtn">&times;</span>
+                    <div id="fullDetailsContainer"></div>
+                </div>
+
+                <div class="side left"></div>
+                <div class="side right"></div>
+                <div class="bottom"></div>
+                <div class="lid"></div>
+            </div>
         </div>
     </div>
 
@@ -251,6 +274,7 @@
         const submitButton = document.getElementById('submitNameButton');
 
         let guestData = [];
+        let nameVerified = false;
 
         async function loadContent() {
             try {
@@ -259,8 +283,22 @@
                 const resHtml = await fetch('./invitationDetails.html');
                 const html = await resHtml.text();
                 detailsContainer.innerHTML = html;
-            } catch (e) { console.error(e); }
+            } catch (e) { console.error("Error loading data:", e); }
         }
+
+        function executeScripts() {
+            const scripts = detailsContainer.querySelectorAll("script");
+            scripts.forEach(oldScript => {
+                const newScript = document.createElement("script");
+                newScript.text = oldScript.text;
+                document.body.appendChild(newScript);
+            });
+        }
+
+        musicToggle.addEventListener('click', () => {
+            if (bgMusic.paused) { bgMusic.play(); musicToggle.innerHTML = "🎶"; } 
+            else { bgMusic.pause(); musicToggle.innerHTML = "🔇"; }
+        });
 
         startButton.addEventListener('click', () => {
             landingScreen.style.display = 'none';
@@ -269,33 +307,33 @@
             bgVideo.play();
             bgMusic.play();
             musicToggle.style.display = 'flex';
-            setTimeout(() => { envelope.classList.add('visible'); }, 3000);
+            setTimeout(() => { envelope.classList.add('visible'); }, 6000);
             loadContent();
         });
 
         envelope.addEventListener('click', () => {
+            if (nameVerified) return;
             nameInputContainer.classList.add('active');
             nameInput.focus();
         });
 
-        nameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') submitButton.click(); });
-
         submitButton.addEventListener('click', () => {
             const input = nameInput.value.trim().toUpperCase();
+            if (!input) return;
+
             const found = guestData.find(g => g.names.some(n => n.toUpperCase() === input));
             
             if (found || input === "GUEST") {
+                nameVerified = true;
                 nameInputContainer.classList.remove('active');
-                
-                // Sequence of Animations
-                envelope.classList.add('open'); // 1. Lid opens slowly
+                envelope.style.animation = "none"; 
+                envelope.classList.add('open');
 
-                // 2. Wait for lid, then pull card up
                 setTimeout(() => {
-                    // 3. Card expands to fill screen smoothly
                     card.classList.add('full-screen');
-                    document.body.style.overflowY = 'auto';
-                }, 2000); 
+                    executeScripts();
+                    document.body.style.overflowY = 'auto'; 
+                }, 1800); 
 
             } else {
                 document.getElementById('nameError').textContent = "Hindi mahanap ang iyong pangalan.";
