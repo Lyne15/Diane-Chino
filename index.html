@@ -1,182 +1,383 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Bridgerton Candle Intro</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Grand Bridgerton Invitation</title>
 
-<style>
-    body {
-        margin: 0;
-        background: radial-gradient(circle at center, #1a1a1a 0%, #0b0b0b 70%);
-        font-family: 'Georgia', serif;
-        overflow: hidden;
-        color: #f5e6c8;
-        text-align: center;
-    }
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-    .table {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 35%;
-        background: linear-gradient(to top, #3b2a1d, #2a1d14);
-        box-shadow: 0 -20px 40px rgba(0,0,0,0.8);
-    }
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            font-family: 'Playfair Display', serif;
+            overflow-x: hidden;
+            overflow-y: auto;
+            background: url('./diangandchinoimage.png') no-repeat center center / cover;
+            min-height: 100vh;
+            background-color: #000;
+            margin: 0;
+        }
 
-    .candle-wrapper {
-        position: absolute;
-        left: 50%;
-        bottom: 35%;
-        transform: translateX(-50%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+        /* Fullscreen Video Background */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -2;
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
+        .video-background.active { opacity: 1; }
+        .video-background video { width: 100%; height: 100%; object-fit: cover; }
 
-    .candle {
-        width: 30px;
-        height: 120px;
-        background: linear-gradient(to bottom, #f8f1e4, #e8dccb);
-        border-radius: 8px;
-        position: relative;
-        box-shadow: 0 0 20px rgba(255, 240, 200, 0.2);
-    }
+        .main-content.active::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.8;
+            z-index: -1;
+            animation: glitterMotion 20s linear infinite;
+            pointer-events: none;
+        }
 
-    .flame {
-        width: 22px;
-        height: 35px;
-        background: radial-gradient(circle at 50% 60%, #ffd36b, #ff8c00 70%);
-        border-radius: 50% 50% 50% 50%;
-        position: absolute;
-        top: -28px;
-        left: 50%;
-        transform: translateX(-50%);
-        animation: flicker 0.15s infinite alternate;
-        box-shadow: 0 0 25px rgba(255, 180, 80, 0.9);
-    }
+        @keyframes glitterMotion {
+            0% { background-position: 0 0; }
+            100% { background-position: 500px 500px; }
+        }
 
-    @keyframes flicker {
-        from { transform: translateX(-50%) scale(1); opacity: 1; }
-        to { transform: translateX(-50%) scale(1.1); opacity: 0.85; }
-    }
+        /* --- 1. LANDING SCREEN --- */
+        #landingScreen {
+            position: absolute;
+            top: 71%;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .smoke {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: rgba(200,200,200,0.4);
-        position: absolute;
-        top: -35px;
-        left: 50%;
-        transform: translateX(-50%);
-        opacity: 0;
-        animation: smokeRise 2s ease-out forwards;
-    }
+        #startButton {
+            padding: 14px 40px;
+            background: linear-gradient(135deg, #d8c8a0 0%, #cbb78a 40%, #b49e6b 100%);
+            color: #031d0b;
+            border: 2.5px solid #D4AF37;
+            border-radius: 40px;
+            font-size: 1.1rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            letter-spacing: 1.8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(212,175,55,0.45), inset 0 0 12px rgba(255,255,255,0.25);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+        }
 
-    @keyframes smokeRise {
-        0% { opacity: 0.6; transform: translate(-50%, 0) scale(0.5); }
-        100% { opacity: 0; transform: translate(-50%, -80px) scale(1.5); }
-    }
+        /* --- 2. NAME INPUT STYLES --- */
+        :root {
+            --color-text: #4a4a4a;
+            --color-gold-light: #f3e5c9;
+            --color-gold-dark: #e0cca4;
+            --color-background-blur: rgba(255, 255, 255, 0.35);
+        }
 
-    .instruction {
-        position: absolute;
-        top: 15%;
-        width: 100%;
-        font-size: 1.2rem;
-        letter-spacing: 1px;
-        opacity: 0.85;
-    }
+        .name-input-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            max-width: 320px;
+            padding: 28px 25px;
+            border-radius: 40px;
+            background: var(--color-background-blur);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+        .name-input-container.active { opacity: 1; visibility: visible; pointer-events: auto; }
 
-    .invite-text {
-        position: absolute;
-        top: 40%;
-        width: 100%;
-        opacity: 0;
-        transition: opacity 2s ease;
-        font-size: 1.8rem;
-    }
+        .input-row { display: flex; width: 100%; height: 44px; border-radius: 22px; overflow: hidden; }
+        #guestNameInput { flex: 1; padding: 0 16px; border: none; outline: none; }
+        #submitNameButton { padding: 0 18px; border: none; background: linear-gradient(to bottom, var(--color-gold-light), var(--color-gold-dark)); cursor: pointer; }
 
-    button {
-        margin-top: 20px;
-        padding: 10px 18px;
-        font-size: 14px;
-        border-radius: 20px;
-        border: none;
-        cursor: pointer;
-        background: #c6a85b;
-        color: #1a1a1a;
-    }
-</style>
+        /* --- 3. ENVELOPE & CARD --- */
+        #mainContent {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+        }
+        #mainContent.active { opacity: 1; visibility: visible; }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: #F8F7EE;
+            cursor: pointer;
+            box-shadow: 0 20px 50px rgba(0,0,0,1.5);
+            border: 1px solid #757C6A;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease;
+        }
+        .envelope-wrapper.visible { opacity: 1; visibility: visible; animation: float 3s ease-in-out infinite; }
+        
+        /* Tinatanggal ang floating animation kapag bumubukas na para iwas wiggle */
+        .envelope-wrapper.open { animation: none; }
+
+        .envelope .side { position: absolute; top: 0; width: 0; height: 0; border-top: 100px solid transparent; border-bottom: 100px solid transparent; z-index: 3; }
+        .envelope .side.left { left: 0; border-left: 150px solid #939A88; }
+        .envelope .side.right { right: 0; border-right: 150px solid #939A88; }
+        .envelope .bottom { position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-bottom: 115px solid #757C6A; z-index: 4; }
+        .envelope .lid {
+            position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-top: 100px solid #939A88; 
+            transform-origin: top;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 5;
+        }
+
+        /* --- THE CARD --- */
+        .card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 253px;
+            height: 160px;
+            background: #FEFCF7;
+            border-radius: 4px;
+            z-index: 2; 
+            border: 5px outset #D4AF37;
+            opacity: 0;
+            visibility: hidden;
+            /* Pinaganda ang transition flow */
+            transition: 
+                top 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                left 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                width 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                height 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.5s ease;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+        }
+
+        .envelope-wrapper.open .card {
+            opacity: 1;
+            visibility: visible;
+            top: -40px;
+            transition-delay: 0.3s;
+        }
+
+        .envelope-wrapper.open .lid { transform: rotateX(180deg); z-index: 1; }
+
+        /* --- FULLSCREEN FIT - NO WIGGLE --- */
+        .card.full-screen {
+            position: fixed;
+            top: 0 !important; 
+            left: 0 !important;
+            transform: translate(0, 0) !important;
+            width: 100vw; 
+            height: 100vh; 
+            z-index: 9999;
+            box-shadow: none; 
+            border: 0; 
+            background: #FEFCF7;
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: block;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .close-icon {
+            display: none;
+            position: fixed; 
+            top: 20px;
+            right: 20px;
+            font-size: 3rem;
+            color: #D4AF37;
+            cursor: pointer;
+            z-index: 10001;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        .card.full-screen .close-icon { display: block; }
+
+        #fullDetailsContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="instruction">
-    Make a wish… then gently blow 💨<br/>
-    <button onclick="startMic()">Start Experience</button>
-</div>
-
-<div class="invite-text" id="invite">
-    <div>Together with their families</div>
-    <div><strong>Lyne & Partner</strong></div>
-    <div>request the honour of your presence</div>
-</div>
-
-<div class="candle-wrapper">
-    <div class="candle">
-        <div class="flame" id="flame"></div>
+    <div class="video-background">
+        <video id="bgVideo" loop muted playsinline>
+            <source src="./videoCastleGate.mp4" type="video/mp4">
+        </video>
     </div>
-</div>
 
-<div class="table"></div>
+    <audio id="bgMusic" loop>
+        <source src="./palagiViolin.mp3" type="audio/mpeg">
+    </audio>
 
-<script>
-let audioContext, analyser, mic, dataArray;
-let blownOut = false;
+    <div id="landingScreen">
+        <button id="startButton">Chino & Diane</button>
+    </div>
 
-async function startMic() {
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        analyser = audioContext.createAnalyser();
-        mic = audioContext.createMediaStreamSource(stream);
-        mic.connect(analyser);
+    <div class="name-input-container" id="nameInputContainer">
+        <p class="greeting-title" style="color: #4a4a4a; font-style: italic; font-size: 2rem; text-align: center;">A Message From Chino & Diane</p>
+        <div class="input-row">
+            <input type="text" id="guestNameInput" placeholder="Enter your first name..." required>
+            <button id="submitNameButton">Enter</button>
+        </div>
+        <p id="nameError" style="color:red; font-size: 0.8rem; margin-top:5px;"></p>
+    </div>
 
-        analyser.fftSize = 256;
-        dataArray = new Uint8Array(analyser.frequencyBinCount);
+    <div class="main-content" id="mainContent">
+        <div class="envelope-wrapper" id="envelope">
+            <div class="envelope">
+                <div class="card" id="card">
+                    <span class="close-icon" id="closeBtn">&times;</span>
+                    <div id="fullDetailsContainer"></div>
+                </div>
+                <div class="side left"></div>
+                <div class="side right"></div>
+                <div class="bottom"></div>
+                <div class="lid"></div>
+            </div>
+        </div>
+    </div>
 
-        listenForBlow();
-        document.querySelector("button").style.display = "none";
-    } catch (err) {
-        alert("Microphone access denied 😢 You can add a tap alternative later.");
-    }
-}
+    <script>
+        const startButton = document.getElementById('startButton');
+        const landingScreen = document.getElementById('landingScreen');
+        const mainContent = document.getElementById('mainContent');
+        const bgVideo = document.getElementById('bgVideo');
+        const bgMusic = document.getElementById('bgMusic');
+        const envelope = document.getElementById('envelope');
+        const card = document.getElementById('card');
+        const closeBtn = document.getElementById('closeBtn');
+        const detailsContainer = document.getElementById('fullDetailsContainer');
+        const nameInputContainer = document.getElementById('nameInputContainer');
+        const nameInput = document.getElementById('guestNameInput');
+        const submitButton = document.getElementById('submitNameButton');
+        const nameError = document.getElementById('nameError');
 
-function listenForBlow() {
-    requestAnimationFrame(listenForBlow);
-    analyser.getByteFrequencyData(dataArray);
+        let guestData = [];
+        let nameVerified = false;
 
-    let volume = dataArray.reduce((a, b) => a + b) / dataArray.length;
+        async function loadContent() {
+            try {
+                const resData = await fetch('./guestData.json');
+                guestData = await resData.json();
+                
+                const resHtml = await fetch('./invitationDetails.html');
+                const html = await resHtml.text();
+                detailsContainer.innerHTML = html;
+                
+                const scripts = detailsContainer.querySelectorAll("script");
+                scripts.forEach(oldScript => {
+                    const newScript = document.createElement("script");
+                    newScript.text = oldScript.text;
+                    document.body.appendChild(newScript);
+                });
+            } catch (e) { console.error("Loading error:", e); }
+        }
 
-    // Threshold for blow detection
-    if (volume > 60 && !blownOut) {
-        blownOut = true;
-        blowOutCandle();
-    }
-}
+        startButton.addEventListener('click', () => {
+            landingScreen.style.display = 'none';
+            mainContent.classList.add('active');
+            document.querySelector('.video-background').classList.add('active');
+            bgVideo.play();
+            bgMusic.play();
+            setTimeout(() => { envelope.classList.add('visible'); }, 4000);
+            loadContent();
+        });
 
-function blowOutCandle() {
-    const flame = document.getElementById("flame");
-    flame.style.display = "none";
+        envelope.addEventListener('click', () => {
+            if (nameVerified) return;
+            nameInputContainer.classList.add('active');
+            nameInput.focus();
+        });
 
-    const smoke = document.createElement("div");
-    smoke.classList.add("smoke");
-    flame.parentElement.appendChild(smoke);
+        submitButton.addEventListener('click', () => {
+            const input = nameInput.value.trim().toUpperCase();
+            if (!input) return;
 
-    document.getElementById("invite").style.opacity = 1;
-}
-</script>
+            const found = guestData.find(g => g.names.some(n => n.toUpperCase() === input));
+            
+            if (found || input === "GUEST") {
+                nameVerified = true;
 
+                // Logic: Pag-insert ng personal message sa dulo ng content
+                if (found && found.message) {
+                    const personalMsgDiv = document.createElement('div');
+                    personalMsgDiv.style.padding = "40px 20px";
+                    personalMsgDiv.style.marginTop = "30px";
+                    personalMsgDiv.style.borderTop = "2px double #D4AF37";
+                    personalMsgDiv.style.textAlign = "center";
+                    personalMsgDiv.style.fontStyle = "italic";
+                    personalMsgDiv.style.fontFamily = "'Cormorant Garamond', serif";
+                    personalMsgDiv.innerHTML = `<p style="font-size: 1.3rem; color: #4a4a4a;">"${found.message}"</p>`;
+                    
+                    detailsContainer.appendChild(personalMsgDiv);
+                }
+
+                nameInputContainer.classList.remove('active');
+                envelope.classList.add('open');
+                
+                // Smooth transition to fullscreen
+                setTimeout(() => {
+                    card.classList.add('full-screen');
+                    document.body.style.overflow = 'hidden';
+                }, 1200);
+            } else {
+                nameError.textContent = "Paumanhin, hindi mahanap ang iyong pangalan.";
+            }
+        });
+
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            card.classList.remove('full-screen');
+            document.body.style.overflow = 'auto';
+        });
+    </script>
 </body>
 </html>
