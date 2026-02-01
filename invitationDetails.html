@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Invitation Details</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700&family=Great+Vibes&family=Libre+Baskerville:italic@0;1&display=swap" rel="stylesheet">
 <style>
 /* ===== VARIABLES & RESET ===== */
 body, html { margin:0; padding:0; }
@@ -14,6 +14,7 @@ body, html { margin:0; padding:0; }
     --w-gold: #c5a059;
     --w-cream: #fcfaf2;
     --w-glass: rgba(255,255,255,0.95);
+    --w-bridgerton-blue: #345c7d;
     font-family: 'Playfair Display', serif;
     background: var(--w-cream);
     color: var(--w-dark);
@@ -132,7 +133,7 @@ h2 {
     overflow: hidden;
     touch-action: pan-y;
     user-select: none;
-    padding-bottom: 60px;
+    padding-bottom: 20px;
 }
 .w-image-stack {
     position: relative;
@@ -167,20 +168,64 @@ h2 {
 .carousel-active .w-stack-img.active { opacity:1; transform: scale(1) translateX(0); z-index:10; }
 .carousel-active .w-stack-img.next { opacity:0.3; transform: scale(0.75) translateX(280px); z-index:5; }
 .carousel-active .w-stack-img.prev { opacity:0.3; transform: scale(0.75) translateX(-280px); z-index:5; }
+
+/* ===== BRIDGERTON MAP INTEGRATION ===== */
+.bridgerton-map-mini {
+    width: 100%;
+    max-width: 360px;
+    margin: 10px auto 40px auto;
+    padding: 5px;
+}
+.regency-border {
+    border: 2px solid var(--w-gold);
+    padding: 12px;
+    background: white;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    text-align: center;
+}
+.map-label-regency {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: var(--w-sage);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+.interactive-map-frame {
+    width: 100%;
+    height: 220px;
+    border: 1px solid #eee;
+    overflow: hidden;
+    touch-action: pan-x pan-y;
+}
+.interactive-map-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    pointer-events: auto; 
+}
+.map-sub-link {
+    display: inline-block;
+    margin-top: 15px;
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    font-size: 0.75rem;
+    color: var(--w-gold);
+    text-decoration: none;
+    border-bottom: 1px solid var(--w-gold);
+}
 </style>
 </head>
 <body>
 
 <div id="w-root">
 
-    <!-- HERO VIDEO -->
     <section id="w-hero">
         <video id="w-video" autoplay muted playsinline loop>
             <source src="./details.mp4" type="video/mp4">
         </video>
     </section>
 
-    <!-- INVITATION SECTION -->
     <section class="w-section">
         <div class="w-reveal">
             <h2>Save the Date</h2>
@@ -230,7 +275,6 @@ h2 {
         </div>
     </section>
 
-    <!-- GALLERY SECTION -->
     <section class="w-gallery-section" id="wSlider">
         <div class="w-image-stack">
             <img src="./place.jpeg" class="w-stack-img img-1" id="gImg1" alt="Venue 1">
@@ -238,6 +282,27 @@ h2 {
             <img src="./place3.png" class="w-stack-img img-3" id="gImg3" alt="Venue 3">
         </div>
     </section>
+
+    <div class="w-reveal">
+        <div class="bridgerton-map-mini">
+            <div class="regency-border">
+                <div class="map-label-regency">Location of the Ball</div>
+                
+                <div class="interactive-map-frame">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3869.8138244356714!2d121.27941547456425!3d14.08816498941814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd5d9a270e6307%3A0x8ca878842e4ba751!2sBistro%20Alejandro!5e0!3m2!1sen!2sph!4v1769924459596!5m2!1sen!2sph" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        title="Event Location">
+                    </iframe>
+                </div>
+
+                <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3869.8138244356714!2d121.27941547456425!3d14.08816498941814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd5d9a270e6307%3A0x8ca878842e4ba751!2sBistro%20Alejandro!5e0!3m2!1sen!2sph!4v1769924459596!5m2!1sen!2sph" target="_blank" class="map-sub-link">
+                    Get Directions for Your Carriage
+                </a>
+            </div>
+        </div>
+    </div>
 
 </div>
 
