@@ -1,24 +1,39 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cinzel:wght@400;700&family=Great+Vibes&family=Libre+Baskerville:ital@1&display=swap" rel="stylesheet">
+
 <style>
-/* ===== GLOBAL STYLES ===== */
-body, html { margin:0; padding:0; background: #fcfaf2; scroll-behavior: smooth; overflow-x: hidden; }
+/* ===== GLOBAL STYLES & MOBILE FIXES ===== */
+body, html { 
+    margin:0; padding:0; background: #fcfaf2; scroll-behavior: smooth; overflow-x: hidden; 
+    /* Tanggalin ang asul na highlight sa mobile */
+    -webkit-tap-highlight-color: transparent;
+}
+
 #w-root {
     --w-sage: #717d6c; --w-gold: #c5a059; --w-dark: #3a4437; --w-cream: #fcfaf2; --w-glass: rgba(255,255,255,0.95);
     font-family: 'Playfair Display', serif; display: flex; flex-direction: column; align-items: center;
+    /* Iwasan ang text selection */
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Para payagan pa rin ang selection sa specific text kung gusto mo */
+p, b, span:not(.w-val) {
+    user-select: text;
+    -webkit-user-select: text;
 }
 
 .w-reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; width: 100%; }
 .w-reveal.active { opacity: 1; transform: translateY(0); }
 
 /* ===== HERO VIDEO ===== */
-#w-hero { height: 65vh; width: 100%; background: #000; position: relative; margin-bottom: 40px; } /* Added margin */
+#w-hero { height: 65vh; width: 100%; background: #000; position: relative; margin-bottom: 40px; }
 #w-video { width: 100%; height: 100%; object-fit: cover; }
 
 /* ===== SECTION SPACING ===== */
 .w-section { 
     width: 100%; 
     max-width: 500px; 
-    padding: 80px 24px; /* Increased vertical padding */
+    padding: 0px 25px 25px;
     text-align: center; 
     box-sizing: border-box; 
     display: flex; 
@@ -49,34 +64,43 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3.5rem, 15vw, 4.5rem)
 .w-label { font-size: 0.65rem; text-transform: uppercase; color: var(--w-gold); letter-spacing: 2px; }
 
 /* ===== GALLERY SECTION ===== */
-.gallery-outer { width: 100%; overflow: hidden; padding: 80px 0; background: #fdfbf7; margin: 40px 0; }
+.gallery-outer { width: 100%; overflow: hidden; background: #fdfbf7; }
 .w-gallery-container {
     display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
     padding: 20px 15%; gap: 0; -webkit-overflow-scrolling: touch; position: relative; height: 420px; align-items: center;
 }
 .w-gallery-container::-webkit-scrollbar { display: none; }
 .w-item { flex: 0 0 75%; scroll-snap-align: center; position: relative; transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1); margin: 0 5px; }
-.w-item.stacked { position: absolute; left: 50%; transform: translateX(-50%) scale(0.9); margin: 0; }
-.w-item.stacked:nth-child(1) { transform: translateX(-50%) rotate(-8deg); z-index: 3; }
-.w-item.stacked:nth-child(2) { transform: translateX(-50%) rotate(4deg); z-index: 2; }
-.w-item.stacked:nth-child(3) { transform: translateX(-50%) rotate(-2deg); z-index: 1; }
-.w-item.spread { position: relative; left: 0; transform: scale(0.85); opacity: 0.4; }
-.w-item.spread.in-focus { transform: scale(1.05); opacity: 1; z-index: 10; }
-.w-item img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border: 10px solid #fff; outline: 1px solid var(--w-gold); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-.caption { font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--w-gold); margin-top: 10px; opacity: 0; text-align: center; transition: 0.5s; }
-.w-item.in-focus .caption { opacity: 1; transform: translateY(-5px); }
+
+/* Mobile optimization for gallery images */
+.w-item img { 
+    width: 100%; aspect-ratio: 4/5; object-fit: cover; border: 10px solid #fff; 
+    outline: 1px solid var(--w-gold); box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+    pointer-events: none; /* Para hindi ma-long press/save sa mobile */
+}
 
 /* ===== ATTIRE SECTION ===== */
-.w-attire-section { width: 100%; max-width: 500px; padding: 80px 24px; text-align: center; box-sizing: border-box; }
+.w-attire-section { width: 100%; max-width: 500px; padding: 0px 24px; text-align: center; box-sizing: border-box; }
 .dear-reader { font-family: 'Great Vibes', cursive; font-size: 2.8rem; color: var(--w-gold); margin-bottom: 15px; }
 .outfits-flex { display: flex; justify-content: center; gap: 15px; margin: 40px 0; }
 .outfit-container { position: relative; width: 45%; aspect-ratio: 2/3; }
-.outfit-container img { width: 100%; height: 100%; object-fit: contain; }
-.color-overlay { position: absolute; top:0; left:0; width:100%; height:100%; mix-blend-mode: multiply; transition: 0.5s; -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-position:center; }
+.outfit-container img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+
+.color-overlay { 
+    position: absolute; top:0; left:0; width:100%; height:100%; 
+    mix-blend-mode: multiply; transition: 0.5s; 
+    -webkit-mask-size:contain; mask-size:contain; 
+    -webkit-mask-repeat:no-repeat; mask-position:center; 
+}
+
 #overlayBride { -webkit-mask-image: url('./maidss.png.png'); mask-image: url('./maidss.png.png'); }
 #overlayGroom { -webkit-mask-image: url('./groom.png(1)(1).png'); mask-image: url('./groom.png(1)(1).png'); }
+
 .palette { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
-.color-btn { width: 38px; height: 38px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.color-btn { 
+    width: 38px; height: 38px; border-radius: 50%; border: 2px solid #fff; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; 
+}
 
 .sage { background-color: #FFFFE0; } .champagne { background-color: #FFFACD; } .dusty { background-color: #FFFF66; }
 .blush { background-color: #556B2F; } .lavender { background-color: #8FBC8F; } .peach { background-color: #BCE3BC; }
@@ -84,7 +108,6 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3.5rem, 15vw, 4.5rem)
 /* MAP WRAPPER */
 .map-card { border: 1px solid var(--w-gold); padding: 30px 20px; background: #fff; width: 100%; box-sizing: border-box; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
 </style>
-
 
 <div id="w-root">
 
@@ -129,7 +152,7 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3.5rem, 15vw, 4.5rem)
     <div class="w-section w-reveal">
         <div class="map-card">
             <p style="font-family:'Cinzel'; font-size:0.85rem; font-weight:700; margin:0; letter-spacing:2px; text-align: center;">BISTRO ALEJANDRO</p>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.321852445851!2d121.0264!3d14.5547!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTTCsDMzJzE2LjkiTiAxMjHCsDAxJzM1LjAiRQ!5e0!3m2!1sen!2sph!4v1640000000000!5m2!1sen!2sph" style="width:100%; height:220px; border:0; margin-top:25px; border-radius: 4px;"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3862.030619223793!2d121.050302!3d14.540118!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTTCsDMyJzI0LjQiTiAxMjHCsDAzJzAxLjEiRQ!5e0!3m2!1sen!2sph!4v1620000000000!5m2!1sen!2sph" style="width:100%; height:220px; border:0; margin-top:25px; border-radius: 4px;" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
 
@@ -142,7 +165,6 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3.5rem, 15vw, 4.5rem)
             <div class="outfits-flex">
                 <div class="outfit-container"><img src="./maidss.png.png"><div class="color-overlay" id="overlayBride"></div></div>
                 <div class="outfit-container"><img src="./groom.png(1)(1).png"><div class="color-overlay" id="overlayGroom"></div></div>
-  
             </div>
             <div class="palette">
                 <div class="color-btn sage" onclick="changeColor('#FFFFE0')"></div>
@@ -154,8 +176,8 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3.5rem, 15vw, 4.5rem)
             </div>
         </div>
 
-        <div class="w-reveal" style="margin-top: 50px; border-top: 1px solid rgba(197,160,89,0.2); pt: 30px;">
-            <span style="font-family:'Cinzel'; font-weight:700; color:var(--w-gold); letter-spacing:3px; font-size:1.1rem; display: block; margin-top: 30px;">DRESS CODE</span>
+        <div class="w-reveal" style="margin-top: 50px; border-top: 1px solid rgba(197,160,89,0.2); padding-top: 30px;">
+            <span style="font-family:'Cinzel'; font-weight:700; color:var(--w-gold); letter-spacing:3px; font-size:1.1rem; display: block;">DRESS CODE</span>
             <div style="font-size:0.95rem; line-height:2; margin-top:15px; color: var(--w-dark);">
                 <b style="color: var(--w-sage)">LADIES:</b> Empire waist gowns & gloves.<br>
                 <b style="color: var(--w-sage)">GENTLEMEN:</b> Tailored coats & vests.
@@ -166,12 +188,16 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3.5rem, 15vw, 4.5rem)
 </div>
 
 <script>
+// Siniguradong global ang function para sa injected HTML
 window.changeColor = function(color) {
-    document.getElementById('overlayBride').style.backgroundColor = color;
-    document.getElementById('overlayGroom').style.backgroundColor = color;
+    const bOverlay = document.getElementById('overlayBride');
+    const gOverlay = document.getElementById('overlayGroom');
+    if(bOverlay) bOverlay.style.backgroundColor = color;
+    if(gOverlay) gOverlay.style.backgroundColor = color;
 };
 
 (function(){
+    // Smooth Reveal Observer
     const revealObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if(entry.isIntersecting) {
@@ -188,6 +214,7 @@ window.changeColor = function(color) {
     }, {threshold: 0.1});
     document.querySelectorAll(".w-reveal").forEach(r => revealObserver.observe(r));
 
+    // Gallery Focus Effect
     const focusObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if(entry.isIntersecting) entry.target.classList.add('in-focus');
@@ -196,21 +223,25 @@ window.changeColor = function(color) {
     }, { root: document.getElementById('mainGallery'), threshold: 0.7 });
     document.querySelectorAll('.w-item').forEach(item => focusObserver.observe(item));
 
+    // Countdown Timer
     const target=new Date("April 19, 2026 10:00:00").getTime();
     function updateTimer(){
         const now=new Date().getTime(), diff=target-now;
         if(diff<0) return;
-        document.getElementById("wD").innerText=String(Math.floor(diff/864e5)).padStart(2,'0');
-        document.getElementById("wH").innerText=String(Math.floor((diff%864e5)/36e5)).padStart(2,'0');
-        document.getElementById("wM").innerText=String(Math.floor((diff%36e5)/6e4)).padStart(2,'0');
-        document.getElementById("wS").innerText=String(Math.floor((diff%6e4)/1e3)).padStart(2,'0');
+        const d = document.getElementById("wD"), h = document.getElementById("wH"), m = document.getElementById("wM"), s = document.getElementById("wS");
+        if(d) d.innerText=String(Math.floor(diff/864e5)).padStart(2,'0');
+        if(h) h.innerText=String(Math.floor((diff%864e5)/36e5)).padStart(2,'0');
+        if(m) m.innerText=String(Math.floor((diff%36e5)/6e4)).padStart(2,'0');
+        if(s) s.innerText=String(Math.floor((diff%6e4)/1e3)).padStart(2,'0');
     }
     setInterval(updateTimer,1000); updateTimer();
 
+    // Cube Animation
     let rot=0;
     setInterval(() => {
         const c1=document.getElementById("wC1"), c2=document.getElementById("wC2");
-        if(!c1) return; rot+=360;
+        if(!c1 || !c2) return; 
+        rot+=360;
         c1.style.transform=`rotateX(${rot}deg) rotateY(${rot}deg)`;
         c2.style.transform=`rotateX(${rot}deg) rotateY(${rot}deg)`;
     }, 8000);
