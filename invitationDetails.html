@@ -1,337 +1,201 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invitation Details</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700&family=Great+Vibes&family=Libre+Baskerville:italic@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cinzel:wght@400;700&family=Great+Vibes&family=Libre+Baskerville:ital@1&display=swap" rel="stylesheet">
 <style>
-/* ===== VARIABLES & RESET ===== */
-body, html { margin:0; padding:0; }
+/* ===== GLOBAL STYLES ===== */
+body, html { margin:0; padding:0; background: #fcfaf2; scroll-behavior: smooth; overflow-x: hidden; }
 #w-root {
-    --w-sage: #717d6c;
-    --w-dark: #3a4437;
-    --w-gold: #c5a059;
-    --w-cream: #fcfaf2;
-    --w-glass: rgba(255,255,255,0.95);
-    --w-bridgerton-blue: #345c7d;
-    font-family: 'Playfair Display', serif;
-    background: var(--w-cream);
-    color: var(--w-dark);
-    width: 100%;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    -webkit-font-smoothing: antialiased;
+    --w-sage: #717d6c; --w-gold: #c5a059; --w-dark: #3a4437; --w-cream: #fcfaf2; --w-glass: rgba(255,255,255,0.95);
+    font-family: 'Playfair Display', serif; display: flex; flex-direction: column; align-items: center;
 }
 
-/* ===== HERO VIDEO ===== */
-#w-hero {
-    height: 80vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    background: #000;
-}
-#w-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* ===== CONTENT SECTIONS ===== */
-.w-section {
-    width: 100%;
-    max-width: 500px;
-    padding: 40px 20px 25px 20px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    box-sizing: border-box;
-}
-.w-reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+.w-reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; width: 100%; }
 .w-reveal.active { opacity: 1; transform: translateY(0); }
 
-h2 { 
-    font-family: 'Great Vibes', cursive; 
-    font-size: clamp(3rem, 14vw, 4.5rem); 
-    color: var(--w-sage); 
-    margin: 0; 
-    line-height: 1.1; 
-}
-.w-sub {
-    font-family: 'Cinzel', serif;
-    font-size: 0.8rem;
-    letter-spacing: 5px;
-    color: var(--w-gold);
-    margin-top: 10px;
-    text-transform: uppercase;
+/* ===== HERO VIDEO ===== */
+#w-hero { height: 65vh; width: 100%; background: #000; position: relative; margin-bottom: 40px; } /* Added margin */
+#w-video { width: 100%; height: 100%; object-fit: cover; }
+
+/* ===== SECTION SPACING ===== */
+.w-section { 
+    width: 100%; 
+    max-width: 500px; 
+    padding: 80px 24px; /* Increased vertical padding */
+    text-align: center; 
+    box-sizing: border-box; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 35px; 
 }
 
-/* ===== CALENDAR & TIMER ===== */
+h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3.5rem, 15vw, 4.5rem); color: var(--w-sage); margin: 0; }
+
 .w-card-box {
-    background: var(--w-glass);
-    padding: 40px 20px;
-    border-radius: 120px 120px 40px 40px;
-    width: 240px;
-    border: 1px solid rgba(197,160,89,0.2);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    background: var(--w-glass); padding: 40px 20px; border-radius: 120px 120px 40px 40px; 
+    width: 240px; border: 1px solid rgba(197,160,89,0.2); box-shadow: 0 15px 35px rgba(0,0,0,0.05);
 }
+
 .w-cubes { display: flex; gap: 15px; justify-content: center; margin-bottom: 20px; }
 .w-wrap { width: 55px; height: 55px; perspective: 1000px; }
-.w-cube {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 1.8s cubic-bezier(0.4,0,0.2,1);
-}
-.w-face {
-    position: absolute;
-    width: 55px; height: 55px;
-    background: #fff;
-    border: 0.5px solid var(--w-gold);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.6rem; font-family: 'Cinzel', serif;
-    color: var(--w-dark);
-    backface-visibility: hidden;
-}
+.w-cube { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 1.8s cubic-bezier(0.4,0,0.2,1); }
+.w-face { position: absolute; width: 55px; height: 55px; background: #fff; border: 0.5px solid var(--w-gold); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; font-family: 'Cinzel', serif; }
 .w-front { transform: rotateY(0deg) translateZ(27.5px); }
 .w-back { transform: rotateY(180deg) translateZ(27.5px); }
 .w-top { transform: rotateX(90deg) translateZ(27.5px); }
 .w-bottom { transform: rotateX(-90deg) translateZ(27.5px); }
 
-.w-timer-container { display: flex; justify-content: center; gap: 18px; width: 100%; }
+.w-timer-container { display: flex; justify-content: center; gap: 15px; margin-top: 10px; }
 .w-t-unit { display: flex; flex-direction: column; align-items: center; }
-.w-val { font-size: 1.6rem; color: var(--w-dark); font-family: 'Cinzel', serif; font-weight: 700; }
-.w-label { font-size: 0.8rem; text-transform: uppercase; color: var(--w-gold); letter-spacing: 2px; margin-top: 5px; }
+.w-val { font-size: 1.5rem; color: var(--w-dark); font-family: 'Cinzel', serif; font-weight: 700; }
+.w-label { font-size: 0.65rem; text-transform: uppercase; color: var(--w-gold); letter-spacing: 2px; }
 
-.w-venue-pre { font-size: 1.1rem; font-style: italic; opacity: 0.8; margin-bottom: 5px; }
-.w-venue-name { font-family: 'Cinzel', serif; font-size: 1.3rem; font-weight: 700; letter-spacing: 3px; color: var(--w-dark); }
+/* ===== GALLERY SECTION ===== */
+.gallery-outer { width: 100%; overflow: hidden; padding: 80px 0; background: #fdfbf7; margin: 40px 0; }
+.w-gallery-container {
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+    padding: 20px 15%; gap: 0; -webkit-overflow-scrolling: touch; position: relative; height: 420px; align-items: center;
+}
+.w-gallery-container::-webkit-scrollbar { display: none; }
+.w-item { flex: 0 0 75%; scroll-snap-align: center; position: relative; transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1); margin: 0 5px; }
+.w-item.stacked { position: absolute; left: 50%; transform: translateX(-50%) scale(0.9); margin: 0; }
+.w-item.stacked:nth-child(1) { transform: translateX(-50%) rotate(-8deg); z-index: 3; }
+.w-item.stacked:nth-child(2) { transform: translateX(-50%) rotate(4deg); z-index: 2; }
+.w-item.stacked:nth-child(3) { transform: translateX(-50%) rotate(-2deg); z-index: 1; }
+.w-item.spread { position: relative; left: 0; transform: scale(0.85); opacity: 0.4; }
+.w-item.spread.in-focus { transform: scale(1.05); opacity: 1; z-index: 10; }
+.w-item img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border: 10px solid #fff; outline: 1px solid var(--w-gold); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+.caption { font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--w-gold); margin-top: 10px; opacity: 0; text-align: center; transition: 0.5s; }
+.w-item.in-focus .caption { opacity: 1; transform: translateY(-5px); }
 
-/* ===== GALLERY ===== */
-.w-gallery-section {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    touch-action: pan-y;
-    user-select: none;
-    padding-bottom: 20px;
-}
-.w-image-stack {
-    position: relative;
-    width: 280px;
-    height: 350px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 5;
-}
-.w-stack-img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-    border: 8px solid #fff;
-    transition: transform 0.6s cubic-bezier(0.23,1,0.32,1), opacity 0.6s ease;
-    pointer-events: auto;
-    will-change: transform, opacity;
-}
-.img-1 { transform: translate(0,0) rotate(-2deg); z-index:3; }
-.img-2 { transform: translate(8px,8px) rotate(2deg); z-index:2; }
-.img-3 { transform: translate(-8px,12px) rotate(-1deg); z-index:1; }
+/* ===== ATTIRE SECTION ===== */
+.w-attire-section { width: 100%; max-width: 500px; padding: 80px 24px; text-align: center; box-sizing: border-box; }
+.dear-reader { font-family: 'Great Vibes', cursive; font-size: 2.8rem; color: var(--w-gold); margin-bottom: 15px; }
+.outfits-flex { display: flex; justify-content: center; gap: 15px; margin: 40px 0; }
+.outfit-container { position: relative; width: 45%; aspect-ratio: 2/3; }
+.outfit-container img { width: 100%; height: 100%; object-fit: contain; }
+.color-overlay { position: absolute; top:0; left:0; width:100%; height:100%; mix-blend-mode: multiply; transition: 0.5s; -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-position:center; }
+#overlayBride { -webkit-mask-image: url('./maidss.png.png'); mask-image: url('./maidss.png.png'); }
+#overlayGroom { -webkit-mask-image: url('./groom.png(1)(1).png'); mask-image: url('./groom.png(1)(1).png'); }
+.palette { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
+.color-btn { width: 38px; height: 38px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-.scatter.img-1 { transform: translate(-15px,-10px) rotate(-3deg); }
-.scatter.img-2 { transform: translate(15px,5px) rotate(3deg); }
-.scatter.img-3 { transform: translate(0,15px) rotate(0deg); }
+.sage { background-color: #FFFFE0; } .champagne { background-color: #FFFACD; } .dusty { background-color: #FFFF66; }
+.blush { background-color: #556B2F; } .lavender { background-color: #8FBC8F; } .peach { background-color: #BCE3BC; }
 
-.carousel-active .w-stack-img { opacity:0; transform: scale(0.6) translateX(0); }
-.carousel-active .w-stack-img.active { opacity:1; transform: scale(1) translateX(0); z-index:10; }
-.carousel-active .w-stack-img.next { opacity:0.3; transform: scale(0.75) translateX(280px); z-index:5; }
-.carousel-active .w-stack-img.prev { opacity:0.3; transform: scale(0.75) translateX(-280px); z-index:5; }
-
-/* ===== BRIDGERTON MAP INTEGRATION ===== */
-.bridgerton-map-mini {
-    width: 100%;
-    max-width: 360px;
-    margin: 10px auto 40px auto;
-    padding: 5px;
-}
-.regency-border {
-    border: 2px solid var(--w-gold);
-    padding: 12px;
-    background: white;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    text-align: center;
-}
-.map-label-regency {
-    font-family: 'Cinzel', serif;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    color: var(--w-sage);
-    margin-bottom: 12px;
-    text-transform: uppercase;
-}
-.interactive-map-frame {
-    width: 100%;
-    height: 220px;
-    border: 1px solid #eee;
-    overflow: hidden;
-    touch-action: pan-x pan-y;
-}
-.interactive-map-frame iframe {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    pointer-events: auto; 
-}
-.map-sub-link {
-    display: inline-block;
-    margin-top: 15px;
-    font-family: 'Libre Baskerville', serif;
-    font-style: italic;
-    font-size: 0.75rem;
-    color: var(--w-gold);
-    text-decoration: none;
-    border-bottom: 1px solid var(--w-gold);
-}
+/* MAP WRAPPER */
+.map-card { border: 1px solid var(--w-gold); padding: 30px 20px; background: #fff; width: 100%; box-sizing: border-box; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
 </style>
-</head>
-<body>
+
 
 <div id="w-root">
 
     <section id="w-hero">
-        <video id="w-video" autoplay muted playsinline loop>
-            <source src="./details.mp4" type="video/mp4">
-        </video>
+        <video id="w-video" autoplay muted playsinline loop><source src="./details.mp4" type="video/mp4"></video>
     </section>
 
-    <section class="w-section">
-        <div class="w-reveal">
+    <section class="w-section w-reveal">
+        <div style="margin-bottom: -10px;">
             <h2>Save the Date</h2>
-            <div class="w-sub">Chino & Diane</div>
+            <div style="font-family:'Cinzel'; letter-spacing:5px; color:var(--w-gold); font-size:0.75rem; margin-top: 10px;">CHINO & DIANE</div>
         </div>
-
-        <div class="w-reveal">
-            <div class="w-card-box">
-                <div class="w-cubes">
-                    <div class="w-wrap">
-                        <div class="w-cube" id="wC1">
-                            <div class="w-face w-front" id="wN1">1</div>
-                            <div class="w-face w-back">0</div>
-                            <div class="w-face w-top">4</div>
-                            <div class="w-face w-bottom">7</div>
-                        </div>
-                    </div>
-                    <div class="w-wrap">
-                        <div class="w-cube" id="wC2">
-                            <div class="w-face w-front" id="wN2">9</div>
-                            <div class="w-face w-back">2</div>
-                            <div class="w-face w-top">5</div>
-                            <div class="w-face w-bottom">8</div>
-                        </div>
-                    </div>
-                </div>
-                <div style="text-align:center; font-family: 'Cinzel', serif;">
-                    <span style="font-size:1.1rem; letter-spacing:5px; font-weight:700;">APRIL</span>
-                    <div style="height:1px; background:var(--w-gold); width:35px; margin:8px auto; opacity:0.5;"></div>
-                    <span style="font-size:0.9rem; letter-spacing:4px; color:var(--w-gold);">2026</span>
-                </div>
+        
+        <div class="w-card-box">
+            <div class="w-cubes">
+                <div class="w-wrap"><div class="w-cube" id="wC1"><div class="w-face w-front" id="wN1">1</div><div class="w-face w-back">0</div><div class="w-face w-top">4</div><div class="w-face w-bottom">7</div></div></div>
+                <div class="w-wrap"><div class="w-cube" id="wC2"><div class="w-face w-front" id="wN2">9</div><div class="w-face w-back">2</div><div class="w-face w-top">5</div><div class="w-face w-bottom">8</div></div></div>
+            </div>
+            <div style="text-align:center; font-family: 'Cinzel', serif;">
+                <span style="font-size:1rem; letter-spacing:4px; font-weight:700;">APRIL</span>
+                <div style="height:1px; background:var(--w-gold); width:30px; margin:12px auto; opacity:0.4;"></div>
+                <span style="font-size:0.8rem; letter-spacing:3px; color:var(--w-gold);">2026</span>
             </div>
         </div>
 
-        <div class="w-reveal">
-            <div class="w-timer-container">
-                <div class="w-t-unit"><span class="w-val" id="wD">00</span><span class="w-label">Days</span></div>
-                <div class="w-t-unit"><span class="w-val" id="wH">00</span><span class="w-label">Hrs</span></div>
-                <div class="w-t-unit"><span class="w-val" id="wM">00</span><span class="w-label">Min</span></div>
-                <div class="w-t-unit"><span class="w-val" id="wS">00</span><span class="w-label">Sec</span></div>
-            </div>
-        </div>
-
-        <div class="w-reveal">
-            <span class="w-venue-pre">The place to be for our wedding:</span>
-            <div class="w-venue-name">BISTRO ALEJANDRO</div>
+        <div class="w-timer-container">
+            <div class="w-t-unit"><span class="w-val" id="wD">00</span><span class="w-label">Days</span></div>
+            <div class="w-t-unit"><span class="w-val" id="wH">00</span><span class="w-label">Hrs</span></div>
+            <div class="w-t-unit"><span class="w-val" id="wM">00</span><span class="w-label">Min</span></div>
+            <div class="w-t-unit"><span class="w-val" id="wS">00</span><span class="w-label">Sec</span></div>
         </div>
     </section>
 
-    <section class="w-gallery-section" id="wSlider">
-        <div class="w-image-stack">
-            <img src="./place.jpeg" class="w-stack-img img-1" id="gImg1" alt="Venue 1">
-            <img src="./place2.png" class="w-stack-img img-2" id="gImg2" alt="Venue 2">
-            <img src="./place3.png" class="w-stack-img img-3" id="gImg3" alt="Venue 3">
-        </div>
-    </section>
-
-    <div class="w-reveal">
-        <div class="bridgerton-map-mini">
-            <div class="regency-border">
-                <div class="map-label-regency">Location of the Ball</div>
-                
-                <div class="interactive-map-frame">
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3869.8138244356714!2d121.27941547456425!3d14.08816498941814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd5d9a270e6307%3A0x8ca878842e4ba751!2sBistro%20Alejandro!5e0!3m2!1sen!2sph!4v1769924459596!5m2!1sen!2sph" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        title="Event Location">
-                    </iframe>
-                </div>
-
-                <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3869.8138244356714!2d121.27941547456425!3d14.08816498941814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd5d9a270e6307%3A0x8ca878842e4ba751!2sBistro%20Alejandro!5e0!3m2!1sen!2sph!4v1769924459596!5m2!1sen!2sph" target="_blank" class="map-sub-link">
-                    Get Directions for Your Carriage
-                </a>
-            </div>
+    <div class="gallery-outer w-reveal" id="galleryTrigger">
+        <div class="w-gallery-container" id="mainGallery">
+            <div class="w-item stacked"><img src="./place.jpeg"></div>
+            <div class="w-item stacked"><img src="./place2.png"></div>
+            <div class="w-item stacked"><img src="./place3.png"></div>
         </div>
     </div>
+
+    <div class="w-section w-reveal">
+        <div class="map-card">
+            <p style="font-family:'Cinzel'; font-size:0.85rem; font-weight:700; margin:0; letter-spacing:2px; text-align: center;">BISTRO ALEJANDRO</p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.321852445851!2d121.0264!3d14.5547!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTTCsDMzJzE2LjkiTiAxMjHCsDAxJzM1LjAiRQ!5e0!3m2!1sen!2sph!4v1640000000000!5m2!1sen!2sph" style="width:100%; height:220px; border:0; margin-top:25px; border-radius: 4px;"></iframe>
+        </div>
+    </div>
+
+    <section class="w-attire-section" id="attireSection">
+        <div class="w-reveal">
+            <div class="dear-reader">Dear Readers,</div>
+            <p style="font-family:'Libre Baskerville'; font-style:italic; font-size:1rem; line-height:1.8; color: var(--w-dark); padding: 0 10px;">“In the spirit of Bridgerton, please arrive in your finest Regency-inspired attire.”</p>
+        </div>
+        <div class="w-reveal">
+            <div class="outfits-flex">
+                <div class="outfit-container"><img src="./maidss.png.png"><div class="color-overlay" id="overlayBride"></div></div>
+                <div class="outfit-container"><img src="./groom.png(1)(1).png"><div class="color-overlay" id="overlayGroom"></div></div>
+  
+            </div>
+            <div class="palette">
+                <div class="color-btn sage" onclick="changeColor('#FFFFE0')"></div>
+                <div class="color-btn champagne" onclick="changeColor('#FFFACD')"></div>
+                <div class="color-btn dusty" onclick="changeColor('#FFFF66')"></div>
+                <div class="color-btn blush" onclick="changeColor('#556B2F')"></div>
+                <div class="color-btn lavender" onclick="changeColor('#8FBC8F')"></div>
+                <div class="color-btn peach" onclick="changeColor('#BCE3BC')"></div>
+            </div>
+        </div>
+
+        <div class="w-reveal" style="margin-top: 50px; border-top: 1px solid rgba(197,160,89,0.2); pt: 30px;">
+            <span style="font-family:'Cinzel'; font-weight:700; color:var(--w-gold); letter-spacing:3px; font-size:1.1rem; display: block; margin-top: 30px;">DRESS CODE</span>
+            <div style="font-size:0.95rem; line-height:2; margin-top:15px; color: var(--w-dark);">
+                <b style="color: var(--w-sage)">LADIES:</b> Empire waist gowns & gloves.<br>
+                <b style="color: var(--w-sage)">GENTLEMEN:</b> Tailored coats & vests.
+            </div>
+        </div>
+    </section>
 
 </div>
 
 <script>
+window.changeColor = function(color) {
+    document.getElementById('overlayBride').style.backgroundColor = color;
+    document.getElementById('overlayGroom').style.backgroundColor = color;
+};
+
 (function(){
-    /* ===== REVEAL ANIMATION ===== */
     const revealObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
-            if(entry.isIntersecting) entry.target.classList.add("active");
+            if(entry.isIntersecting) {
+                entry.target.classList.add("active");
+                if(entry.target.id === 'galleryTrigger') {
+                    setTimeout(() => {
+                        document.querySelectorAll('.w-item').forEach(item => {
+                            item.classList.remove('stacked'); item.classList.add('spread');
+                        });
+                    }, 600);
+                }
+            }
         });
-    }, {threshold:0.1});
+    }, {threshold: 0.1});
     document.querySelectorAll(".w-reveal").forEach(r => revealObserver.observe(r));
 
-    /* ===== CUBES ROTATION ===== */
-    let rot=0;
-    function spinCubes() {
-        const c1=document.getElementById("wC1"), c2=document.getElementById("wC2");
-        const n1=document.getElementById("wN1"), n2=document.getElementById("wN2");
-        if(!c1) return;
-        rot+=360;
-        c1.style.transform=`rotateX(${rot}deg) rotateY(${rot}deg)`;
-        c2.style.transform=`rotateX(${rot}deg) rotateY(${rot}deg)`;
-        const mix=setInterval(()=>{ n1.textContent=Math.floor(Math.random()*10); n2.textContent=Math.floor(Math.random()*10); },100);
-        setTimeout(()=>{ clearInterval(mix); n1.textContent="1"; n2.textContent="9"; },1500);
-    }
-    setInterval(spinCubes,8000);
-    setTimeout(spinCubes,1000);
+    const focusObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) entry.target.classList.add('in-focus');
+            else entry.target.classList.remove('in-focus');
+        });
+    }, { root: document.getElementById('mainGallery'), threshold: 0.7 });
+    document.querySelectorAll('.w-item').forEach(item => focusObserver.observe(item));
 
-    /* ===== TIMER ===== */
     const target=new Date("April 19, 2026 10:00:00").getTime();
     function updateTimer(){
         const now=new Date().getTime(), diff=target-now;
@@ -341,83 +205,14 @@ h2 {
         document.getElementById("wM").innerText=String(Math.floor((diff%36e5)/6e4)).padStart(2,'0');
         document.getElementById("wS").innerText=String(Math.floor((diff%6e4)/1e3)).padStart(2,'0');
     }
-    setInterval(updateTimer,1000);
-    updateTimer();
+    setInterval(updateTimer,1000); updateTimer();
 
-    /* ===== GALLERY CAROUSEL ===== */
-    const gallerySection = document.getElementById('wSlider');
-    const images = [
-        document.getElementById('gImg1'),
-        document.getElementById('gImg2'),
-        document.getElementById('gImg3')
-    ];
-    let carouselActive = false;
-    let currentIndex = 0;
-
-    function playIntroAnimation() {
-        images.forEach(img => img.classList.remove('intro', 'scatter', 'active', 'next', 'prev'));
-        images.forEach((img,i)=>setTimeout(()=>img.classList.add('scatter'), i*150));
-        setTimeout(()=>{
-            carouselActive = true;
-            gallerySection.classList.add('carousel-active');
-            updateCarousel();
-        }, 500);
-    }
-
-    function updateCarousel(offset=0){
-        if(!carouselActive) return;
-        images.forEach((img,i)=>{
-            img.classList.remove('active','next','prev');
-            let pos = (i - currentIndex + images.length) % images.length;
-            if(pos===0){ img.classList.add('active'); img.style.transform=`translateX(${offset}px) scale(${1 - Math.abs(offset/1000)}) rotate(${offset/30}deg)`; img.style.opacity=1; img.style.zIndex=10;}
-            else if(pos===1){ img.classList.add('next'); img.style.transform=`translateX(${280+offset}px) scale(0.75)`; img.style.opacity=0.3; img.style.zIndex=5;}
-            else{ img.classList.add('prev'); img.style.transform=`translateX(${-280+offset}px) scale(0.75)`; img.style.opacity=0.3; img.style.zIndex=5;}
-        });
-    }
-
-    let startX=0, startY=0, isDragging=false, currentOffset=0, isScrolling=false;
-
-    const handleStart=(e)=>{
-        const touch=e.type.includes('touch')?e.touches[0]:e;
-        startX=touch.clientX; startY=touch.clientY;
-        isDragging=true; isScrolling=false; currentOffset=0;
-        images.forEach(img=>img.style.transition='none');
-    };
-    const handleMove=(e)=>{
-        if(!isDragging || isScrolling) return;
-        const touch=e.type.includes('touch')?e.touches[0]:e;
-        const diffX = touch.clientX - startX;
-        const diffY = touch.clientY - startY;
-        if(!isScrolling && Math.abs(diffY)>Math.abs(diffX) && Math.abs(diffY)>5){ isScrolling=true; isDragging=false; return;}
-        if(Math.abs(diffX)>5){ if(e.cancelable)e.preventDefault(); currentOffset=diffX; updateCarousel(currentOffset);}
-    };
-    const handleEnd=()=>{
-        if(!isDragging) return;
-        isDragging=false;
-        images.forEach(img=>img.style.transition='transform 0.5s cubic-bezier(0.2,0.8,0.2,1), opacity 0.5s ease');
-        if(Math.abs(currentOffset)>60){ currentIndex = (currentIndex + (currentOffset < 0 ? 1 : -1) + images.length) % images.length;}
-        currentOffset=0;
-        updateCarousel(0);
-    };
-
-    gallerySection.addEventListener('touchstart', handleStart, {passive:true});
-    gallerySection.addEventListener('mousedown', handleStart);
-    gallerySection.addEventListener('touchmove', handleMove, {passive:false});
-    gallerySection.addEventListener('mousemove', handleMove);
-    window.addEventListener('touchend', handleEnd);
-    window.addEventListener('mouseup', handleEnd);
-
-    const observer = new IntersectionObserver(entries=>{
-        entries.forEach(entry=>{
-            if(entry.isIntersecting){ carouselActive=false; gallerySection.classList.remove('carousel-active'); playIntroAnimation();}
-        });
-    }, {threshold:0.5});
-    observer.observe(gallerySection);
-
-    playIntroAnimation();
-
+    let rot=0;
+    setInterval(() => {
+        const c1=document.getElementById("wC1"), c2=document.getElementById("wC2");
+        if(!c1) return; rot+=360;
+        c1.style.transform=`rotateX(${rot}deg) rotateY(${rot}deg)`;
+        c2.style.transform=`rotateX(${rot}deg) rotateY(${rot}deg)`;
+    }, 8000);
 })();
 </script>
-
-</body>
-</html>
