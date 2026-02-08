@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cinzel:wght@400;700&family=Great+Vibes&family=Libre+Baskerville:ital@1&display=swap" rel="stylesheet">
+    <title>Wedding Invitation - Chino & Diane</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cinzel:wght@400;700&family=Great+Vibes&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
 <style>
 /* ===== GLOBAL STYLES ===== */
@@ -20,18 +21,18 @@ body, html {
 .w-reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; width: 100%; }
 .w-reveal.active { opacity: 1; transform: translateY(0); }
 
-/* ===== 1. HERO VIDEO ===== */
+/* ===== 1. HERO ===== */
 #w-hero { 
     height: 70vh; width: 100%; background: #000; position: relative; overflow: hidden; margin-bottom: -20px; 
 }
-#w-video { width: 100%; height: 100%; object-fit: cover; }
+#w-hero img { width: 100%; height: 100%; object-fit: cover; }
 #w-hero::after {
     content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 250px; 
     background: linear-gradient(to bottom, rgba(252, 250, 242, 0) 0%, rgba(252, 250, 242, 0.4) 30%, rgba(252, 250, 242, 0.8) 70%, #fcfaf2 100%);
     z-index: 2;
 }
 
-/* ===== 2. CALENDAR, TEXT, & TIMER SECTION ===== */
+/* ===== 2. CALENDAR & TIMER ===== */
 .w-section { 
     width: 100%; max-width: 500px; padding: 20px 25px 40px; text-align: center; box-sizing: border-box; 
     display: flex; flex-direction: column; align-items: center; gap: 25px; position: relative; z-index: 3;
@@ -39,7 +40,6 @@ body, html {
 h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 12vw, 4rem); color: var(--w-sage); margin: 0; }
 .w-names { font-family:'Cinzel'; letter-spacing:4px; color:var(--w-gold); font-size: 0.7rem; margin-top: 8px; }
 
-/* Calendar Cube */
 .w-card-box {
     background: var(--w-glass); padding: 30px 20px; border-radius: 120px 120px 40px 40px; 
     width: 200px; border: 1px solid rgba(197,160,89,0.2); box-shadow: 0 15px 35px rgba(0,0,0,0.05);
@@ -53,45 +53,109 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 12vw, 4rem); co
 .w-top { transform: rotateX(90deg) translateZ(22.5px); }
 .w-bottom { transform: rotateX(-90deg) translateZ(22.5px); }
 
-/* Timer */
 .w-timer-container { display: flex; justify-content: center; gap: 15px; }
 .w-t-unit { display: flex; flex-direction: column; align-items: center; min-width: 50px; }
 .w-val { font-size: 1.2rem; color: var(--w-dark); font-family: 'Cinzel', serif; font-weight: 700; }
 .w-label { font-size: 0.55rem; text-transform: uppercase; color: var(--w-gold); letter-spacing: 1px; }
 
-/* ===== 3. STACKED TO CAROUSEL GALLERY ===== */
-.gallery-outer { width: 100%; background: #fdfbf7; padding: 60px 0; overflow: hidden; position: relative; }
-.w-gallery-container {
-    display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
-    gap: 0; padding: 0 15%; -webkit-overflow-scrolling: touch; align-items: center; height: 400px;
-    transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
+/* ===== 3. 3D CAROUSEL ===== */
+.icon-cards {
+  position: relative; width: 60vw; height: 75vw; max-width: 280px; max-height: 350px; margin: 40px 0; perspective: 1000px;
 }
-.w-gallery-container::-webkit-scrollbar { display: none; }
-.w-item { flex: 0 0 70%; scroll-snap-align: center; position: relative; transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1); margin: 0 -10px; }
+.icon-cards__content {
+  position: absolute; width: 100%; height: 100%; transform-origin: center; transform-style: preserve-3d; transform: translateZ(-30vw) rotateY(0); animation: carousel 12s infinite cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+.icon-cards__item {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 4px solid #fff;
+}
+.icon-cards__item img { width: 100%; height: 100%; object-fit: cover; }
+.icon-cards__item:nth-child(1) { transform: rotateY(0deg) translateZ(35vw); }
+.icon-cards__item:nth-child(2) { transform: rotateY(120deg) translateZ(35vw); }
+.icon-cards__item:nth-child(3) { transform: rotateY(240deg) translateZ(35vw); }
 
-/* Stacked State */
-.is-stacked .w-item:nth-child(1) { transform: translate(100px, 15px) rotate(-12deg); z-index: 1; opacity: 0.8; }
-.is-stacked .w-item:nth-child(2) { transform: translate(0, 0) rotate(0deg); z-index: 5; opacity: 1; }
-.is-stacked .w-item:nth-child(3) { transform: translate(-100px, 20px) rotate(12deg); z-index: 1; opacity: 0.8; }
+@keyframes carousel {
+  0%, 15% { transform: translateZ(-35vw) rotateY(0); }
+  30%, 45% { transform: translateZ(-35vw) rotateY(-120deg); }
+  60%, 75% { transform: translateZ(-35vw) rotateY(-240deg); }
+  90%, 100% { transform: translateZ(-35vw) rotateY(-360deg); }
+}
 
-/* Carousel Focus State */
-.w-item.is-active { transform: scale(1.0); z-index: 10; opacity: 1; filter: blur(0); }
-.w-item:not(.is-active) { transform: scale(0.85); opacity: 0.5; filter: blur(2px); }
-.w-item img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border: 10px solid #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
-
-/* ===== 4. MAP SECTION ===== */
+/* ===== 4. MAP ===== */
 .map-card { border: 1px solid var(--w-gold); padding: 25px 15px; background: #fff; width: 100%; box-sizing: border-box; }
 .map-title { font-family:'Cinzel'; font-size: 0.75rem; font-weight:700; letter-spacing:2px; margin-bottom: 15px; color: var(--w-dark); }
 
-/* ===== 5. COLOR PALETTE & ATTIRE ===== */
-.w-attire-section { width: 100%; max-width: 500px; padding: 40px 24px; text-align: center; box-sizing: border-box; }
-.dear-reader { font-family: 'Great Vibes', cursive; font-size: 2.8rem; color: var(--w-gold); }
-.color-overlay { position: absolute; top:0; left:0; width:100%; height:100%; mix-blend-mode: multiply; transition: 0.5s; -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-position:center; }
+/* ===== 5. ATTIRE SECTION ===== */
+.w-attire-section { width: 100%; max-width: 500px; padding: 40px 24px; text-align: center; box-sizing: border-box; overflow: hidden; }
+.dear-reader { font-family: 'Great Vibes', cursive; font-size: 2.8rem; color: var(--w-gold); margin-bottom: 10px; }
+
+.scroll-track-container { 
+    display: flex; 
+    justify-content: center; 
+    gap: 10px; 
+    margin: 30px 0; 
+    will-change: transform;
+}
+
+.slide-actor { 
+    position: relative; 
+    width: 45%; 
+    aspect-ratio: 2/3; 
+}
+
+#actor-left { transform: translateX(-150%); opacity: 0; }
+#actor-right { transform: translateX(150%); opacity: 0; }
+
+.color-overlay { 
+    position: absolute; top:0; left:0; width:100%; height:100%; 
+    mix-blend-mode: multiply; transition: background-color 0.5s; 
+    -webkit-mask-size:contain; mask-size:contain; 
+    -webkit-mask-repeat:no-repeat; mask-position:center; 
+    pointer-events: none; 
+}
 #overlayBride { -webkit-mask-image: url('./maidss.png.png'); mask-image: url('./maidss.png.png'); }
 #overlayGroom { -webkit-mask-image: url('./groom.png(1)(1).png'); mask-image: url('./groom.png(1)(1).png'); }
 
-.palette { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 25px; }
-.color-btn { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; }
+/* SINGLE ROW PALETTE FIX */
+.palette { 
+    display: flex; 
+    justify-content: center; 
+    gap: 5px; 
+    flex-wrap: nowrap; 
+    margin: 15px auto; 
+    width: 100%;
+}
+
+@keyframes pulse-hint {
+    0% { transform: scale(1); filter: drop-shadow(0 0 0px var(--w-gold)); }
+    50% { transform: scale(1.1); filter: drop-shadow(0 0 8px var(--w-gold)); }
+    100% { transform: scale(1); filter: drop-shadow(0 0 0px var(--w-gold)); }
+}
+.pulse { animation: pulse-hint 2s infinite ease-in-out; }
+
+.color-frame {
+    position: relative; 
+    width: 52px; 
+    height: 52px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    cursor: pointer; 
+    transition: 0.3s;
+    flex-shrink: 0;
+}
+.color-frame::after {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url('./palette-bg.png'); background-size: contain; background-repeat: no-repeat; background-position: center;
+    z-index: 2; pointer-events: none; opacity: 0.7; transition: 0.3s;
+}
+.color-frame.active-color::after { opacity: 1; filter: sepia(1) saturate(5) hue-rotate(10deg); transform: scale(1.15); }
+.color-btn { position: relative; width: 28px; height: 28px; border-radius: 50%; z-index: 1; }
+
+/* New Dress Code Text Layout */
+.dress-code-grid { display: flex; justify-content: space-around; text-align: center; gap: 15px; margin-top: 20px; }
+.dress-code-col { flex: 1; }
+.dress-code-col h4 { font-family: 'Cinzel'; font-size: 0.7rem; letter-spacing: 2px; color: var(--w-sage); margin-bottom: 5px; }
+.dress-code-col p { font-family: 'Playfair Display'; font-size: 0.8rem; line-height: 1.4; color: var(--w-dark); margin: 0; }
 </style>
 </head>
 
@@ -100,11 +164,9 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 12vw, 4rem); co
 <div id="w-root">
 
     <section id="w-hero">
-        <video id="w-video" autoplay muted playsinline loop>
-            <source src="./details.mp4" type="video/mp4">
-        </video>
+        <img src="./sample1.jpg" alt="Hero">
     </section>
-
+    
     <section class="w-section w-reveal">
         <div>
             <h2>Save the Date</h2>
@@ -133,97 +195,96 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 12vw, 4rem); co
             <div class="w-t-unit"><span class="w-val" id="wM">00</span><span class="w-label">Min</span></div>
             <div class="w-t-unit"><span class="w-val" id="wS">00</span><span class="w-label">Sec</span></div>
         </div>
-    </section>
 
-    <div class="gallery-outer" id="galleryTrigger">
-        <div class="w-gallery-container is-stacked" id="mainGallery">
-            <div class="w-item"><img src="./place.jpeg"></div>
-            <div class="w-item is-active"><img src="./place2.png"></div>
-            <div class="w-item"><img src="./place3.png"></div>
-        </div>
-        <p id="swipeHint" style="font-family:'Cinzel'; font-size: 0.55rem; color: var(--w-gold); margin-top: 20px; letter-spacing: 2px; text-align: center; opacity:0; transition: 1s;">Swipe to explore</p>
-    </div>
+        <figure class="icon-cards w-reveal">
+          <div class="icon-cards__content">
+            <div class="icon-cards__item"><img src="./place.jpeg"></div>
+            <div class="icon-cards__item"><img src="./place2.png"></div>
+            <div class="icon-cards__item"><img src="./place3.png"></div>
+          </div>
+        </figure>
+    </section>
 
     <div class="w-section w-reveal">
         <div class="map-card">
             <p class="map-title">BISTRO ALEJANDRO</p>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3862.348658824101!2d121.2384!3d14.5076!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTTCsDMwJzI3LjQiTiAxMjHCsDE0JzE4LjIiRQ!5e0!3m2!1sen!2sph!4v1620000000000!5m2!1sen!2sph" style="width:100%; height:200px; border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3826.9657782635294!2d120.38883731486307!3d16.42514598866164!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3391a16606829789%3A0x6b81b896939e6a0a!2sBistro%20Alejandro!5e0!3m2!1sen!2sph!4v1648000000000!5m2!1sen!2sph" style="width:100%; height:200px; border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
 
     <section class="w-attire-section">
         <div class="w-reveal">
             <div class="dear-reader">Dear Readers,</div>
-            <p style="font-family:'Libre Baskerville'; font-style:italic; font-size:0.95rem; color:var(--w-dark);">“In the spirit of Bridgerton, please arrive in your finest Regency-inspired attire.”</p>
+            <p style="font-family:'Libre Baskerville'; font-style:italic; font-size:1rem; color:var(--w-dark); margin-bottom: 5px;">
+                “In the spirit of Bridgerton, please arrive in your finest Regency-inspired attire.”
+            </p>
+            <p style="font-family:'Cinzel'; font-size:0.7rem; letter-spacing:2px; color:var(--w-gold); margin-bottom: 20px;">
+                VENUE: BISTRO ALEJANDRO
+            </p>
         </div>
-        <div class="w-reveal">
-            <div style="display: flex; justify-content: center; gap: 10px; margin-top: 25px;">
-                <div style="position: relative; width: 45%; aspect-ratio: 2/3;"><img src="./maidss.png.png" style="width:100%; height:100%; object-fit:contain;"><div class="color-overlay" id="overlayBride"></div></div>
-                <div style="position: relative; width: 45%; aspect-ratio: 2/3;"><img src="./groom.png(1)(1).png" style="width:100%; height:100%; object-fit:contain;"><div class="color-overlay" id="overlayGroom"></div></div>
+
+        <div class="scroll-track-container" id="attireTrigger">
+            <div id="actor-left" class="slide-actor">
+                <img src="./maidss.png.png" style="width:100%; height:100%; object-fit:contain;">
+                <div class="color-overlay" id="overlayBride"></div>
             </div>
+            <div id="actor-right" class="slide-actor">
+                <img src="./groom.png(1)(1).png" style="width:100%; height:100%; object-fit:contain;">
+                <div class="color-overlay" id="overlayGroom"></div>
+            </div>
+        </div>
+
+        <div class="w-reveal">
+            <p style="font-family: 'Cinzel'; font-size: 0.65rem; color: var(--w-gold); letter-spacing: 2px; text-transform: uppercase;">
+                Tap a jewel to preview the palette
+            </p>
+            
             <div class="palette">
-                <div class="color-btn" style="background-color: #FFFFE0;" onclick="changeColor('#FFFFE0')"></div>
-                <div class="color-btn" style="background-color: #FFFACD;" onclick="changeColor('#FFFACD')"></div>
-                <div class="color-btn" style="background-color: #FFFF66;" onclick="changeColor('#FFFF66')"></div>
-                <div class="color-btn" style="background-color: #556B2F;" onclick="changeColor('#556B2F')"></div>
-                <div class="color-btn" style="background-color: #8FBC8F;" onclick="changeColor('#8FBC8F')"></div>
-                <div class="color-btn" style="background-color: #BCE3BC;" onclick="changeColor('#BCE3BC')"></div>
+                <div class="color-frame pulse" onclick="changeColor('#FFFFE0', this)"><div class="color-btn" style="background-color: #FFFFE0;"></div></div>
+                <div class="color-frame" onclick="changeColor('#FFFACD', this)"><div class="color-btn" style="background-color: #FFFACD;"></div></div>
+                <div class="color-frame" onclick="changeColor('#FFFF66', this)"><div class="color-btn" style="background-color: #FFFF66;"></div></div>
+                <div class="color-frame" onclick="changeColor('#556B2F', this)"><div class="color-btn" style="background-color: #556B2F;"></div></div>
+                <div class="color-frame" onclick="changeColor('#8FBC8F', this)"><div class="color-btn" style="background-color: #8FBC8F;"></div></div>
+                <div class="color-frame" onclick="changeColor('#BCE3BC', this)"><div class="color-btn" style="background-color: #BCE3BC;"></div></div>
+            </div>
+            
+            <div style="margin-top: 35px; border-top: 1px solid rgba(197,160,89,0.3); padding-top: 25px;">
+                <h3 style="font-family:'Cinzel'; font-size:0.9rem; color:var(--w-gold); letter-spacing:3px; margin-bottom:10px;">DRESS CODE</h3>
+                <p style="font-family:'Libre Baskerville'; font-style:italic; font-size:0.85rem; color:var(--w-dark); padding: 0 15px;">
+                    “Think regency gowns, delicate gloves, pearls, soft pastels, and graceful silhouettes.”
+                </p>
+                
+                <div class="dress-code-grid">
+                    <div class="dress-code-col">
+                        <h4>LADIES</h4>
+                        <p>Flowy gowns, empire waists, gloves, and dainty accessories.</p>
+                    </div>
+                    <div class="dress-code-col">
+                        <h4>GENTLEMEN</h4>
+                        <p>Coats, vests, crisp collars, and a touch of charm.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-
-</div>
+    </div>
 
 <script>
-window.changeColor = function(color) {
-    document.getElementById('overlayBride').style.backgroundColor = color;
-    document.getElementById('overlayGroom').style.backgroundColor = color;
+// Palette Change logic
+window.changeColor = function(color, element) {
+    const bride = document.getElementById('overlayBride');
+    const groom = document.getElementById('overlayGroom');
+    if(bride) bride.style.backgroundColor = color;
+    if(groom) groom.style.backgroundColor = color;
+    
+    document.querySelectorAll('.color-frame').forEach(frame => {
+        frame.classList.remove('active-color', 'pulse');
+    });
+    if(element) element.classList.add('active-color');
 };
 
 (function(){
-    // CAROUSEL LOGIC
-    const galleryTrigger = document.getElementById('galleryTrigger');
-    const galleryContainer = document.getElementById('mainGallery');
-    const hint = document.getElementById('swipeHint');
-    let stackTimeout;
-
-    const galleryObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if(entry.isIntersecting) {
-                stackTimeout = setTimeout(() => {
-                    galleryContainer.classList.remove('is-stacked');
-                    hint.style.opacity = "1";
-                    const items = document.querySelectorAll('.w-item');
-                    items[1].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-                }, 2000); 
-            } else {
-                clearTimeout(stackTimeout);
-                galleryContainer.classList.add('is-stacked');
-                galleryContainer.scrollTo({left: 0});
-                hint.style.opacity = "0";
-            }
-        });
-    }, { threshold: 0.5 });
-    galleryObserver.observe(galleryTrigger);
-
-    galleryContainer.addEventListener('scroll', () => {
-        if(galleryContainer.classList.contains('is-stacked')) return;
-        const items = document.querySelectorAll('.w-item');
-        let closest = null;
-        let closestDistance = Infinity;
-        items.forEach(item => {
-            const rect = item.getBoundingClientRect();
-            const distance = Math.abs((rect.left + rect.width / 2) - (window.innerWidth / 2));
-            if (distance < closestDistance) {
-                closestDistance = distance;
-                closest = item;
-            }
-        });
-        items.forEach(item => item.classList.remove('is-active'));
-        if (closest) closest.classList.add('is-active');
-    });
-
-    // CUBE LOGIC
+    // Cube Rotation
     let rot = 0;
     setInterval(() => {
         rot += 360;
@@ -232,7 +293,7 @@ window.changeColor = function(color) {
         if(c2) c2.style.transform = `rotateX(${rot}deg) rotateY(${rot}deg)`;
     }, 8000);
 
-    // TIMER LOGIC
+    // Countdown Timer
     const target = new Date("April 19, 2026 10:00:00").getTime();
     function updateTimer(){
         const now = new Date().getTime(), diff = target - now;
@@ -244,13 +305,41 @@ window.changeColor = function(color) {
     }
     setInterval(updateTimer,1000); updateTimer();
 
-    // REVEAL LOGIC
+    // Intersection Observer for generic reveals
     const revealObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if(entry.isIntersecting) entry.target.classList.add("active");
         });
     }, { threshold: 0.1 });
     document.querySelectorAll(".w-reveal").forEach(r => revealObserver.observe(r));
+
+
+    // ===== DYNAMIC SCROLL TRACKING LOGIC =====
+    const attireSection = document.getElementById('attireTrigger');
+    const actorLeft = document.getElementById('actor-left');
+    const actorRight = document.getElementById('actor-right');
+
+    window.addEventListener('scroll', () => {
+        if(!attireSection) return;
+        const rect = attireSection.getBoundingClientRect();
+        const viewHeight = window.innerHeight;
+
+        let progress = (viewHeight - rect.top) / (viewHeight * 0.8);
+        progress = Math.max(0, Math.min(1, progress));
+
+        const moveX = (1 - progress) * 100; 
+        const opacity = progress;
+
+        if(actorLeft) {
+            actorLeft.style.transform = `translateX(-${moveX}%)`;
+            actorLeft.style.opacity = opacity;
+        }
+        if(actorRight) {
+            actorRight.style.transform = `translateX(${moveX}%)`;
+            actorRight.style.opacity = opacity;
+        }
+    });
+
 })();
 </script>
 </body>
