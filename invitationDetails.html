@@ -14,7 +14,7 @@ body, html {
 }
 
 #w-root {
-    --w-sage: #717d6c; --w-gold: #c5a059; --w-dark: #3a4437; --w-cream: #fcfaf2; --w-glass: rgba(255,255,255,0.95);
+    --w-sage: #717d6c; --w-gold: #c5a059; --w-dark: #3a4437; --w-cream: #fcfaf2; --w-glass: rgba(255,255,255,0.85);
     font-family: 'Playfair Display', serif; display: flex; flex-direction: column; align-items: center;
 }
 
@@ -23,13 +23,34 @@ body, html {
 
 /* ===== 1. HERO ===== */
 #w-hero { 
-    height: 70vh; width: 100%; background: #000; position: relative; overflow: hidden; margin-bottom: -20px; 
+    height: 70vh; width: 100%; background: #000; position: relative; overflow: hidden; margin-bottom: -1.5px; 
 }
 #w-hero img { width: 100%; height: 100%; object-fit: cover; }
 #w-hero::after {
-    content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 250px; 
-    background: linear-gradient(to bottom, rgba(252, 250, 242, 0) 0%, rgba(252, 250, 242, 0.4) 30%, rgba(252, 250, 242, 0.8) 70%, #fcfaf2 100%);
+    content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height:100px; 
+    background: linear-gradient(to bottom, rgba(252, 250, 242, 0) 0%, rgba(252, 250, 242, 0.4) 30%, rgba(242, 252, 245, 0.8) 70%, #fcfaf2 100%);
     z-index: 2;
+}
+
+/* ===== BACKGROUND WRAPPER ===== */
+.w-custom-bg-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    background-image: url('./sage-green1.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: scroll;
+}
+
+.w-custom-bg-section::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, #fcfaf2 0%, rgba(252, 250, 242, 0.2) 15%, rgba(252, 250, 242, 0.2) 85%, #fcfaf2 100%);
+    z-index: 1;
 }
 
 /* ===== 2. CALENDAR & TIMER ===== */
@@ -37,26 +58,66 @@ body, html {
     width: 100%; max-width: 500px; padding: 20px 25px 40px; text-align: center; box-sizing: border-box; 
     display: flex; flex-direction: column; align-items: center; gap: 25px; position: relative; z-index: 3;
 }
-h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 12vw, 4rem); color: var(--w-sage); margin: 0; }
-.w-names { font-family:'Cinzel'; letter-spacing:4px; color:var(--w-gold); font-size: 0.7rem; margin-top: 8px; }
+h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3.5rem, 15vw, 4.5rem); color: var(--w-sage); margin: 0; font-weight: 400; }
+.w-names { font-family:'Cinzel'; letter-spacing:5px; color:var(--w-gold); font-size: 0.75rem; margin-top: 8px; font-weight: 700; }
+
+.intro-p { font-family: 'Libre Baskerville', serif; font-size: 0.95rem; color: var(--w-dark); line-height: 1.8; max-width: 320px; margin: 15px auto; }
+
+/* ===== VENUE TEXT STYLE ===== */
+.venue-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.8rem;
+    color: var(--w-sage);
+    margin-top: 30px;
+    margin-bottom: 5px;
+    font-weight: 400;
+}
+.venue-sub {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--w-dark);
+    max-width: 350px;
+    margin: 0 auto 10px;
+    line-height: 1.6;
+}
+
+/* ===== MAP TEXT STYLE ===== */
+.map-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    letter-spacing: 4px;
+    color: var(--w-dark);
+    margin-bottom: 8px;
+    margin-top: 25px;
+    font-weight: 700;
+}
+.map-sub {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--w-sage);
+    margin-bottom: 15px;
+}
 
 .w-card-box {
-    background: var(--w-glass); padding: 30px 20px; border-radius: 120px 120px 40px 40px; 
-    width: 200px; border: 1px solid rgba(197,160,89,0.2); box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    background: var(--w-glass); padding: 35px 20px; border-radius: 120px 120px 40px 40px; 
+    width: 210px; border: 1px solid rgba(197,160,89,0.3); box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    backdrop-filter: blur(5px);
 }
-.w-cubes { display: flex; gap: 12px; justify-content: center; margin-bottom: 15px; }
+.w-cubes { display: flex; gap: 12px; justify-content: center; margin-bottom: 18px; }
 .w-wrap { width: 45px; height: 45px; perspective: 1000px; }
 .w-cube { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 1.8s cubic-bezier(0.4,0,0.2,1); }
-.w-face { position: absolute; width: 45px; height: 45px; background: #fff; border: 0.5px solid var(--w-gold); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-family: 'Cinzel', serif; color: var(--w-dark); }
+.w-face { position: absolute; width: 45px; height: 45px; background: #fff; border: 0.5px solid var(--w-gold); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-family: 'Cinzel', serif; color: var(--w-dark); }
 .w-front { transform: rotateY(0deg) translateZ(22.5px); }
 .w-back { transform: rotateY(180deg) translateZ(22.5px); }
 .w-top { transform: rotateX(90deg) translateZ(22.5px); }
 .w-bottom { transform: rotateX(-90deg) translateZ(22.5px); }
 
-.w-timer-container { display: flex; justify-content: center; gap: 15px; }
+.w-timer-container { display: flex; justify-content: center; gap: 18px; margin-top: 5px; }
 .w-t-unit { display: flex; flex-direction: column; align-items: center; min-width: 50px; }
-.w-val { font-size: 1.2rem; color: var(--w-dark); font-family: 'Cinzel', serif; font-weight: 700; }
-.w-label { font-size: 0.55rem; text-transform: uppercase; color: var(--w-gold); letter-spacing: 1px; }
+.w-val { font-size: 1.3rem; color: var(--w-dark); font-family: 'Cinzel', serif; font-weight: 700; }
+.w-label { font-size: 0.6rem; text-transform: uppercase; color: var(--w-gold); letter-spacing: 1.5px; margin-top: 2px; }
 
 /* ===== 3. 3D CAROUSEL ===== */
 .icon-cards { position: relative; width: 60vw; height: 75vw; max-width: 280px; max-height: 350px; margin: 40px 0; perspective: 1000px; }
@@ -74,15 +135,22 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 12vw, 4rem); co
     90%, 100% { transform: translateZ(-35vw) rotateY(-360deg); }
 }
 
-/* ===== 4. MAP ===== */
-.map-card { border: 1px solid var(--w-gold); padding: 25px 15px; background: #fff; width: 100%; box-sizing: border-box; }
-.map-title { font-family:'Cinzel'; font-size: 0.75rem; font-weight:700; letter-spacing:2px; margin-bottom: 15px; color: var(--w-dark); }
+/* ===== 4. MAP SECTION ===== */
+.w-map-container {
+    width: 90%; max-width: 400px; margin-top: 10px; padding: 10px; background: #fff; border: 1px solid var(--w-gold);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 15px; position: relative; z-index: 10;
+}
+.w-map-frame { width: 100%; height: 250px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(197,160,89,0.3); }
+.w-map-btn {
+    margin-top: 20px; display: inline-block; padding: 14px 30px; background: var(--w-dark); color: #fff;
+    text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 2px; border-radius: 50px; transition: 0.3s; border: 1px solid var(--w-gold);
+}
 
 /* ===== 5. ATTIRE SECTION ===== */
-.w-attire-section { width: 100%; max-width: 500px; padding: 40px 24px; text-align: center; box-sizing: border-box; overflow: hidden; }
-.dear-reader { font-family: 'Great Vibes', cursive; font-size: 2.8rem; color: var(--w-gold); margin-bottom: 10px; }
+.w-attire-section { width: 100%; max-width: 500px; padding: 50px 24px; text-align: center; box-sizing: border-box; overflow: hidden; background: #fcfaf2; position: relative; z-index: 3; }
+.dear-reader { font-family: 'Great Vibes', cursive; font-size: 3.2rem; color: var(--w-gold); margin-bottom: 12px; font-weight: 400; }
 
-.scroll-track-container { display: flex; justify-content: center; gap: 10px; margin: 30px 0; height: 300px; }
+.scroll-track-container { display: flex; justify-content: center; gap: 10px; margin: 35px 0; height: 320px; }
 .slide-actor { position: relative; width: 45%; height: 100%; will-change: transform, opacity; }
 .slide-actor img { width: 100%; height: 100%; object-fit: contain; }
 
@@ -95,21 +163,33 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 12vw, 4rem); co
     -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-position:center; 
     pointer-events: none; 
 }
-#overlayBride { -webkit-mask-image: url('./maidss.png.png'); mask-image: url('./maidss.png.png'); }
+#overlayBride { -webkit-mask-image: url('./Gemini_Generated_Image_qid7w5qid7w5qid7-removebg-preview.png'); mask-image: url('./Gemini_Generated_Image_qid7w5qid7w5qid7-removebg-preview.png'); }
 #overlayGroom { -webkit-mask-image: url('./groom.png(1)(1).png'); mask-image: url('./groom.png(1)(1).png'); }
 
-/* Palette Fixed */
-.palette { display: flex; justify-content: center; gap: 5px; flex-wrap: nowrap; margin: 15px auto; width: 100%; }
+.tap-jewel-bg {
+    background-image: url('./White_Cream_Photo_Wedding_Invitation__4_-removebg-preview.png'); 
+    background-size: cover; background-position: center; padding: 25px; border-radius: 10px; display: inline-block; margin-bottom: 15px;
+}
+
+.palette { display: flex; justify-content: center; gap: 8px; flex-wrap: nowrap; margin: 20px auto; width: 100%; }
 @keyframes pulse-hint {
     0% { transform: scale(1); filter: drop-shadow(0 0 0px var(--w-gold)); }
     50% { transform: scale(1.1); filter: drop-shadow(0 0 8px var(--w-gold)); }
     100% { transform: scale(1); filter: drop-shadow(0 0 0px var(--w-gold)); }
 }
 .pulse { animation: pulse-hint 2s infinite ease-in-out; }
-.color-frame { position: relative; width: 52px; height: 52px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; flex-shrink: 0; }
+.color-frame { position: relative; width: 54px; height: 54px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; flex-shrink: 0; }
 .color-frame::after { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('./palette-bg.png'); background-size: contain; background-repeat: no-repeat; background-position: center; z-index: 2; pointer-events: none; opacity: 0.7; }
 .color-frame.active-color::after { opacity: 1; filter: sepia(1) saturate(5) hue-rotate(10deg); transform: scale(1.15); }
-.color-btn { position: relative; width: 28px; height: 28px; border-radius: 50%; z-index: 1; }
+.color-btn { position: relative; width: 30px; height: 30px; border-radius: 50%; z-index: 1; }
+
+.dress-code-clean { width: 90%; max-width: 420px; margin: 45px auto; text-align: center; }
+.dress-code-title { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 5px; color: var(--w-dark); margin-bottom: 18px; font-weight: 700; }
+.dress-code-quote { font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 0.95rem; color: var(--w-sage); line-height: 1.8; margin-bottom: 25px; padding: 0 10px; }
+.dress-code-divider { width: 50px; height: 1px; background: var(--w-gold); margin: 20px auto; opacity: 0.6; }
+.gender-spec { margin-bottom: 20px; }
+.gender-title { font-family: 'Cinzel', serif; font-size: 0.7rem; color: var(--w-gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; font-weight: 700; }
+.gender-desc { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--w-dark); line-height: 1.6; }
 </style>
 </head>
 
@@ -118,51 +198,80 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 12vw, 4rem); co
 <div id="w-root">
     <section id="w-hero"><img src="./sample1.jpg"></section>
     
-    <section class="w-section w-reveal">
-        <div>
-            <h2>Save the Date</h2>
-            <div class="w-names">CHINO & DIANE</div>
-        </div>
-        
-        <div class="w-card-box">
-            <div class="w-cubes">
-                <div class="w-wrap"><div class="w-cube" id="wC1"><div class="w-face w-front">1</div><div class="w-face w-back">0</div><div class="w-face w-top">4</div><div class="w-face w-bottom">7</div></div></div>
-                <div class="w-wrap"><div class="w-cube" id="wC2"><div class="w-face w-front">9</div><div class="w-face w-back">2</div><div class="w-face w-top">5</div><div class="w-face w-bottom">8</div></div></div>
+    <div class="w-custom-bg-section">
+        <section class="w-section w-reveal">
+            <div>
+                <h2>Diane & Chino</h2>
+                <div class="w-names">INVITE YOU</div>
+                <p class="intro-p">
+                    With joyful hearts and by God’s grace,<br>
+                    we invite you to celebrate the beginning of our forever.<br><br>
+                    Please mark your calendar and share this beautiful day with us.
+                </p>
             </div>
-            <div style="text-align:center; font-family: 'Cinzel', serif;">
-                <span style="font-size:0.9rem; letter-spacing:3px; font-weight:700;">APRIL</span>
-                <div style="height:1px; background:var(--w-gold); width:25px; margin:8px auto; opacity:0.4;"></div>
-                <span style="font-size:0.7rem; color:var(--w-gold);">2026</span>
+            
+            <div class="w-card-box">
+                <div class="w-cubes">
+                    <div class="w-wrap"><div class="w-cube" id="wC1"><div class="w-face w-front">1</div><div class="w-face w-back">0</div><div class="w-face w-top">4</div><div class="w-face w-bottom">7</div></div></div>
+                    <div class="w-wrap"><div class="w-cube" id="wC2"><div class="w-face w-front">9</div><div class="w-face w-back">2</div><div class="w-face w-top">5</div><div class="w-face w-bottom">8</div></div></div>
+                </div>
+                <div style="text-align:center; font-family: 'Cinzel', serif;">
+                    <span style="font-size:1rem; letter-spacing:4px; font-weight:700;">APRIL</span>
+                    <div style="height:1px; background:var(--w-gold); width:30px; margin:10px auto; opacity:0.5;"></div>
+                    <span style="font-size:0.8rem; color:var(--w-gold); letter-spacing: 2px;">2026</span>
+                    <div style="font-size:0.65rem; margin-top:8px; letter-spacing:1.5px; color:var(--w-dark); font-weight: 700;">SUNDAY • 10:00 AM</div>
+                </div>
             </div>
-        </div>
 
-        <div class="w-timer-container">
-            <div class="w-t-unit"><span class="w-val" id="wD">00</span><span class="w-label">Days</span></div>
-            <div class="w-t-unit"><span class="w-val" id="wH">00</span><span class="w-label">Hrs</span></div>
-            <div class="w-t-unit"><span class="w-val" id="wM">00</span><span class="w-label">Min</span></div>
-            <div class="w-t-unit"><span class="w-val" id="wS">00</span><span class="w-label">Sec</span></div>
-        </div>
+            <div>
+                <div style="font-family:'Libre Baskerville'; font-size:0.85rem; letter-spacing:0.5px; margin-bottom:12px; color:var(--w-sage); font-style: italic;">
+                    Counting down to the moment we say “I do”
+                </div>
+                <div class="w-timer-container">
+                    <div class="w-t-unit"><span class="w-val" id="wD">00</span><span class="w-label">Days</span></div>
+                    <div class="w-t-unit"><span class="w-val" id="wH">00</span><span class="w-label">Hrs</span></div>
+                    <div class="w-t-unit"><span class="w-val" id="wM">00</span><span class="w-label">Min</span></div>
+                    <div class="w-t-unit"><span class="w-val" id="wS">00</span><span class="w-label">Sec</span></div>
+                </div>
+            </div>
 
-        <figure class="icon-cards w-reveal">
-          <div class="icon-cards__content">
-            <div class="icon-cards__item"><img src="./place.jpeg"></div>
-            <div class="icon-cards__item"><img src="./place2.png"></div>
-            <div class="icon-cards__item"><img src="./place3.png"></div>
-          </div>
-        </figure>
-    </section>
+            <div>
+                <h3 class="venue-title">The Wedding Celebration</h3>
+                <p class="venue-sub">A day of love, laughter, and cherished memories as two lives become one in grace and devotion.</p>
+            </div>
+
+            <figure class="icon-cards w-reveal">
+              <div class="icon-cards__content">
+                <div class="icon-cards__item"><img src="./place.jpeg"></div>
+                <div class="icon-cards__item"><img src="./place2.png"></div>
+                <div class="icon-cards__item"><img src="./place3.png"></div>
+              </div>
+            </figure>
+
+            <div class="w-reveal">
+                <div class="map-title">WEDDING VENUE</div>
+                <div class="map-sub">Join us at our chosen place of promise and celebration.</div>
+                <div class="w-map-container">
+                    <div class="w-map-frame">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.123456789!2d121.0!3d14.0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTTCsDAwJzAwLjAiTiAxMjHCsDAwJzAwLjAiRQ!5e0!3m2!1sen!2sph!4v1234567890" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+                <a href="#" class="w-map-btn">GET DIRECTIONS</a>
+            </div>
+        </section>
+    </div>
 
     <section class="w-attire-section">
         <div class="w-reveal">
             <div class="dear-reader">Dear Readers,</div>
-            <p style="font-family:'Libre Baskerville'; font-style:italic; font-size:1rem; color:var(--w-dark);">
+            <p style="font-family:'Libre Baskerville'; font-style:italic; font-size:1.05rem; color:var(--w-dark); line-height: 1.7; padding: 0 10px;">
                 “In the spirit of Bridgerton, please arrive in your finest Regency-inspired attire.”
             </p>
         </div>
 
         <div class="scroll-track-container" id="attireTrigger">
             <div id="actor-left" class="slide-actor">
-                <img src="./maidss.png.png">
+                <img src="./Gemini_Generated_Image_qid7w5qid7w5qid7-removebg-preview.png">
                 <div class="color-overlay" id="overlayBride"></div>
             </div>
             <div id="actor-right" class="slide-actor">
@@ -172,7 +281,9 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 12vw, 4rem); co
         </div>
 
         <div class="w-reveal">
-            <p style="font-family: 'Cinzel'; font-size: 0.65rem; color: var(--w-gold); letter-spacing: 2px;">Tap a jewel to preview the palette</p>
+            <div class="tap-jewel-bg">
+                <p style="font-family: 'Cinzel'; font-size: 0.7rem; color: var(--w-gold); letter-spacing: 2px; margin: 0; font-weight: 700;">Tap a jewel to preview the palette</p>
+            </div>
             <div class="palette">
                 <div class="color-frame pulse" onclick="changeColor('#FFFFE0', this)"><div class="color-btn" style="background-color: #FFFFE0;"></div></div>
                 <div class="color-frame" onclick="changeColor('#FFFACD', this)"><div class="color-btn" style="background-color: #FFFACD;"></div></div>
@@ -182,11 +293,26 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 12vw, 4rem); co
                 <div class="color-frame" onclick="changeColor('#BCE3BC', this)"><div class="color-btn" style="background-color: #BCE3BC;"></div></div>
             </div>
         </div>
+
+        <div class="dress-code-clean w-reveal">
+            <div class="dress-code-title">Dress Code</div>
+            <div class="dress-code-quote">
+                “Think regency gowns, delicate gloves, pearls, soft pastels, and graceful silhouettes.”
+            </div>
+            <div class="dress-code-divider"></div>
+            <div class="gender-spec">
+                <div class="gender-title">Ladies</div>
+                <div class="gender-desc">Flowy gowns, empire waists, gloves, and dainty accessories.</div>
+            </div>
+            <div class="gender-spec">
+                <div class="gender-title">Gentlemen</div>
+                <div class="gender-desc">Coats, vests, crisp collars, and a touch of charm.</div>
+            </div>
+        </div>
     </section>
 </div>
 
 <script>
-// Palette Logic (Global)
 window.changeColor = function(color, element) {
     const bride = document.getElementById('overlayBride');
     const groom = document.getElementById('overlayGroom');
@@ -197,7 +323,6 @@ window.changeColor = function(color, element) {
 };
 
 (function(){
-    // 1. Cube Rotation Fix
     let rot = 0;
     setInterval(() => {
         rot += 360;
@@ -206,7 +331,6 @@ window.changeColor = function(color, element) {
         if(c2) c2.style.transform = `rotateX(${rot}deg) rotateY(${rot}deg)`;
     }, 8000);
 
-    // 2. Timer
     const target = new Date("April 19, 2026 10:00:00").getTime();
     function updateTimer(){
         const now = new Date().getTime(), diff = target - now;
@@ -218,13 +342,11 @@ window.changeColor = function(color, element) {
     }
     setInterval(updateTimer,1000); updateTimer();
 
-    // 3. Reveal Observer
     const observer = new IntersectionObserver(entries => {
         entries.forEach(e => { if(e.isIntersecting) e.target.classList.add("active"); });
     }, { threshold: 0.1 });
     document.querySelectorAll(".w-reveal").forEach(r => observer.observe(r));
 
-    // 4. Scroll-Dependent Actor Logic
     const trigger = document.getElementById('attireTrigger');
     const left = document.getElementById('actor-left');
     const right = document.getElementById('actor-right');
@@ -233,19 +355,14 @@ window.changeColor = function(color, element) {
         if(!trigger || !left || !right) return;
         const rect = trigger.getBoundingClientRect();
         const winH = window.innerHeight;
-
-        // Progress 0 to 1 based on trigger position
         let progress = (winH - rect.top) / (winH * 0.8);
         progress = Math.max(0, Math.min(1, progress));
-
         const moveX = (1 - progress) * 150; 
         left.style.transform = `translateX(-${moveX}%)`;
         left.style.opacity = progress;
         right.style.transform = `translateX(${moveX}%)`;
         right.style.opacity = progress;
     }
-
-    // Capture true is vital for index.html modal scrolling
     window.addEventListener('scroll', handleScroll, true);
     handleScroll();
 })();
