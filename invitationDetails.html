@@ -15,20 +15,20 @@ body, html {
 
 #w-root {
     --w-sage: #717d6c; --w-gold: #c5a059; --w-dark: #3a4437; --w-cream: #fcfaf2; --w-glass: rgba(255,255,255,0.85);
-    font-family: 'Playfair Display', serif; display: flex; flex-direction: column; align-items: center;
+    font-family: 'Playfair Display', serif; display: flex; flex-direction: column; align-items: center; width: 100%;
 }
 
-.w-reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; width: 100%; }
+.w-reveal { opacity: 0; transform: translateY(20px); transition: all 1s ease-out; width: 100%; display: flex; flex-direction: column; align-items: center; padding: 0 15px; box-sizing: border-box; }
 .w-reveal.active { opacity: 1; transform: translateY(0); }
 
 /* ===== 1. HERO ===== */
 #w-hero { 
-    height: 70vh; width: 100%; background: #000; position: relative; overflow: hidden; margin-bottom: -1.5px; 
+    height: 50vh; width: 100%; background: #000; position: relative; overflow: hidden; margin-bottom: -1.5px; 
 }
 #w-hero img { width: 100%; height: 100%; object-fit: cover; }
 #w-hero::after {
-    content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height:100px; 
-    background: linear-gradient(to bottom, rgba(252, 250, 242, 0) 0%, rgba(252, 250, 242, 0.4) 30%, rgba(242, 252, 245, 0.8) 70%, #fcfaf2 100%);
+    content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height:60px; 
+    background: linear-gradient(to bottom, rgba(252, 250, 242, 0) 0%, #fcfaf2 100%);
     z-index: 2;
 }
 
@@ -42,115 +42,119 @@ body, html {
     background-image: url('./sage-green1.jpg'); 
     background-size: cover;
     background-position: center;
-    background-attachment: scroll;
 }
 
 .w-custom-bg-section::before {
     content: "";
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(to bottom, #fcfaf2 0%, rgba(252, 250, 242, 0.2) 15%, rgba(252, 250, 242, 0.2) 85%, #fcfaf2 100%);
+    background: linear-gradient(to bottom, #fcfaf2 0%, rgba(252, 250, 242, 0.3) 10%, rgba(252, 250, 242, 0.3) 90%, #fcfaf2 100%);
     z-index: 1;
 }
 
 /* ===== 2. CALENDAR & TIMER ===== */
 .w-section { 
-    width: 100%; max-width: 500px; padding: 20px 25px 40px; text-align: center; box-sizing: border-box; 
-    display: flex; flex-direction: column; align-items: center; gap: 25px; position: relative; z-index: 3;
+    width: 100%; max-width: 450px; padding: 10px 15px 30px; text-align: center; box-sizing: border-box; 
+    display: flex; flex-direction: column; align-items: center; gap: 20px; position: relative; z-index: 3;
 }
-h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3.5rem, 15vw, 4.5rem); color: var(--w-sage); margin: 0; font-weight: 400; }
-.w-names { font-family:'Cinzel'; letter-spacing:5px; color:var(--w-gold); font-size: 0.75rem; margin-top: 8px; font-weight: 700; }
+h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 12vw, 3.8rem); color: var(--w-sage); margin: 0; font-weight: 400; }
+.w-names { font-family:'Cinzel'; letter-spacing:4px; color:var(--w-gold); font-size: 0.7rem; margin-top: 5px; font-weight: 700; }
 
-.intro-p { font-family: 'Libre Baskerville', serif; font-size: 0.95rem; color: var(--w-dark); line-height: 1.8; max-width: 320px; margin: 15px auto; }
+.intro-p { font-family: 'Libre Baskerville', serif; font-size: 0.85rem; color: var(--w-dark); line-height: 1.6; max-width: 290px; margin: 10px auto; }
 
 /* ===== VENUE TEXT STYLE ===== */
 .venue-title {
     font-family: 'Great Vibes', cursive;
-    font-size: 2.8rem;
+    font-size: 2.4rem;
     color: var(--w-sage);
-    margin-top: 30px;
+    margin-top: 20px;
     margin-bottom: 5px;
     font-weight: 400;
 }
 .venue-sub {
     font-family: 'Libre Baskerville', serif;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-style: italic;
     color: var(--w-dark);
-    max-width: 350px;
-    margin: 0 auto 10px;
-    line-height: 1.6;
+    max-width: 300px;
+    margin: 0 auto 5px;
+    line-height: 1.5;
 }
 
 /* ===== MAP TEXT STYLE ===== */
 .map-title {
     font-family: 'Cinzel', serif;
-    font-size: 0.95rem;
-    letter-spacing: 4px;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
     color: var(--w-dark);
-    margin-bottom: 8px;
-    margin-top: 25px;
+    margin-bottom: 5px;
+    margin-top: 15px;
     font-weight: 700;
 }
 .map-sub {
     font-family: 'Libre Baskerville', serif;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-style: italic;
     color: var(--w-sage);
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .w-card-box {
-    background: var(--w-glass); padding: 35px 20px; border-radius: 120px 120px 40px 40px; 
-    width: 210px; border: 1px solid rgba(197,160,89,0.3); box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    background: var(--w-glass); padding: 25px 15px; border-radius: 100px 100px 30px 30px; 
+    width: 190px; border: 1px solid rgba(197,160,89,0.3); box-shadow: 0 10px 25px rgba(0,0,0,0.05);
     backdrop-filter: blur(5px);
 }
-.w-cubes { display: flex; gap: 12px; justify-content: center; margin-bottom: 18px; }
-.w-wrap { width: 45px; height: 45px; perspective: 1000px; }
+.w-cubes { display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; }
+.w-wrap { width: 40px; height: 40px; perspective: 1000px; }
 .w-cube { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 1.8s cubic-bezier(0.4,0,0.2,1); }
-.w-face { position: absolute; width: 45px; height: 45px; background: #fff; border: 0.5px solid var(--w-gold); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-family: 'Cinzel', serif; color: var(--w-dark); }
-.w-front { transform: rotateY(0deg) translateZ(22.5px); }
-.w-back { transform: rotateY(180deg) translateZ(22.5px); }
-.w-top { transform: rotateX(90deg) translateZ(22.5px); }
-.w-bottom { transform: rotateX(-90deg) translateZ(22.5px); }
+.w-face { position: absolute; width: 40px; height: 40px; background: #fff; border: 0.5px solid var(--w-gold); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-family: 'Cinzel', serif; color: var(--w-dark); }
+.w-front { transform: rotateY(0deg) translateZ(20px); }
+.w-back { transform: rotateY(180deg) translateZ(20px); }
+.w-top { transform: rotateX(90deg) translateZ(20px); }
+.w-bottom { transform: rotateX(-90deg) translateZ(20px); }
 
-.w-timer-container { display: flex; justify-content: center; gap: 18px; margin-top: 5px; }
-.w-t-unit { display: flex; flex-direction: column; align-items: center; min-width: 50px; }
-.w-val { font-size: 1.3rem; color: var(--w-dark); font-family: 'Cinzel', serif; font-weight: 700; }
-.w-label { font-size: 0.6rem; text-transform: uppercase; color: var(--w-gold); letter-spacing: 1.5px; margin-top: 2px; }
+.w-timer-container { display: flex; justify-content: center; gap: 12px; margin-top: 5px; }
+.w-t-unit { display: flex; flex-direction: column; align-items: center; min-width: 45px; }
+.w-val { font-size: 1.1rem; color: var(--w-dark); font-family: 'Cinzel', serif; font-weight: 700; }
+.w-label { font-size: 0.55rem; text-transform: uppercase; color: var(--w-gold); letter-spacing: 1px; margin-top: 2px; }
 
 /* ===== 3. 3D CAROUSEL ===== */
-.icon-cards { position: relative; width: 60vw; height: 75vw; max-width: 280px; max-height: 350px; margin: 40px 0; perspective: 1000px; }
+.icon-cards { position: relative; width: 55vw; height: 70vw; max-width: 240px; max-height: 300px; margin: 25px 0; perspective: 1000px; }
 .icon-cards__content { position: absolute; width: 100%; height: 100%; transform-origin: center; transform-style: preserve-3d; transform: translateZ(-30vw) rotateY(0); animation: carousel 12s infinite cubic-bezier(0.77, 0, 0.175, 1) forwards; }
-.icon-cards__item { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 4px solid #fff; }
+.icon-cards__item { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 3px solid #fff; }
 .icon-cards__item img { width: 100%; height: 100%; object-fit: cover; }
-.icon-cards__item:nth-child(1) { transform: rotateY(0deg) translateZ(35vw); }
-.icon-cards__item:nth-child(2) { transform: rotateY(120deg) translateZ(35vw); }
-.icon-cards__item:nth-child(3) { transform: rotateY(240deg) translateZ(35vw); }
+.icon-cards__item:nth-child(1) { transform: rotateY(0deg) translateZ(32vw); }
+.icon-cards__item:nth-child(2) { transform: rotateY(120deg) translateZ(32vw); }
+.icon-cards__item:nth-child(3) { transform: rotateY(240deg) translateZ(32vw); }
 
 @keyframes carousel {
-    0%, 15% { transform: translateZ(-35vw) rotateY(0); }
-    30%, 45% { transform: translateZ(-35vw) rotateY(-120deg); }
-    60%, 75% { transform: translateZ(-35vw) rotateY(-240deg); }
-    90%, 100% { transform: translateZ(-35vw) rotateY(-360deg); }
+    0%, 15% { transform: translateZ(-32vw) rotateY(0); }
+    30%, 45% { transform: translateZ(-32vw) rotateY(-120deg); }
+    60%, 75% { transform: translateZ(-32vw) rotateY(-240deg); }
+    90%, 100% { transform: translateZ(-32vw) rotateY(-360deg); }
 }
 
 /* ===== 4. MAP SECTION ===== */
 .w-map-container {
-    width: 90%; max-width: 400px; margin-top: 10px; padding: 10px; background: #fff; border: 1px solid var(--w-gold);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 15px; position: relative; z-index: 10;
+    width: 95%; max-width: 380px; margin: 10px auto; padding: 6px; background: #fff; border: 1px solid var(--w-gold);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-radius: 12px; position: relative; z-index: 10;
 }
-.w-map-frame { width: 100%; height: 250px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(197,160,89,0.3); }
+.w-map-frame { width: 100%; height: 200px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(197,160,89,0.3); }
 .w-map-btn {
-    margin-top: 20px; display: inline-block; padding: 14px 30px; background: var(--w-dark); color: #fff;
-    text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 2px; border-radius: 50px; transition: 0.3s; border: 1px solid var(--w-gold);
+    margin: 15px 0; display: inline-block; padding: 12px 25px; background: var(--w-dark); color: #fff;
+    text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 2px; border-radius: 50px; border: 1px solid var(--w-gold);
 }
 
 /* ===== 5. ATTIRE SECTION ===== */
-.w-attire-section { width: 100%; max-width: 500px; padding: 50px 24px; text-align: center; box-sizing: border-box; overflow: hidden; background: #fcfaf2; position: relative; z-index: 3; }
-.dear-reader { font-family: 'Great Vibes', cursive; font-size: 3.2rem; color: var(--w-gold); margin-bottom: 12px; font-weight: 400; }
+.w-attire-section { 
+    width: 100%; max-width: 450px; padding: 40px 15px; text-align: center; box-sizing: border-box; overflow: hidden; 
+    background: linear-gradient(to bottom, #fcfaf2 0%, #fffbe6 10%, #fff9e0 25%, #d1dbc6 70%, #717d6c 100%);
+    position: relative; z-index: 3; 
+}
 
-.scroll-track-container { display: flex; justify-content: center; gap: 10px; margin: 35px 0; height: 320px; }
+.dear-reader { font-family: 'Great Vibes', cursive; font-size: 2.8rem; color: var(--w-gold); margin-bottom: 10px; font-weight: 400; }
+
+.scroll-track-container { display: flex; justify-content: center; gap: 8px; margin: 25px 0; height: 280px; }
 .slide-actor { position: relative; width: 45%; height: 100%; will-change: transform, opacity; }
 .slide-actor img { width: 100%; height: 100%; object-fit: contain; }
 
@@ -168,28 +172,22 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3.5rem, 15vw, 4.5rem)
 
 .tap-jewel-bg {
     background-image: url('./White_Cream_Photo_Wedding_Invitation__4_-removebg-preview.png'); 
-    background-size: cover; background-position: center; padding: 25px; border-radius: 10px; display: inline-block; margin-bottom: 15px;
+    background-size: cover; background-position: center; padding: 25px; border-radius: 10px; display: inline-block; margin-bottom: 10px;
 }
 
-.palette { display: flex; justify-content: center; gap: 8px; flex-wrap: nowrap; margin: 20px auto; width: 100%; }
-@keyframes pulse-hint {
-    0% { transform: scale(1); filter: drop-shadow(0 0 0px var(--w-gold)); }
-    50% { transform: scale(1.1); filter: drop-shadow(0 0 8px var(--w-gold)); }
-    100% { transform: scale(1); filter: drop-shadow(0 0 0px var(--w-gold)); }
-}
-.pulse { animation: pulse-hint 2s infinite ease-in-out; }
-.color-frame { position: relative; width: 54px; height: 54px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; flex-shrink: 0; }
+.palette { display: flex; justify-content: center; gap: 6px; flex-wrap: nowrap; margin: 15px auto; width: 100%; }
+.color-frame { position: relative; width: 48px; height: 48px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; flex-shrink: 0; }
 .color-frame::after { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('./palette-bg.png'); background-size: contain; background-repeat: no-repeat; background-position: center; z-index: 2; pointer-events: none; opacity: 0.7; }
-.color-frame.active-color::after { opacity: 1; filter: sepia(1) saturate(5) hue-rotate(10deg); transform: scale(1.15); }
-.color-btn { position: relative; width: 30px; height: 30px; border-radius: 50%; z-index: 1; }
+.color-frame.active-color::after { opacity: 1; filter: sepia(1) saturate(5) hue-rotate(10deg); transform: scale(1.1); }
+.color-btn { position: relative; width: 26px; height: 26px; border-radius: 50%; z-index: 1; }
 
-.dress-code-clean { width: 90%; max-width: 420px; margin: 45px auto; text-align: center; }
-.dress-code-title { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 5px; color: var(--w-dark); margin-bottom: 18px; font-weight: 700; }
-.dress-code-quote { font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 0.95rem; color: var(--w-sage); line-height: 1.8; margin-bottom: 25px; padding: 0 10px; }
-.dress-code-divider { width: 50px; height: 1px; background: var(--w-gold); margin: 20px auto; opacity: 0.6; }
-.gender-spec { margin-bottom: 20px; }
-.gender-title { font-family: 'Cinzel', serif; font-size: 0.7rem; color: var(--w-gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; font-weight: 700; }
-.gender-desc { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--w-dark); line-height: 1.6; }
+.dress-code-clean { width: 95%; max-width: 400px; margin: 30px auto; text-align: center; }
+.dress-code-title { font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 4px; color: var(--w-dark); margin-bottom: 12px; font-weight: 700; }
+.dress-code-quote { font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 0.85rem; color: #4a5447; line-height: 1.6; margin-bottom: 20px; padding: 0 5px; }
+.dress-code-divider { width: 40px; height: 1px; background: var(--w-gold); margin: 15px auto; opacity: 0.6; }
+.gender-spec { margin-bottom: 15px; }
+.gender-title { font-family: 'Cinzel', serif; font-size: 0.65rem; color: #8a6d3b; letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 4px; font-weight: 700; }
+.gender-desc { font-family: 'Playfair Display', serif; font-size: 0.85rem; color: #f2f5f0; line-height: 1.5; }
 </style>
 </head>
 
@@ -201,7 +199,7 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3.5rem, 15vw, 4.5rem)
     <div class="w-custom-bg-section">
         <section class="w-section w-reveal">
             <div>
-                <h2>Diane & Chino</h2>
+                <h2>Chino & Diane</h2>
                 <div class="w-names">INVITE YOU</div>
                 <p class="intro-p">
                     With joyful hearts and by God’s grace,<br>
@@ -216,15 +214,15 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3.5rem, 15vw, 4.5rem)
                     <div class="w-wrap"><div class="w-cube" id="wC2"><div class="w-face w-front">9</div><div class="w-face w-back">2</div><div class="w-face w-top">5</div><div class="w-face w-bottom">8</div></div></div>
                 </div>
                 <div style="text-align:center; font-family: 'Cinzel', serif;">
-                    <span style="font-size:1rem; letter-spacing:4px; font-weight:700;">APRIL</span>
-                    <div style="height:1px; background:var(--w-gold); width:30px; margin:10px auto; opacity:0.5;"></div>
-                    <span style="font-size:0.8rem; color:var(--w-gold); letter-spacing: 2px;">2026</span>
-                    <div style="font-size:0.65rem; margin-top:8px; letter-spacing:1.5px; color:var(--w-dark); font-weight: 700;">SUNDAY • 10:00 AM</div>
+                    <span style="font-size:0.9rem; letter-spacing:4px; font-weight:700;">APRIL</span>
+                    <div style="height:1px; background:var(--w-gold); width:25px; margin:8px auto; opacity:0.5;"></div>
+                    <span style="font-size:0.75rem; color:var(--w-gold); letter-spacing: 2px;">2026</span>
+                    <div style="font-size:0.6rem; margin-top:6px; letter-spacing:1px; color:var(--w-dark); font-weight: 700;">SUNDAY • 10:00 AM</div>
                 </div>
             </div>
 
             <div>
-                <div style="font-family:'Libre Baskerville'; font-size:0.85rem; letter-spacing:0.5px; margin-bottom:12px; color:var(--w-sage); font-style: italic;">
+                <div style="font-family:'Libre Baskerville'; font-size:0.75rem; letter-spacing:0.5px; margin-bottom:8px; color:var(--w-sage); font-style: italic;">
                     Counting down to the moment we say “I do”
                 </div>
                 <div class="w-timer-container">
@@ -248,15 +246,22 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3.5rem, 15vw, 4.5rem)
               </div>
             </figure>
 
-            <div class="w-reveal">
+           <div class="w-reveal">
                 <div class="map-title">WEDDING VENUE</div>
-                <div class="map-sub">Join us at our chosen place of promise and celebration.</div>
+                <div class="map-sub">Join us at our chosen place of promise.</div>
                 <div class="w-map-container">
                     <div class="w-map-frame">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.123456789!2d121.0!3d14.0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTTCsDAwJzAwLjAiTiAxMjHCsDAwJzAwLjAiRQ!5e0!3m2!1sen!2sph!4v1234567890" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3869.8138244356714!2d121.27941547456425!3d14.088164989418134!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd5d9a270e6307%3A0x8ca878842e4ba751!2sBistro%20Alejandro!5e0!3m2!1sen!2sph!4v1770640160148!5m2!1sen!2sph" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
                     </div>
                 </div>
-                <a href="#" class="w-map-btn">GET DIRECTIONS</a>
+                <a href="https://www.google.com/maps/place/Bistro+Alejandro/@14.0874007,121.2793952,16.61z/data=!4m6!3m5!1s0x33bd5d9a270e6307:0x8ca878842e4ba751!8m2!3d14.0881598!4d121.2819904!16s%2Fg%2F11tgd6l8k9?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoKLDEwMDc5MjA3MUgBUAM%3D" class="w-map-btn" target="_blank">GET DIRECTIONS</a>
             </div>
         </section>
     </div>
@@ -264,8 +269,8 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3.5rem, 15vw, 4.5rem)
     <section class="w-attire-section">
         <div class="w-reveal">
             <div class="dear-reader">Dear Readers,</div>
-            <p style="font-family:'Libre Baskerville'; font-style:italic; font-size:1.05rem; color:var(--w-dark); line-height: 1.7; padding: 0 10px;">
-                “In the spirit of Bridgerton, please arrive in your finest Regency-inspired attire.”
+            <p style="font-family:'Libre Baskerville'; font-style:italic; font-size:0.9rem; color:var(--w-dark); line-height: 1.6; padding: 0 10px;">
+                “In the spirit of Bridgerton, please arrive in your finest Regency-inspired attire. Venue:  Bistro Alejandro”
             </p>
         </div>
 
@@ -282,23 +287,21 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3.5rem, 15vw, 4.5rem)
 
         <div class="w-reveal">
             <div class="tap-jewel-bg">
-                <p style="font-family: 'Cinzel'; font-size: 0.7rem; color: var(--w-gold); letter-spacing: 2px; margin: 0; font-weight: 700;">Tap a jewel to preview the palette</p>
+                <p style="font-family: 'Cinzel'; font-size: 0.8rem; color: var(--w-gold); letter-spacing: 1.5px; margin: 0; font-weight: 700;">Tap a jewel to preview color</p>
             </div>
             <div class="palette">
-                <div class="color-frame pulse" onclick="changeColor('#FFFFE0', this)"><div class="color-btn" style="background-color: #FFFFE0;"></div></div>
-                <div class="color-frame" onclick="changeColor('#FFFACD', this)"><div class="color-btn" style="background-color: #FFFACD;"></div></div>
-                <div class="color-frame" onclick="changeColor('#FFFF66', this)"><div class="color-btn" style="background-color: #FFFF66;"></div></div>
-                <div class="color-frame" onclick="changeColor('#556B2F', this)"><div class="color-btn" style="background-color: #556B2F;"></div></div>
-                <div class="color-frame" onclick="changeColor('#8FBC8F', this)"><div class="color-btn" style="background-color: #8FBC8F;"></div></div>
-                <div class="color-frame" onclick="changeColor('#BCE3BC', this)"><div class="color-btn" style="background-color: #BCE3BC;"></div></div>
+                <div class="color-frame" onclick="changeColor('#FFF9E3', this)"><div class="color-btn" style="background-color: #FFF9E3;"></div></div>
+                <div class="color-frame" onclick="changeColor('#FDF4AC', this)"><div class="color-btn" style="background-color: #FDF4AC;"></div></div>
+                <div class="color-frame" onclick="changeColor('#E6D5A7', this)"><div class="color-btn" style="background-color: #E6D5A7;"></div></div>
+                <div class="color-frame" onclick="changeColor('#C2CAB0', this)"><div class="color-btn" style="background-color: #C2CAB0;"></div></div>
+                <div class="color-frame" onclick="changeColor('#9BA68B', this)"><div class="color-btn" style="background-color: #9BA68B;"></div></div>
+                <div class="color-frame" onclick="changeColor('#717D6C', this)"><div class="color-btn" style="background-color: #717D6C;"></div></div>
             </div>
         </div>
 
         <div class="dress-code-clean w-reveal">
             <div class="dress-code-title">Dress Code</div>
-            <div class="dress-code-quote">
-                “Think regency gowns, delicate gloves, pearls, soft pastels, and graceful silhouettes.”
-            </div>
+            <div class="dress-code-quote">“Think regency gowns, delicate gloves, pearls, soft pastels, and graceful silhouettes.”</div>
             <div class="dress-code-divider"></div>
             <div class="gender-spec">
                 <div class="gender-title">Ladies</div>
@@ -318,7 +321,7 @@ window.changeColor = function(color, element) {
     const groom = document.getElementById('overlayGroom');
     if(bride) bride.style.backgroundColor = color;
     if(groom) groom.style.backgroundColor = color;
-    document.querySelectorAll('.color-frame').forEach(f => f.classList.remove('active-color', 'pulse'));
+    document.querySelectorAll('.color-frame').forEach(f => f.classList.remove('active-color'));
     if(element) element.classList.add('active-color');
 };
 

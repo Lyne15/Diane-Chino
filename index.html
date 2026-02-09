@@ -23,7 +23,10 @@
             margin: 0;
         }
 
-        /* Fullscreen Video Background */
+        /* Hide scrollbars for the clean paper look */
+        .scroll-viewport::-webkit-scrollbar { display: none; }
+        .scroll-viewport { -ms-overflow-style: none; scrollbar-width: none; }
+
         .video-background {
             position: fixed;
             top: 0;
@@ -57,7 +60,6 @@
             100% { background-position: 500px 500px; }
         }
 
-        /* --- 1. LANDING SCREEN --- */
         #landingScreen {
             position: absolute;
             top: 71%;
@@ -86,7 +88,6 @@
             text-transform: uppercase;
         }
 
-        /* --- 2. NAME INPUT STYLES --- */
         :root {
             --color-text: #4a4a4a;
             --color-gold-light: #f3e5c9;
@@ -121,7 +122,6 @@
         #guestNameInput { flex: 1; padding: 0 16px; border: none; outline: none; font-family: 'Poppins', sans-serif; }
         #submitNameButton { padding: 0 18px; border: none; background: linear-gradient(to bottom, var(--color-gold-light), var(--color-gold-dark)); cursor: pointer; font-family: 'Playfair Display'; font-weight: bold; }
 
-        /* --- 3. ENVELOPE & CARD --- */
         #mainContent {
             opacity: 0;
             visibility: hidden;
@@ -322,45 +322,70 @@
             if (found || input === "GUEST") {
                 nameVerified = true;
 
-                // Create a container for the personal message AND RSVP
+                // --- CREATING THE STATIONARY FRAME ---
                 const footerSection = document.createElement('div');
-                footerSection.style.padding = "40px 20px 80px";
-                footerSection.style.textAlign = "center";
-                footerSection.style.background = "#FEFCF7";
+                footerSection.style.position = "relative";
+                // footerSection.style.margin = "40px auto 100px";
+                // footerSection.style.width = "95%";
+                // footerSection.style.maxWidth = "500px"; 
+                footerSection.style.aspectRatio = "1 / 1.4"; // Ensures the "box" matches a paper shape
+                footerSection.style.backgroundImage = "url('./letterbg.png')"; 
+                footerSection.style.backgroundSize = "contain"; 
+                // footerSection.style.backgroundRepeat = "no-repeat";
+                footerSection.style.backgroundPosition = "center top";
+                footerSection.style.overflow = "hidden"; // Clip text to stay within paper borders
 
-                // Personal Message
+                // --- CREATING THE SCROLLABLE WINDOW ---
+                const scrollViewport = document.createElement('div');
+                scrollViewport.className = "scroll-viewport";
+                scrollViewport.style.position = "absolute";
+                scrollViewport.style.top = "20%";
+                scrollViewport.style.height = "65%";
+                scrollViewport.style.left = "0";
+                scrollViewport.style.width = "100%";
+                // scrollViewport.style.height = "100%";
+                scrollViewport.style.overflowY = "auto";
+                scrollViewport.style.webkitOverflowScrolling = "touch";
+
+                const textWrapper = document.createElement('div');
+                // Padding-top (35%-40%) pushes text exactly below the icon logo
+                textWrapper.style.padding = "0% 15% 15%"; 
+                textWrapper.style.textAlign = "center";
+                textWrapper.style.width = "100%";
+                textWrapper.style.boxSizing = "border-box";
+                textWrapper.style.fontFamily = "'Cormorant Garamond', serif";
+                textWrapper.style.color = "#3a4437";
+
                 let personalHtml = "";
                 if (found && found.message) {
                     personalHtml = `
-                        <div style="border-top: 2px double #D4AF37; padding-top: 30px; margin-bottom: 40px; font-style: italic; font-family: 'Cormorant Garamond', serif;">
-                            <p style="font-size: 1.4rem; color: #4a4a4a; line-height: 1.6;">"${found.message}"</p>
+                        <div style="margin-bottom: 25px;">
+                            <p style="font-size: 1.15rem; line-height: 1.5; margin: 0; font-style: italic;">
+                                "${found.message}"
+                            </p>
                         </div>
                     `;
                 }
 
-                // RSVP Section (Targeting Messenger)
                 const rsvpHtml = `
-                    <div style="border: 1px solid #D4AF37; padding: 30px 20px; border-radius: 8px; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                        <h3 style="font-family: 'Playfair Display', serif; color: #717d6c; letter-spacing: 3px; margin-bottom: 10px;">RSVP</h3>
-                        <p style="font-family: 'Poppins', sans-serif; font-size: 0.85rem; color: #3a4437; margin-bottom: 25px; line-height: 1.5;">
-                            Dearest Guest, as we prepare for this day, we request the favor of your response.<br><br>
-                            <strong>Upon opening this invitation, please message us immediately to confirm your attendance.</strong>
-                        </p>
-                        
-                        <div style="display: flex; flex-direction: column; gap: 12px; align-items: center;">
+                    <div style="font-family: 'Playfair Display', serif; margin-top: 20px;">
+                        <h3 style="color: #4a4a4a; letter-spacing: 2px; font-size: 0.85rem; margin-bottom: 15px; text-transform: uppercase; font-weight: bold;">RSVP</h3>
+                        <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
                             <a href="https://m.me/ChinoLamJr" target="_blank" 
-                               style="text-decoration: none; background: #717d6c; color: #fff; width: 85%; max-width: 250px; padding: 12px; border-radius: 30px; font-family: 'Poppins', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 1px;">
+                               style="text-decoration: none; background: #717d6c; color: #fff; width: 190px; padding: 10px; border-radius: 40px; font-family: 'Poppins', sans-serif; font-size: 0.65rem; font-weight: 600; letter-spacing: 1px; display: inline-block;">
                                CONFIRM WITH CHINO
                             </a>
                             <a href="https://m.me/XDaegusvenus" target="_blank" 
-                               style="text-decoration: none; border: 1.5px solid #D4AF37; color: #D4AF37; width: 85%; max-width: 250px; padding: 12px; border-radius: 30px; font-family: 'Poppins', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 1px;">
+                               style="text-decoration: none; border: 1.5px solid #D4AF37; background: rgba(255,255,255,0.7); color: #8a6d3b; width: 190px; padding: 10px; border-radius: 40px; font-family: 'Poppins', sans-serif; font-size: 0.65rem; font-weight: 600; letter-spacing: 1px; display: inline-block;">
                                CONFIRM WITH DIANE
                             </a>
                         </div>
                     </div>
                 `;
 
-                footerSection.innerHTML = personalHtml + rsvpHtml;
+                textWrapper.innerHTML = personalHtml + rsvpHtml;
+                scrollViewport.appendChild(textWrapper);
+                footerSection.appendChild(scrollViewport);
                 detailsContainer.appendChild(footerSection);
 
                 nameInputContainer.classList.remove('active');
