@@ -18,51 +18,99 @@ body, html {
     font-family: 'Playfair Display', serif; display: flex; flex-direction: column; align-items: center; width: 100%;
 }
 
-.w-reveal { opacity: 0; transform: translateY(20px); transition: all 1s ease-out; width: 100%; display: flex; flex-direction: column; align-items: center; padding: 0 15px; box-sizing: border-box; }
+.w-reveal { opacity: 0; transform: translateY(20px); transition: all 1s ease-out; width: 100%; display: flex; flex-direction: column; align-items: center; padding: 0 15px; box-sizing: border-box;
+ }
 .w-reveal.active { opacity: 1; transform: translateY(0); }
 
-/* ===== 1. HERO ===== */
+/* ===== 1. HERO (FIXED FOR FULL VISIBILITY) ===== */
 #w-hero { 
-    height: 50vh; width: 100%; background: #000; position: relative; overflow: hidden; margin-bottom: -1.5px; 
-}
-#w-hero img { width: 100%; height: 100%; object-fit: cover; }
-#w-hero::after {
-    content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height:60px; 
-    background: linear-gradient(to bottom, rgba(252, 250, 242, 0) 0%, #fcfaf2 100%);
-    z-index: 2;
+    min-height: 50vh; /* Changed from fixed height to allow expansion */
+    width: 100%; 
+    position: relative; 
+    top: 0;
+    z-index: 1;
+    overflow: hidden;
+    background: #fcfaf2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; 
 }
 
-/* ===== BACKGROUND WRAPPER ===== */
+#w-hero img { 
+    width: 100%; 
+    height: auto; /* Allow height to scale with width */
+    position: relative; /* Changed from absolute to occupy space */
+    display: block;
+    object-fit: contain; /* Ensures no edges are cut */
+    object-position: center;
+    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    z-index: 1;
+}
+
+.hero-text-overlay {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 40px; 
+    margin-top: -55%; 
+    pointer-events: none;
+}
+
+.hero-text-overlay h2 {
+    text-shadow: 0 2px 10px rgba(252, 250, 242, 0.8);
+}
+
+.w-names-hero { 
+    font-family:'Cinzel'; 
+    letter-spacing:4px; 
+    color: #3a4437; 
+    font-size: 0.75rem; 
+    font-weight: 700;
+}
+
+.intro-p { 
+    font-family: 'Libre Baskerville', serif; 
+    font-size: 0.85rem; 
+    color: var(--w-dark); 
+    line-height: 1.6; 
+    max-width: 290px; 
+    margin: 15px auto 0;
+    text-shadow: 0 1px 5px rgba(252, 250, 242, 1);
+}
+
+/* CONTENT WRAPPER ADJUSTMENT */
 .w-custom-bg-section {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
-    background-image: url('./sage-green1.jpg'); 
-    background-size: cover;
-    background-position: center;
+    z-index: 5;
+    margin-top: 0; 
 }
 
 .w-custom-bg-section::before {
     content: "";
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(to bottom, #fcfaf2 0%, rgba(252, 250, 242, 0.3) 10%, rgba(252, 250, 242, 0.3) 90%, #fcfaf2 100%);
+    background: linear-gradient(to bottom, 
+        rgba(252, 250, 242, 0) 0%, 
+        rgba(252, 250, 242, 0.9) 10%, 
+        #fcfaf2 20%);
     z-index: 1;
+    border-radius: 50px 50px 0 0;
 }
 
 /* ===== 2. CALENDAR & TIMER ===== */
 .w-section { 
-    width: 100%; max-width: 450px; padding: 10px 15px 30px; text-align: center; box-sizing: border-box; 
+    width: 100%; max-width: 450px; padding: 0px 15px 30px; text-align: center; box-sizing: border-box; 
     display: flex; flex-direction: column; align-items: center; gap: 20px; position: relative; z-index: 3;
 }
 h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 12vw, 3.8rem); color: var(--w-sage); margin: 0; font-weight: 400; }
 .w-names { font-family:'Cinzel'; letter-spacing:4px; color:var(--w-gold); font-size: 0.7rem; margin-top: 5px; font-weight: 700; }
 
-.intro-p { font-family: 'Libre Baskerville', serif; font-size: 0.85rem; color: var(--w-dark); line-height: 1.6; max-width: 290px; margin: 10px auto; }
-
-/* ===== VENUE TEXT STYLE ===== */
 .venue-title {
     font-family: 'Great Vibes', cursive;
     font-size: 2.4rem;
@@ -81,7 +129,6 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 12vw, 3.8rem); 
     line-height: 1.5;
 }
 
-/* ===== MAP TEXT STYLE ===== */
 .map-title {
     font-family: 'Cinzel', serif;
     font-size: 0.9rem;
@@ -147,7 +194,7 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 12vw, 3.8rem); 
 
 /* ===== 5. ATTIRE SECTION ===== */
 .w-attire-section { 
-    width: 100%; max-width: 450px; padding: 40px 15px; text-align: center; box-sizing: border-box; overflow: hidden; 
+    width: 100%; padding: 40px 15px; text-align: center; box-sizing: border-box; overflow: hidden; 
     background: linear-gradient(to bottom, #fcfaf2 0%, #fffbe6 10%, #fff9e0 25%, #d1dbc6 70%, #717d6c 100%);
     position: relative; z-index: 3; 
 }
@@ -170,15 +217,37 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 12vw, 3.8rem); 
 #overlayBride { -webkit-mask-image: url('./Gemini_Generated_Image_qid7w5qid7w5qid7-removebg-preview.png'); mask-image: url('./Gemini_Generated_Image_qid7w5qid7w5qid7-removebg-preview.png'); }
 #overlayGroom { -webkit-mask-image: url('./groom.png(1)(1).png'); mask-image: url('./groom.png(1)(1).png'); }
 
+/* Pulse Animation for Text */
+@keyframes pulseText {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
 .tap-jewel-bg {
     background-image: url('./White_Cream_Photo_Wedding_Invitation__4_-removebg-preview.png'); 
     background-size: cover; background-position: center; padding: 25px; border-radius: 10px; display: inline-block; margin-bottom: 10px;
+    animation: pulseText 2s infinite ease-in-out;
+}
+
+/* Wiggle and Glow Animation */
+@keyframes wiggleGlow {
+    0% { transform: rotate(0deg); filter: drop-shadow(0 0 0px var(--w-gold)); }
+    25% { transform: rotate(3deg); }
+    50% { transform: rotate(0deg); filter: drop-shadow(0 0 8px var(--w-gold)); }
+    75% { transform: rotate(-3deg); }
+    100% { transform: rotate(0deg); filter: drop-shadow(0 0 0px var(--w-gold)); }
 }
 
 .palette { display: flex; justify-content: center; gap: 6px; flex-wrap: nowrap; margin: 15px auto; width: 100%; }
 .color-frame { position: relative; width: 48px; height: 48px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; flex-shrink: 0; }
 .color-frame::after { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('./palette-bg.png'); background-size: contain; background-repeat: no-repeat; background-position: center; z-index: 2; pointer-events: none; opacity: 0.7; }
+
+/* Apply wiggle only when NOT active */
+.color-frame.wiggle { animation: wiggleGlow 1.5s infinite ease-in-out; }
+
 .color-frame.active-color::after { opacity: 1; filter: sepia(1) saturate(5) hue-rotate(10deg); transform: scale(1.1); }
+.color-frame.active-color { animation: none; filter: none; }
+
 .color-btn { position: relative; width: 26px; height: 26px; border-radius: 50%; z-index: 1; }
 
 .dress-code-clean { width: 95%; max-width: 400px; margin: 30px auto; text-align: center; }
@@ -194,20 +263,21 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 12vw, 3.8rem); 
 <body>
 
 <div id="w-root">
-    <section id="w-hero"><img src="./sample1.jpg"></section>
+    <section id="w-hero">
+        <img src="./true-top (2).png" alt="Wedding Couple">
+        <div class="hero-text-overlay">
+            <h2>Chino & Diane</h2>
+            <div class="w-names-hero">cordially invite you</div>
+            <p class="intro-p">
+               With joyful hearts and by God’s grace,
+we invite you to celebrate the beginning of our forever.
+<br><br><br>Please mark your calendar and share this beautiful day with us.
+            </p>
+        </div>
+    </section>
     
     <div class="w-custom-bg-section">
         <section class="w-section w-reveal">
-            <div>
-                <h2>Chino & Diane</h2>
-                <div class="w-names">INVITE YOU</div>
-                <p class="intro-p">
-                    With joyful hearts and by God’s grace,<br>
-                    we invite you to celebrate the beginning of our forever.<br><br>
-                    Please mark your calendar and share this beautiful day with us.
-                </p>
-            </div>
-            
             <div class="w-card-box">
                 <div class="w-cubes">
                     <div class="w-wrap"><div class="w-cube" id="wC1"><div class="w-face w-front">1</div><div class="w-face w-back">0</div><div class="w-face w-top">4</div><div class="w-face w-bottom">7</div></div></div>
@@ -290,12 +360,12 @@ h2 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 12vw, 3.8rem); 
                 <p style="font-family: 'Cinzel'; font-size: 0.8rem; color: var(--w-gold); letter-spacing: 1.5px; margin: 0; font-weight: 700;">Tap a jewel to preview color</p>
             </div>
             <div class="palette">
-                <div class="color-frame" onclick="changeColor('#FFF9E3', this)"><div class="color-btn" style="background-color: #FFF9E3;"></div></div>
-                <div class="color-frame" onclick="changeColor('#FDF4AC', this)"><div class="color-btn" style="background-color: #FDF4AC;"></div></div>
-                <div class="color-frame" onclick="changeColor('#E6D5A7', this)"><div class="color-btn" style="background-color: #E6D5A7;"></div></div>
-                <div class="color-frame" onclick="changeColor('#C2CAB0', this)"><div class="color-btn" style="background-color: #C2CAB0;"></div></div>
-                <div class="color-frame" onclick="changeColor('#9BA68B', this)"><div class="color-btn" style="background-color: #9BA68B;"></div></div>
-                <div class="color-frame" onclick="changeColor('#717D6C', this)"><div class="color-btn" style="background-color: #717D6C;"></div></div>
+                <div class="color-frame wiggle" onclick="changeColor('#68755b', this)"><div class="color-btn" style="background-color: #68755b;"></div></div>
+                <div class="color-frame wiggle" onclick="changeColor('#8b9c77', this)"><div class="color-btn" style="background-color: #8b9c77"></div></div>
+                <div class="color-frame wiggle" onclick="changeColor('#abc095', this)"><div class="color-btn" style="background-color: #abc095;"></div></div>
+                <div class="color-frame wiggle" onclick="changeColor('#ffffb7', this)"><div class="color-btn" style="background-color: #ffffb7"></div></div>
+                <div class="color-frame wiggle" onclick="changeColor('#fef098', this)"><div class="color-btn" style="background-color: #fef098;"></div></div>
+                <div class="color-frame wiggle" onclick="changeColor('#feea6f', this)"><div class="color-btn" style="background-color: #feea6f;"></div></div>
             </div>
         </div>
 
@@ -321,8 +391,18 @@ window.changeColor = function(color, element) {
     const groom = document.getElementById('overlayGroom');
     if(bride) bride.style.backgroundColor = color;
     if(groom) groom.style.backgroundColor = color;
-    document.querySelectorAll('.color-frame').forEach(f => f.classList.remove('active-color'));
-    if(element) element.classList.add('active-color');
+    
+    // Alisin ang active-color at ibalik ang wiggle sa lahat
+    document.querySelectorAll('.color-frame').forEach(f => {
+        f.classList.remove('active-color');
+        f.classList.add('wiggle');
+    });
+    
+    // Alisin ang wiggle at ilagay ang active-color sa pinindot
+    if(element) {
+        element.classList.remove('wiggle');
+        element.classList.add('active-color');
+    }
 };
 
 (function(){
@@ -338,10 +418,14 @@ window.changeColor = function(color, element) {
     function updateTimer(){
         const now = new Date().getTime(), diff = target - now;
         if(diff < 0) return;
-        document.getElementById("wD").innerText = String(Math.floor(diff/864e5)).padStart(2,'0');
-        document.getElementById("wH").innerText = String(Math.floor((diff%864e5)/36e5)).padStart(2,'0');
-        document.getElementById("wM").innerText = String(Math.floor((diff%36e5)/6e4)).padStart(2,'0');
-        document.getElementById("wS").innerText = String(Math.floor((diff%6e4)/1e3)).padStart(2,'0');
+        const wD = document.getElementById("wD");
+        const wH = document.getElementById("wH");
+        const wM = document.getElementById("wM");
+        const wS = document.getElementById("wS");
+        if(wD) wD.innerText = String(Math.floor(diff/864e5)).padStart(2,'0');
+        if(wH) wH.innerText = String(Math.floor((diff%864e5)/36e5)).padStart(2,'0');
+        if(wM) wM.innerText = String(Math.floor((diff%36e5)/6e4)).padStart(2,'0');
+        if(wS) wS.innerText = String(Math.floor((diff%6e4)/1e3)).padStart(2,'0');
     }
     setInterval(updateTimer,1000); updateTimer();
 
